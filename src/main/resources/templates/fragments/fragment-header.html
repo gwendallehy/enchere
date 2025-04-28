@@ -1,0 +1,32 @@
+<header data-th-fragment="header">
+  <div>
+    <div>
+      <a data-th-href="@{/(lang='fr')}"><img data-th-src="@{/images/French.webp}" height="10" alt="Drapeau français"></a>
+      <a data-th-href="@{/(lang='en')}"><img data-th-src="@{/images/English.webp}" height="10" alt="Drapeau anglais"></a>
+    </div>
+  </div>
+  <p id="nav-title">
+    <a data-th-href="@{/}" data-th-text="#{nom-application}">
+    </a>
+<!--    <strong data-th-if="${#authorization.expression('isAuthenticated')}" th:text="' - Connecté en tant que : '+${#authentication.name} + ' - ' + ${#authentication.getAuthorities()}">-->
+<!--    </strong>-->
+  </p>
+
+  <nav>
+    <ul>
+      <li><a data-th-href="@{/films}" data-th-text="#{frag-entete.a.enchere}"></a></li>
+
+    </ul>
+    <ul>
+      <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
+      <li><a data-th-href="@{/auctions/view}" data-th-text="#{frag-entete.a.enchere.one}"></a></li>
+      <li><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
+      <li><a data-th-href="@{/auctions/cancel}" data-th-text="#{frag-entete.a.enchere.cancel}"></a></li>
+
+      <li><a data-th-href="@{/users/profile}" data-th-text="#{frag-entete.a.user.profile}"></a></li>
+      <li><a data-th-href="@{/users/viewProfile}" data-th-text="#{frag-entete.a.user.checkone}"></a></li>
+      <li><a data-th-href="@{/users/create}" data-th-text="#{frag-entete.a.user.create}"></a></li>
+
+    </ul>
+  </nav>
+</header>
