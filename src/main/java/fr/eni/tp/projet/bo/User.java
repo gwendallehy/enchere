@@ -3,15 +3,15 @@ package fr.eni.tp.projet.bo;
 public class User {
     private long idUser;
     private Person person;
-    private Adress adress;
+    private Address address;
     private String password;
     private long credit;
     private int administrator;
 
-    public User(long idUser, Person person, Adress adress, String password, long credit, int administrator) {
+    public User(long idUser, Person person, Address adress, String password, long credit, int administrator) {
         this.idUser = idUser;
         this.person = person;
-        this.adress = adress;
+        this.address = adress;
         this.password = password;
         this.credit = credit;
         this.administrator = administrator;
@@ -33,12 +33,12 @@ public class User {
         this.person = person;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Address getAdress() {
+        return address;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setAdress(Address adress) {
+        this.address = adress;
     }
 
     public String getPassword() {
@@ -70,7 +70,7 @@ public class User {
         final StringBuffer sb = new StringBuffer("User{");
         sb.append("idUser=").append(idUser);
         sb.append(", person=").append(person);
-        sb.append(", adress=").append(adress);
+        sb.append(", adress=").append(address);
         sb.append(", password='").append(password).append('\'');
         sb.append(", credit=").append(credit);
         sb.append(", administrator=").append(administrator);
