@@ -2,8 +2,10 @@ package fr.eni.tp.projet.dal;
 
 import fr.eni.tp.projet.bo.Categories;
 
+import java.util.List;
+
 public interface CategoriesDAO {
     Categories findCategoriesById(int id);
-    Categories findAllCategories();
-    Categories createCategories(Categories categories);
+    List<Categories> findAllCategories();
+    void createCategories(Categories categories);
 }

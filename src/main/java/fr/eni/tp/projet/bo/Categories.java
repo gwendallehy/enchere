@@ -9,6 +9,10 @@ public class Categories {
         this.wording = wording;
     }
 
+    public Categories() {
+
+    }
+
     public long getIdCategory() {
         return idCategory;
     }
