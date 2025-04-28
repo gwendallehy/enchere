@@ -5,11 +5,14 @@ import java.util.List;
 public class Auction {
     private int idAuction;
     private Article article;
-    private List<Bid> bids;
+    private Bid bids;
 
-    public Auction(Article article, List<Bid> bids) {
-        this.article = article;
-        this.bids = bids;
+    public int getIdAuction() {
+        return idAuction;
+    }
+
+    public void setIdAuction(int idAuction) {
+        this.idAuction = idAuction;
     }
 
     public Article getArticle() {
@@ -20,11 +23,11 @@ public class Auction {
         this.article = article;
     }
 
-    public List<Bid> getBids() {
+    public Bid getBids() {
         return bids;
     }
 
-    public void setBids(List<Bid> bids) {
+    public void setBids(Bid bids) {
         this.bids = bids;
     }
 

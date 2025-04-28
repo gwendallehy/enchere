@@ -29,6 +29,10 @@ public class User {
         this.administrator = administrator;
     }
 
+    public User() {
+
+    }
+
     public long getIdUser() {
         return idUser;
     }
