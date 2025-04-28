@@ -1,52 +1,52 @@
 package fr.eni.tp.projet.bo;
 
 public class User {
-    private long noUtilisateur;
-    private Personne personne;
-    private Adresse adresse;
-    private String motDePasse;
+    private long idUser;
+    private Person person;
+    private Adress adress;
+    private String password;
     private long credit;
-    private boolean administrateur;
+    private int administrator;
 
-    public User(long noUtilisateur, Personne personne, Adresse adresse, String motDePasse, long credit, boolean administrateur) {
-        this.noUtilisateur = noUtilisateur;
-        this.personne = personne;
-        this.adresse = adresse;
-        this.motDePasse = motDePasse;
+    public User(long idUser, Person person, Adress adress, String password, long credit, int administrator) {
+        this.idUser = idUser;
+        this.person = person;
+        this.adress = adress;
+        this.password = password;
         this.credit = credit;
-        this.administrateur = administrateur;
+        this.administrator = administrator;
     }
 
-    public long getNoUtilisateur() {
-        return noUtilisateur;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setNoUtilisateur(long noUtilisateur) {
-        this.noUtilisateur = noUtilisateur;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
-    public Personne getPersonne() {
-        return personne;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonne(Personne personne) {
-        this.personne = personne;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Adresse getAdresse() {
-        return adresse;
+    public Adress getAdress() {
+        return adress;
     }
 
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getCredit() {
@@ -57,23 +57,23 @@ public class User {
         this.credit = credit;
     }
 
-    public boolean isAdministrateur() {
-        return administrateur;
+    public int getAdministrator() {
+        return administrator;
     }
 
-    public void setAdministrateur(boolean administrateur) {
-        this.administrateur = administrateur;
+    public void setAdministrator(int administrator) {
+        this.administrator = administrator;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("User{");
-        sb.append("noUtilisateur=").append(noUtilisateur);
-        sb.append(", personne=").append(personne);
-        sb.append(", adresse=").append(adresse);
-        sb.append(", motDePasse='").append(motDePasse).append('\'');
+        sb.append("idUser=").append(idUser);
+        sb.append(", person=").append(person);
+        sb.append(", adress=").append(adress);
+        sb.append(", password='").append(password).append('\'');
         sb.append(", credit=").append(credit);
-        sb.append(", administrateur=").append(administrateur);
+        sb.append(", administrator=").append(administrator);
         sb.append('}');
         return sb.toString();
     }
