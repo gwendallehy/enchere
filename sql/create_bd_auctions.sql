@@ -41,7 +41,7 @@ CREATE TABLE USERS (
     pseudo           VARCHAR(30) NOT NULL,
     lastname             VARCHAR(30) NOT NULL,
     firstname           VARCHAR(30) NOT NULL,
-    email            VARCHAR(20) NOT NULL,
+    email            VARCHAR(50) NOT NULL,
     phone_nb        VARCHAR(15),
     address              VARCHAR(30) NOT NULL,
     post_code      VARCHAR(10) NOT NULL,
