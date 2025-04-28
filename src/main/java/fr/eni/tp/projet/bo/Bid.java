@@ -3,6 +3,7 @@ package fr.eni.tp.projet.bo;
 import java.util.ArrayList;
 
 public class Bid {
+    private int idBid;
     private String auctionDate;
     private long auctionAmount ;
 
