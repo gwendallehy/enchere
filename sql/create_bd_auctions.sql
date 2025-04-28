@@ -17,7 +17,7 @@ CREATE TABLE CATEGORIES (
 
 ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (category_id)
 
-CREATE TABLE AUCTIONS (
+CREATE TABLE BIDS (
     user_id   INTEGER NOT NULL,
     item_id       INTEGER NOT NULL,
     bid_date     datetime NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE AUCTIONS (
 
 )
 
-ALTER TABLE AUCTIONS ADD constraint enchere_pk PRIMARY KEY (user_id, item_id)
+ALTER TABLE BIDS ADD constraint bid_pk PRIMARY KEY (user_id, item_id)
 
 CREATE TABLE PICKUPS (
 	item_id         INTEGER NOT NULL,
@@ -63,7 +63,8 @@ CREATE TABLE ITEMS_SOLD (
     price_init                  INTEGER,
     price_selling                    INTEGER,
     user_id               INTEGER NOT NULL,
-    category_id                INTEGER NOT NULL
+    category_id                INTEGER NOT NULL,
+    picture_url                 VARCHAR(250)
 )
 
 ALTER TABLE ITEMS_SOLD ADD constraint items_sold_pk PRIMARY KEY (item_id)
@@ -73,8 +74,8 @@ ALTER TABLE ITEMS_SOLD
 ON DELETE NO ACTION 
     ON UPDATE no action 
 
-ALTER TABLE AUCTIONS
-    ADD CONSTRAINT	auctions_items_fk FOREIGN KEY ( item_id )
+ALTER TABLE BIDS
+    ADD CONSTRAINT	bids_items_fk FOREIGN KEY ( item_id )
         REFERENCES ITEMS_SOLD ( item_id )
 ON DELETE NO ACTION 
     ON UPDATE no action 
