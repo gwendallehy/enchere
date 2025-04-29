@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title data-th-text="Connexion"></title>
+
+<link rel="stylesheet" data-th-href="@{/css/login.css}">
+
+<main>
+    <div class="connexion">
+        <h1>Formulaire de connexion</h1>
+        <form th:action="@{/login}" method="post">
+            <input type="text" name="username" id="username" th:placeholder="#{login.username}">
+            <br>
+            <input type="password" name="password" id="password" th:placeholder="#{login.pwd}" required>
+            <br>
+            <button type="submit" data-th-text="#{login.button}"></button>
+            <button type="submit" data-th-text="#{login.create}"></button>
+        </form>
+
+    </div>
+</main>
+</html>

@@ -1,0 +1,45 @@
+.connexion{
+    text-align: center;
+    /*background-color: #ff6a6a;*/
+    margin: 20px;
+    padding: 10px;
+    line-height: 30px;
+}
+.connexion form{
+    text-align: center;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.connexion form label{
+
+}
+.connexion form input{
+    text-align: center;
+    outline: none;
+    border: none;
+    border-bottom: #0780fb 1px solid;
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.2;
+    width: 20%;
+    height: 45px;
+    background: transparent;
+    padding: 0 5px;
+
+}
+
+.connexion form button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: #0780fb;
+    line-height: 1.2;
+    text-transform: uppercase;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+}
