@@ -41,7 +41,7 @@ public class SecurityConfiguration {
 
         http.formLogin(form -> {
             form.loginPage("/login").permitAll();
-            form.defaultSuccessUrl("/films");
+            form.defaultSuccessUrl("/users/profile");
         });
 
         http.logout(logout -> {

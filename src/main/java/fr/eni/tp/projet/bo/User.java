@@ -9,12 +9,12 @@ public class User {
     private long phone;
     private String street;
     private String city;
-    private String postalCode;
+    private Long postalCode;
     private String password;
     private long credit;
     private int administrator;
 
-    public User(long idUser, String pseudo, String name, String firstName, String email, long phone, String street, String city, String postalCode, String password, long credit, int administrator) {
+    public User(long idUser, String pseudo, String name, String firstName, String email, long phone, String street, String city, Long postalCode, String password, long credit, int administrator) {
         this.idUser = idUser;
         this.pseudo = pseudo;
         this.name = name;
@@ -97,11 +97,11 @@ public class User {
         this.city = city;
     }
 
-    public String getPostalCode() {
+    public Long getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(Long postalCode) {
         this.postalCode = postalCode;
     }
 

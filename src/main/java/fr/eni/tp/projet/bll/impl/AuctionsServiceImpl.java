@@ -2,11 +2,8 @@ package fr.eni.tp.projet.bll.impl;
 
 import fr.eni.tp.projet.bll.AuctionsService;
 import fr.eni.tp.projet.bo.Article;
-import fr.eni.tp.projet.bo.Auction;
 import fr.eni.tp.projet.bo.Categories;
 import fr.eni.tp.projet.bo.User;
-import fr.eni.tp.projet.dal.ArticleDAO;
-import fr.eni.tp.projet.dal.AuctionDAO;
 import fr.eni.tp.projet.dal.CategoriesDAO;
 import fr.eni.tp.projet.dal.UserDAO;
 import org.springframework.stereotype.Service;
@@ -30,16 +27,6 @@ public class AuctionsServiceImpl implements AuctionsService {
 
 
     @Override
-    public List<Auction> consultAuctions() {
-        return null;
-    }
-
-    @Override
-    public Auction consultAuctionById(long id) {
-        return null;
-    }
-
-    @Override
     public List<User> consultUsers() {
         return userDAO.findAllUsers();
     }
@@ -47,6 +34,16 @@ public class AuctionsServiceImpl implements AuctionsService {
     @Override
     public User consultUserById(long id) {
         return userDAO.findById(id);
+    }
+
+    @Override
+    public List<Categories> findAllCategories() {
+        return categoriesDAO.findAllCategories();
+    }
+
+    @Override
+    public Categories findCategoryById(long id) {
+        return categoriesDAO.findCategoriesById(id);
     }
 
     @Override
