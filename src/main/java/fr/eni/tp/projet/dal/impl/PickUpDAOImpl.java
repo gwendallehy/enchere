@@ -42,7 +42,6 @@ public class PickUpDAOImpl implements PickUpDAO {
 
     }
 
-
     public void createPickUp(Pickup pickup) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("item_id", pickup.getIdPickup());

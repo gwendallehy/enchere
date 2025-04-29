@@ -10,7 +10,7 @@ public class Article {
     private long salePrice;
     private String status;
     private String picture;
-    private User user;
+    private long user_id;
 
     private Categories category;
     private Pickup pickup;
@@ -18,7 +18,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(long idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, User user, Categories category, Pickup pickup) {
+    public Article(long idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, long user_id, Categories category, Pickup pickup) {
         this.idArticle = idArticle;
         this.name = name;
         this.description = description;
@@ -28,7 +28,7 @@ public class Article {
         this.salePrice = salePrice;
         this.status = status;
         this.picture = picture;
-        this.user = user;
+        this.user_id = user_id;
         this.category = category;
         this.pickup = pickup;
     }
@@ -121,12 +121,12 @@ public class Article {
         this.picture = picture;
     }
 
-    public User getUser() {
-        return user;
+    public long getUser() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(long user_id) {
+        this.user_id = user_id;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class Article {
         sb.append(", salePrice=").append(salePrice);
         sb.append(", status='").append(status).append('\'');
         sb.append(", picture='").append(picture).append('\'');
-        sb.append(", user=").append(user);
+        sb.append(", user=").append(user_id);
         sb.append(", category=").append(category);
         sb.append(", pickup=").append(pickup);
         sb.append('}');

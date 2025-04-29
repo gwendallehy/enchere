@@ -38,12 +38,12 @@ public class AuctionsServiceImpl implements AuctionsService {
 
     @Override
     public List<Categories> findAllCategories() {
-        return List.of();
+        return categoriesDAO.findAllCategories();
     }
 
     @Override
     public Categories findCategoryById(long id) {
-        return null;
+        return categoriesDAO.findCategoriesById(id);
     }
 
     @Override

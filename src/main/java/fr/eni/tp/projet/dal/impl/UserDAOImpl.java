@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SELECT_ALL = "SELECT * FROM USERS";
     private static final String SELECT_BY_ID = "SELECT * FROM USERS WHERE user_id = :user_id";
     private static final String SELECT_BY_EMAIL = "SELECT * FROM USERS WHERE email = :email";
-    private static final String CREATE_USER = "INSERT INTO USERS VALUES (:pseudo, :name, :firstName, :email, :phone, :street, :city, :postalCode, :password, :credit, :administrator)";
+    private static final String CREATE_USER = "INSERT INTO USERS VALUES (:pseudo, :name, :firstName, :email, :phone, :street, :city, :post_code, :password, :credit, :administrator)";
     private static final String DELETE_USER = "DELETE FROM USERS WHERE user_id = :user_id";
     private static final String UPDATE_USER = "";
 
@@ -76,10 +76,11 @@ public class UserDAOImpl implements UserDAO {
         mapSqlParameterSource.addValue("phone", user.getPhone());
         mapSqlParameterSource.addValue("street", user.getStreet());
         mapSqlParameterSource.addValue("city", user.getCity());
-        mapSqlParameterSource.addValue("postalCode", user.getPostalCode());
+        mapSqlParameterSource.addValue("post_code", user.getPostalCode());
         mapSqlParameterSource.addValue("password", user.getPassword());
         mapSqlParameterSource.addValue("credit", user.getCredit());
         mapSqlParameterSource.addValue("administrator", user.getAdministrator());
+
 
 
         KeyHolder keyHolder = new GeneratedKeyHolder();

@@ -7,6 +7,7 @@ import fr.eni.tp.projet.dal.impl.UserDAOImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -29,7 +30,9 @@ public class AuctionController {
     //Mapping auctions
 
     @GetMapping("/auctions/list")
-    public String auctions() {
+    public String auctions(Model model) {
+
+
         return "/auctions/list";
     }
 
