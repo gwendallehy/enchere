@@ -1,7 +1,7 @@
 package fr.eni.tp.projet.bo;
 
 public class Article {
-    private int idArticle;
+    private long idArticle;
     private String name;
     private String description;
     private String startDate;
@@ -18,7 +18,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(int idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, User user, Categories category, Pickup pickup) {
+    public Article(long idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, User user, Categories category, Pickup pickup) {
         this.idArticle = idArticle;
         this.name = name;
         this.description = description;
@@ -33,11 +33,11 @@ public class Article {
         this.pickup = pickup;
     }
 
-    public int getIdArticle() {
+    public long getIdArticle() {
         return idArticle;
     }
 
-    public void setIdArticle(int idArticle) {
+    public void setIdArticle(long idArticle) {
         this.idArticle = idArticle;
     }
 

@@ -82,7 +82,6 @@ public class UserDAOImpl implements UserDAO {
         mapSqlParameterSource.addValue("administrator", user.getAdministrator());
 
 
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         namedParameterJdbcTemplate.update(
@@ -122,7 +121,7 @@ class UserRowMapper implements RowMapper<User> {
         user.setPhone(rs.getLong("phone"));
         user.setStreet(rs.getString("street"));
         user.setCity(rs.getString("city"));
-        user.setPostalCode(rs.getLong("postal_code"));
+        user.setPostalCode(rs.getLong("post_code"));
         user.setPassword(rs.getString("password"));
         user.setCredit(rs.getLong("credit"));
         user.setAdministrator(rs.getInt("administrator"));

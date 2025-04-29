@@ -1,41 +1,57 @@
 package fr.eni.tp.projet.bo;
 
-import java.util.ArrayList;
-
 public class Bid {
-    private int idBid;
-    private String auctionDate;
-    private long auctionAmount ;
+    private long bidIdUser;
+    private long bidIdItem;
+    private String bidDate;
+    private long bidAmount;
 
     public Bid() {
+
     }
 
-    public Bid(String auctionDate, long auctionAmount) {
-        this.auctionDate = auctionDate;
-        this.auctionAmount = auctionAmount;
+    public long getBidIdUser() {
+        return bidIdUser;
     }
 
-    public String getAuctionDate() {
-        return auctionDate;
+    public void setBidIdUser(long bidIdUser) {
+        this.bidIdUser = bidIdUser;
     }
 
-    public void setAuctionDate(String auctionDate) {
-        this.auctionDate = auctionDate;
+    public long getBidIdItem() {
+        return bidIdItem;
     }
 
-    public long getAuctionAmount() {
-        return auctionAmount;
+    public void setBidIdItem(long bidIdItem) {
+        this.bidIdItem = bidIdItem;
     }
 
-    public void setAuctionAmount(long auctionAmount) {
-        this.auctionAmount = auctionAmount;
+    public Bid(String auctionDate, long bidAmount) {
+        this.bidDate = auctionDate;
+        this.bidAmount = bidAmount;
+    }
+
+    public String getBidDate() {
+        return bidDate;
+    }
+
+    public void setBidDate(String bidDate) {
+        this.bidDate = bidDate;
+    }
+
+    public long getBidAmount() {
+        return bidAmount;
+    }
+
+    public void setBidAmount(long bidAmount) {
+        this.bidAmount = bidAmount;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Bid{");
-        sb.append("auctionDate='").append(auctionDate).append('\'');
-        sb.append(", auctionAmount=").append(auctionAmount);
+        sb.append("bidDate='").append(bidDate).append('\'');
+        sb.append(", bidAmount=").append(bidAmount);
         sb.append('}');
         return sb.toString();
     }

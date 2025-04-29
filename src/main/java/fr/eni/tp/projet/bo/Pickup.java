@@ -16,9 +16,6 @@ public class Pickup {
         this.postalCode = postalCode;
     }
 
-    public Pickup() {
-
-    }
 
     public long getIdPickup() {
         return idPickup;
