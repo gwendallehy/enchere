@@ -31,8 +31,6 @@ public class AuctionController {
 
     @GetMapping("/auctions/list")
     public String auctions(Model model) {
-
-
         return "/auctions/list";
     }
 
