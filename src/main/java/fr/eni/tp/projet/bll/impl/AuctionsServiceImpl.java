@@ -4,6 +4,7 @@ import fr.eni.tp.projet.bll.AuctionsService;
 import fr.eni.tp.projet.bo.Article;
 import fr.eni.tp.projet.bo.Categories;
 import fr.eni.tp.projet.bo.User;
+import fr.eni.tp.projet.dal.ArticleDAO;
 import fr.eni.tp.projet.dal.CategoriesDAO;
 import fr.eni.tp.projet.dal.UserDAO;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,12 @@ import java.util.List;
 @Service
 public class AuctionsServiceImpl implements AuctionsService {
     private UserDAO userDAO;
-//    private AuctionDAO auctionDAO;
-//    private ArticleDAO articleDAO;
+    private ArticleDAO articleDAO;
     private CategoriesDAO categoriesDAO;
 
-    public AuctionsServiceImpl(UserDAO userDAO//, AuctionDAO auctionDAO, ArticleDAO articleDAO
+    public AuctionsServiceImpl(UserDAO userDAO, ArticleDAO articleDAO
                                 , CategoriesDAO categoriesDAO) {
         this.userDAO = userDAO;
-//        this.auctionDAO = auctionDAO;
 //        this.articleDAO = articleDAO;
         this.categoriesDAO = categoriesDAO;
     }

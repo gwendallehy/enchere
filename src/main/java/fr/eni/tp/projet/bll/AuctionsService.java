@@ -9,6 +9,7 @@ public interface AuctionsService {
 
     //Consulter les utilisateurs
     List<User> consultUsers();
+
     //Consulter un utilisateur
     User consultUserById(long id);
 
