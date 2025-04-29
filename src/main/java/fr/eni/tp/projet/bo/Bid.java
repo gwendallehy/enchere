@@ -7,6 +7,9 @@ public class Bid {
     private String auctionDate;
     private long auctionAmount ;
 
+    public Bid() {
+    }
+
     public Bid(String auctionDate, long auctionAmount) {
         this.auctionDate = auctionDate;
         this.auctionAmount = auctionAmount;

@@ -6,6 +6,9 @@ public class Pickup {
     private String city;
     private long postalCode;
 
+    public Pickup() {
+    }
+
     public Pickup(long idPickup, String street, String city, long postalCode) {
         this.idPickup = idPickup;
         this.street = street;

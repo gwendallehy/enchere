@@ -4,13 +4,12 @@ public class Categories {
     private long idCategory;
     private String wording;
 
+    public Categories() {
+    }
+
     public Categories(long idCategory, String wording) {
         this.idCategory = idCategory;
         this.wording = wording;
-    }
-
-    public Categories() {
-
     }
 
     public long getIdCategory() {

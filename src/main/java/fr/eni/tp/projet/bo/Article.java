@@ -9,11 +9,16 @@ public class Article {
     private long betAPrice;
     private long salePrice;
     private String status;
+    private String picture;
+    private User user;
 
     private Categories category;
     private Pickup pickup;
 
-    public Article(int idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, Categories category, Pickup pickup) {
+    public Article() {
+    }
+
+    public Article(int idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, User user, Categories category, Pickup pickup) {
         this.idArticle = idArticle;
         this.name = name;
         this.description = description;
@@ -22,6 +27,8 @@ public class Article {
         this.betAPrice = betAPrice;
         this.salePrice = salePrice;
         this.status = status;
+        this.picture = picture;
+        this.user = user;
         this.category = category;
         this.pickup = pickup;
     }
@@ -106,6 +113,22 @@ public class Article {
         this.pickup = pickup;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Article{");
@@ -117,6 +140,8 @@ public class Article {
         sb.append(", betAPrice=").append(betAPrice);
         sb.append(", salePrice=").append(salePrice);
         sb.append(", status='").append(status).append('\'');
+        sb.append(", picture='").append(picture).append('\'');
+        sb.append(", user=").append(user);
         sb.append(", category=").append(category);
         sb.append(", pickup=").append(pickup);
         sb.append('}');
