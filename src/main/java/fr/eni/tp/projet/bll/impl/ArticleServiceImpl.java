@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    private ArticleDAO articleDAO;
+    private final ArticleDAO articleDAO;
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
@@ -26,11 +26,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void createArticle(Article article, long user_id) {
-        articleDAO.sellAnArticle(article, user_id);
-    }
-
-    @Override
     public List<Article> findSalesByUser(int userId) {
         return articleDAO.findSalesByUser(userId);
     }
@@ -43,5 +38,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void cancelASell(int article_id) {
         articleDAO.cancelASell(article_id);
+    }
+
+    @Override
+    public List<Article> FindFilter(String name, long category_id) {
+        return articleDAO.findByFilter(name , category_id);
     }
 }

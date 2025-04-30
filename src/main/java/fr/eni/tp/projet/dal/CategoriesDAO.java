@@ -9,4 +9,7 @@ public interface CategoriesDAO {
     Categories findCategoriesById(long category_id);
     List<Categories> findAllCategories();
 
+    void createcategory(Categories categories);
+    void deleteCategory(long id);
+
 }

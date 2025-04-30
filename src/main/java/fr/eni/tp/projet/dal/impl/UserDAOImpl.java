@@ -97,7 +97,7 @@ public class UserDAOImpl implements UserDAO {
         mapSqlParameterSource.addValue("city", user.getCity());
         mapSqlParameterSource.addValue("post_code", user.getPostalCode());
         mapSqlParameterSource.addValue("password", user.getPassword());
-        mapSqlParameterSource.addValue("credit", user.getCredit());
+        mapSqlParameterSource.addValue("credit", 1000);
         mapSqlParameterSource.addValue("administrator", user.getAdministrator());
 
 

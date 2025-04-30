@@ -7,23 +7,14 @@ import java.util.List;
 
 public interface AuctionsService {
 
-    //Consulter les utilisateurs
-    List<User> consultUsers();
+    //Achat
+    List<Article> OpenAuctions();
+    List<Article> MyOpenBid(long user_id);
+    List<Article> MyWinAuctions(long user_id);
 
-    //Consulter un utilisateur
-    User consultUserById(long id);
-
-    List<Categories> findAllCategories();
-
-    Categories findCategoryById(long id);
-
-
-    //Vendre un objet
-    void createAuction(Article article, User user);
-
-    //Annuler la vente
-    void cancelAuction(long id);
-
-
+    //Vente
+    List<Article> MyCurrentAuction(long user_id);
+    List<Article> MyNotStartedAuction(long user_id);
+    List<Article> MyFinishedAuction(long user_id);
 
 }

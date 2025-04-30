@@ -27,6 +27,19 @@ public class ArticleDAOImpl implements ArticleDAO {
             "(:item_name, :description, :auction_date_begin, NULL, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
     private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = :article_id;";
 
+    private static final String FIND_ALL_EC ="SELECT * FROM ITEMS_SOLD WHERE status = 'EC'";
+    private static final String SELECT_STATUS_USER ="SELECT * FROM BIDS as b INNER JOIN ITEMS_SOLD as i ON b.item_id = i.item_id WHERE b.user_id= :user_id AND status = :status"; //Select BID JOIN Article
+    private static final String SELECT_MY_STATUS_USER ="SELECT * FROM ITEMS_SOLD WHERE status = :status AND user_id = :user_id";
+
+
+
+    private static final String SELECT_FILTER = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id AND name LIKE '%' + :name + '%'";
+    private static final String SELECT_FILTER_WITHOUT_NAME = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id";
+    private static final String SELECT_FILTER_WITHOUT_CATE = "SELECT * FROM ITEMS_SOLD WHERE item_name ";
+
+
+
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -84,9 +97,41 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     @Override
+    public List<Article> findByFilter(String name,long category_id) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("item_name", name);
+        parameters.addValue("category_id", category_id);
+
+        // SI name est vide ou null mais il y a une catégorie
+        if (name == null || name.isEmpty() && (category_id > 0)) {
+            return namedParameterJdbcTemplate.query(
+                    SELECT_FILTER_WITHOUT_NAME,
+                    parameters,
+                    new ArticleRowMapper()
+            );
+        }
+        // SI name contient qqchose mais pas de catégorie
+        if (category_id < 0 && !name.isEmpty()) {
+            return namedParameterJdbcTemplate.query(
+                    SELECT_FILTER_WITHOUT_CATE,
+                    parameters,
+                    new ArticleRowMapper()
+            );
+        }
+        // SI name contient qqchose et  il y a une catégorie
+        return namedParameterJdbcTemplate.query(
+                SELECT_FILTER,
+                parameters,
+                new ArticleRowMapper()
+        );
+    }
+
+
+    @Override
     public void sellAnArticle(Article article, long user_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("item_id", article.getIdArticle());
+        mapSqlParameterSource.addValue("item_name", article.getName());
         mapSqlParameterSource.addValue("description", article.getDescription());
         mapSqlParameterSource.addValue("auction_date_begin", article.getStartDate());
         mapSqlParameterSource.addValue("price_init", article.getBetAPrice());
@@ -117,6 +162,44 @@ public class ArticleDAOImpl implements ArticleDAO {
         jdbcTemplate.update(
                 CANCEL_A_SALE,
                 article_id
+        );
+    }
+
+
+    @Override
+    public List<Article> findOpenAction() {
+        return jdbcTemplate.query(
+                FIND_ALL_EC,
+                new ArticleRowMapper()
+        );
+    }
+
+    //MES BID GAGNER ET EN COUR
+    @Override
+    public List<Article> findBidAndWinByUser(long user_id, String status) {
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("user_id", user_id);
+            parameters.addValue("status", status);
+
+            return namedParameterJdbcTemplate.query(
+                    SELECT_STATUS_USER,
+                    parameters,
+                    new ArticleRowMapper()
+            );
+
+    }
+
+    //MES VENTES EC NC & TR
+    @Override
+    public List<Article> findAuctionByUserAndStatus(long user_id, String status) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", user_id);
+        parameters.addValue("status", status);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_MY_STATUS_USER,
+                parameters,
+                new ArticleRowMapper()
         );
     }
 }
