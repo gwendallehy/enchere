@@ -65,7 +65,14 @@
         <button type="submit" data-th-text="#{frag-form-search-submit}">Rechercher</button>
 
     </form>
-
+    <div class="box" data-th-each="articles: ${articles}">
+        <p data-th-text="${articles.name}"></p>
+        <p data-th-text="${articles.betAPrice}"></p>
+        <p data-th-text="${articles.startDate}"></p>
+        <p data-th-text="${articles.endDate}"></p>
+        <p data-th-text="${articles.user}"></p>
+        <a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a>
+    </div>
 </main>
 <footer data-th-replace="~{fragments/fragment-footer :: footer}"></footer>
 
