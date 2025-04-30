@@ -26,6 +26,10 @@ public class CategoriesDAOImpl implements CategoriesDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     *
+     * Trouver les catégories par ID
+     */
 
     @Override
     public Categories findCategoriesById(long category_id) {
@@ -38,6 +42,10 @@ public class CategoriesDAOImpl implements CategoriesDAO {
                 new CategoriesRowMapper()
         );
     }
+    /**
+     *
+     * Trouver toutes les catégories
+     */
 
     @Override
     public List<Categories> findAllCategories() {

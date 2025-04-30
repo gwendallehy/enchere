@@ -6,7 +6,7 @@ import fr.eni.tp.projet.bo.Pickup;
 import java.util.List;
 
 public interface ArticleDAO {
-    Article findArticleById(int id);
+    Article findArticleById(long id);
     List<Article> findAllArticles();
 
     List<Article> findSalesByUser(long user_id);

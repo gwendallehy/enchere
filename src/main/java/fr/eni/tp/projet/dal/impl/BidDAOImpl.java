@@ -6,10 +6,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class BidDAOImpl implements BidDAO {
 
     private static final String SELECT_ALL = "SELECT * FROM BIDS";
@@ -26,6 +29,11 @@ public class BidDAOImpl implements BidDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     *
+     * Trouver toutes les enchères (un User enchere sur un Article)
+     */
+
     @Override
     public List<Bid> findAllBids() {
         return jdbcTemplate.query(
@@ -33,17 +41,26 @@ public class BidDAOImpl implements BidDAO {
                 new BidRowMapper()
         );
     }
+    /**
+     *
+     * Trouver les encheres par un userId
+     */
 
     @Override
-    public Bid findBidByUserId(long user_id) {
+    public List<Bid> findBidByUserId(long user_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("user_id", user_id);
-        return namedParameterJdbcTemplate.queryForObject(
+        return namedParameterJdbcTemplate.query(
                 SELECT_BY_USER_ID,
                 mapSqlParameterSource,
                 new BidRowMapper()
         );
     }
+
+    /**
+     *
+     * Trouver les encheres pour un article
+     */
 
     @Override
     public Bid findBidByItemId(long item_id) {
@@ -55,6 +72,11 @@ public class BidDAOImpl implements BidDAO {
                 new BidRowMapper()
         );
     }
+
+    /**
+     *
+     * Encherir
+     */
 
     @Override
     public void createBid(Bid bid) {

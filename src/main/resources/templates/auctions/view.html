@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>je regarde une enchere</h1>
-</body>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title data-th-text="Titre"></title>
+
+<link rel="stylesheet" data-th-href="@{/css/liste.css}">
+
+<main>
+    <h1 data-th-text="Titre"></h1>
+    <div class="box">
+        <p data-th-text="${article.name}"></p>
+        <p data-th-text="${article.betAPrice}"></p>
+        <p data-th-text="${article.startDate}"></p>
+        <p data-th-text="${article.endDate}"></p>
+        <p data-th-text="${article.user}"></p>
+    </div>
+</main>
 </html>

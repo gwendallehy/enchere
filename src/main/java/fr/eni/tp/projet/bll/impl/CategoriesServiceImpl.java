@@ -9,19 +9,21 @@ import java.util.List;
 
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
-    private CategoriesDAO categoriesDAO;
+
+    private final CategoriesDAO categoriesDAO;
 
     public CategoriesServiceImpl(CategoriesDAO categoriesDAO) {
         this.categoriesDAO = categoriesDAO;
     }
 
     @Override
-    public Categories findCategoriesById(long category_id) {
-        return categoriesDAO.findCategoriesById(category_id);
+    public List<Categories> getAllCategories() {
+        return categoriesDAO.findAllCategories();
     }
 
     @Override
-    public List<Categories> findAllCategories() {
-        return categoriesDAO.findAllCategories();
+    public Categories getCategoryById(long id) {
+        return categoriesDAO.findCategoriesById(id);
     }
 }
+

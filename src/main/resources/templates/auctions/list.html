@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>la liste des enchere</h1>
-</body>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title data-th-text="Titre"></title>
+
+<link rel="stylesheet" data-th-href="@{/css/liste.css}">
+
+<main>
+    <h1 data-th-text="Titre"></h1>
+        <div class="box" data-th-each="articles: ${articles}">
+            <p data-th-text="${articles.name}"></p>
+            <p data-th-text="${articles.betAPrice}"></p>
+            <p data-th-text="${articles.startDate}"></p>
+            <p data-th-text="${articles.endDate}"></p>
+            <p data-th-text="${articles.user}"></p>
+            <a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a>
+        </div>
+</main>
 </html>

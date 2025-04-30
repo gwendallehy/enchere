@@ -9,25 +9,26 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDAO userDAO;
+
+    private final UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     @Override
-    public User findUserById(long id) {
+    public List<User> getAllUsers() {
+        return userDAO.findAllUsers();
+    }
+
+    @Override
+    public User getUserById(long id) {
         return userDAO.findById(id);
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         return userDAO.findByEmail(email);
-    }
-
-    @Override
-    public List<User> findAllUsers() {
-        return userDAO.findAllUsers();
     }
 
     @Override
@@ -36,7 +37,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long user_id) {
-        userDAO.deleteUser(user_id);
+    public void deleteUser(long id) {
+        userDAO.deleteUser(id);
     }
 }
+

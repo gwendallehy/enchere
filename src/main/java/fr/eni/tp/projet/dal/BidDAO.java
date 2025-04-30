@@ -7,7 +7,7 @@ import java.util.List;
 public interface BidDAO {
     List<Bid> findAllBids();
 
-    Bid findBidByUserId(long id);
+    List<Bid> findBidByUserId(long id);
 
     Bid findBidByItemId(long id);
 

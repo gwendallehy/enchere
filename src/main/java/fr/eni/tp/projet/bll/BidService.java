@@ -5,13 +5,10 @@ import fr.eni.tp.projet.bo.Bid;
 import java.util.List;
 
 public interface BidService {
-    List<Bid> findAllBids();
-
-    Bid findBidByUserId(long id);
-
-    Bid findBidByItemId(long id);
-
+    List<Bid> getAllBids();
+    List<Bid> getBidsByUserId(long userId);
+    Bid getBidByItemId(long itemId);
     void createBid(Bid bid);
-
-    void deleteBid(long item_id);
+    void deleteBid(long itemId);
 }
+

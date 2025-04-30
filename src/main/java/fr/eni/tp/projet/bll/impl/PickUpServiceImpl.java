@@ -7,15 +7,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PickUpServiceImpl implements PickUpService {
-    private PickUpDAO pickUpDAO;
+
+    private final PickUpDAO pickUpDAO;
 
     public PickUpServiceImpl(PickUpDAO pickUpDAO) {
         this.pickUpDAO = pickUpDAO;
     }
 
     @Override
-    public Pickup FindPickupById(long id) {
-        return pickUpDAO.FindPickupById(id);
+    public Pickup getPickUpByItemId(long itemId) {
+        return pickUpDAO.FindPickupById(itemId);
     }
 
     @Override
@@ -23,3 +24,4 @@ public class PickUpServiceImpl implements PickUpService {
         pickUpDAO.createPickUp(pickup);
     }
 }
+

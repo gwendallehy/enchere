@@ -33,6 +33,11 @@ public class UserDAOImpl implements UserDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     *
+     * Trouver un user par ID
+     */
+
     @Override
     public User findById(long user_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -46,6 +51,11 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    /**
+     *
+     * Trouver un user par un email
+     */
+
     @Override
     public User findByEmail(String email) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -58,6 +68,10 @@ public class UserDAOImpl implements UserDAO {
         );
     }
 
+    /**
+     *
+     * Trouver un user par un email
+     */
     @Override
     public List<User> findAllUsers() {
         return jdbcTemplate.query(
@@ -65,6 +79,11 @@ public class UserDAOImpl implements UserDAO {
                 new UserRowMapper()
         );
     }
+
+    /**
+     *
+     * Créer un User
+     */
 
     @Override
     public void createUser(User user) {
@@ -95,6 +114,10 @@ public class UserDAOImpl implements UserDAO {
         user.setIdUser(Objects.requireNonNull(keyHolder.getKey()).longValue());
     }
 
+    /**
+     *
+     * Supprimer un User
+     */
 
     @Override
     public void deleteUser(long user_id) {

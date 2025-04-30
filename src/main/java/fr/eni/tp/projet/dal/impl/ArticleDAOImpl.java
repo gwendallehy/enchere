@@ -24,7 +24,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE article_id = :article_id";
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url) VALUES\n" +
-            "(:item_name, :description, :auction_date_begin, NULL, :price_init, :price_selling, :user_id, category_id, :picture_url);";
+            "(:item_name, :description, :auction_date_begin, NULL, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
     private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = :article_id;";
 
     private JdbcTemplate jdbcTemplate;
@@ -35,10 +35,11 @@ public class ArticleDAOImpl implements ArticleDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    @Override
-    public Article findArticleById(int id) {
-        return null;
-    }
+
+    /**
+     *
+     * Trouver tous les articles
+     */
 
     @Override
     public List<Article> findAllArticles() {
@@ -48,20 +49,39 @@ public class ArticleDAOImpl implements ArticleDAO {
         );
     }
 
+    /**
+     *
+     * Trouver un article avec son ID
+     */
+
     @Override
-    public List<Article> findSalesByUser(long user_id) {
-        return null;
+    public Article findArticleById(long article_id){
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("article_id", article_id);
+
+        return namedParameterJdbcTemplate.queryForObject(
+                SELECT_SALES_BY_USER,
+                mapSqlParameterSource,
+                new ArticleRowMapper()
+        );
     }
 
-//    @Override
-//    public List<Article> findSalesByUser(long userId) {
-//        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-//        mapSqlParameterSource.addValue("user_id", userId);
-//
-//        List<Article> userSales = namedParameterJdbcTemplate.queryForObject(SELECT_SALES_BY_USER, mapSqlParameterSource, new ArticleRowMapper());
-//
-//        return userSales;
-//    }
+    /**
+     *
+     * Trouver les articles avec son IDUser
+     */
+
+    @Override
+    public List<Article> findSalesByUser(long userId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", userId);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_SALES_BY_USER,
+                parameters,
+                new ArticleRowMapper()
+        );
+    }
 
     @Override
     public void sellAnArticle(Article article, long user_id) {
@@ -114,24 +134,10 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setEndDate(rs.getString("auction_date_end"));
         article.setBetAPrice(rs.getLong("price_init"));
         article.setSalePrice(rs.getLong("price_selling"));
+        article.setUser(rs.getLong("user_id"));
         article.setStatus(rs.getString("status"));
         article.setPicture(rs.getString("picture_url"));
 
-        Pickup pickup = new Pickup();
-        pickup.setIdPickup(rs.getLong("item_id"));
-        pickup.setStreet(rs.getString("address"));
-        pickup.setPostalCode(rs.getLong("post_code"));
-        pickup.setCity(rs.getString("city"));
-
-        article.setPickup(pickup);
-
-        Categories category = new Categories();
-        category.setIdCategory(rs.getLong("category_id"));
-        category.setWording(rs.getString("category_desc"));
-
-        article.setCategory(category);
-
-        article.setUser(rs.getLong("user_id"));
 
         return article;
     }

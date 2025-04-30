@@ -30,6 +30,11 @@ public class PickUpDAOImpl implements PickUpDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     *
+     * Trouver un pickUp avec son ID
+     */
+
     public Pickup FindPickupById(long item_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("item_id", item_id);
@@ -41,6 +46,11 @@ public class PickUpDAOImpl implements PickUpDAO {
         );
 
     }
+
+    /**
+     *
+     *  Créer un pickup
+     */
 
     public void createPickUp(Pickup pickup) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();

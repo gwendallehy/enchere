@@ -9,21 +9,26 @@ import java.util.List;
 
 @Service
 public class BidServiceImpl implements BidService {
-    private BidDAO bidDAO;
+
+    private final BidDAO bidDAO;
+
+    public BidServiceImpl(BidDAO bidDAO) {
+        this.bidDAO = bidDAO;
+    }
 
     @Override
-    public List<Bid> findAllBids() {
+    public List<Bid> getAllBids() {
         return bidDAO.findAllBids();
     }
 
     @Override
-    public Bid findBidByUserId(long id) {
-        return bidDAO.findBidByUserId(id);
+    public List<Bid> getBidsByUserId(long userId) {
+        return bidDAO.findBidByUserId(userId);
     }
 
     @Override
-    public Bid findBidByItemId(long id) {
-        return bidDAO.findBidByItemId(id);
+    public Bid getBidByItemId(long itemId) {
+        return bidDAO.findBidByItemId(itemId);
     }
 
     @Override
@@ -32,7 +37,7 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public void deleteBid(long item_id) {
-        bidDAO.deleteBid(item_id);
+    public void deleteBid(long itemId) {
+        bidDAO.deleteBid(itemId);
     }
 }
