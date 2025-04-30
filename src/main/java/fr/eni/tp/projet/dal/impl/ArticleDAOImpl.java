@@ -10,13 +10,14 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Repository
 public class ArticleDAOImpl implements ArticleDAO {
 
     private static final String FIND_ALL = "SELECT * FROM ITEMS_SOLD";
@@ -41,28 +42,29 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     @Override
     public List<Article> findAllArticles() {
-        List<Article> articles = jdbcTemplate.query(FIND_ALL, new ArticleRowMapper());
-
-        return articles;
+        return jdbcTemplate.query(
+                FIND_ALL,
+                new ArticleRowMapper()
+        );
     }
 
     @Override
-    public Article createArticle(Article article) {
+    public List<Article> findSalesByUser(long user_id) {
         return null;
     }
 
+//    @Override
+//    public List<Article> findSalesByUser(long userId) {
+//        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+//        mapSqlParameterSource.addValue("user_id", userId);
+//
+//        List<Article> userSales = namedParameterJdbcTemplate.queryForObject(SELECT_SALES_BY_USER, mapSqlParameterSource, new ArticleRowMapper());
+//
+//        return userSales;
+//    }
+
     @Override
-    public Article findSalesByUser(int userId) {
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("user_id", userId);
-
-        Article userSales = namedParameterJdbcTemplate.queryForObject(SELECT_SALES_BY_USER, mapSqlParameterSource, new ArticleRowMapper());
-
-        return userSales;
-    }
-
-    @Override
-    public void sellAnArticle(Article article, int user_id) {
+    public void sellAnArticle(Article article, long user_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("item_id", article.getIdArticle());
         mapSqlParameterSource.addValue("description", article.getDescription());
@@ -72,6 +74,8 @@ public class ArticleDAOImpl implements ArticleDAO {
         mapSqlParameterSource.addValue("user_id", user_id);
         mapSqlParameterSource.addValue("category_id", article.getCategory().getIdCategory());
         mapSqlParameterSource.addValue("picture_url", article.getPicture());
+
+        mapSqlParameterSource.addValue("user_id", user_id);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -86,7 +90,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     @Override
-    public void cancelASell(int article_id) {
+    public void cancelASell(long article_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("article_id", article_id);
 
@@ -103,18 +107,18 @@ class ArticleRowMapper implements RowMapper<Article> {
     public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
         Article article = new Article();
 
-        article.setIdArticle(rs.getInt("item_id"));
+        article.setIdArticle(rs.getLong("item_id"));
         article.setName(rs.getString("item_name"));
         article.setDescription(rs.getString("description"));
         article.setStartDate(rs.getString("auction_date_begin"));
         article.setEndDate(rs.getString("auction_date_end"));
-        article.setBetAPrice(rs.getInt("price_init"));
-        article.setSalePrice(rs.getInt("price_selling"));
+        article.setBetAPrice(rs.getLong("price_init"));
+        article.setSalePrice(rs.getLong("price_selling"));
         article.setStatus(rs.getString("status"));
         article.setPicture(rs.getString("picture_url"));
 
         Pickup pickup = new Pickup();
-        pickup.setIdPickup(rs.getInt("item_id"));
+        pickup.setIdPickup(rs.getLong("item_id"));
         pickup.setStreet(rs.getString("address"));
         pickup.setPostalCode(rs.getLong("post_code"));
         pickup.setCity(rs.getString("city"));
@@ -122,12 +126,12 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setPickup(pickup);
 
         Categories category = new Categories();
-        category.setIdCategory(rs.getInt("category_id"));
+        category.setIdCategory(rs.getLong("category_id"));
         category.setWording(rs.getString("category_desc"));
 
         article.setCategory(category);
 
-        article.setUser();
+        article.setUser(rs.getLong("user_id"));
 
         return article;
     }

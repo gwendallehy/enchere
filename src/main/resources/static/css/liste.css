@@ -1,0 +1,13 @@
+.filter{
+    width: 30vh;
+    background-color: #0780fb;
+}
+.article-section{
+    background-color: green;
+}
+.box{
+    width: 40vw;
+    display: flex;
+    border: 2px solid black;
+
+}
