@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<form action="">
+    <h1>Créer un compte</h1>
+    <ul class="flex-outer">
+        <li>
+            <label for="email" data-th-text="#{frag-create-profile-form.email}"></label>
+            <input type="text" name="email" id="email" required>
+        </li>
+        <li>
+            <label for="password" data-th-text="#{frag-create-profile-form.password}"></label>
+            <input type="text" name="password" id="password" required>
+        </li>
+        <li>
+            <label for="confirmPassword" data-th-text="#{frag-create-profile-form.confirmPassword}"></label>
+            <input type="text" name="confirmPassword" id="confirmPassword" required>
+        </li>
+        <li>
+            <label for="name" data-th-text="#{frag-create-profile-form.name}"></label>
+            <input type="text" name="name" id="name" required>
+        </li>
+        <li>
+            <label for="firstName" data-th-text="#{frag-create-profile-form.firstName}"></label>
+            <input type="text" name="firstName" id="firstName" required>
+        </li>
+        <li>
+            <label for="pseudo" data-th-text="#{frag-create-profile-form.pseudo}"></label>
+            <input type="text" name="pseudo" id="pseudo" required>
+        </li>
+        <li>
+            <label for="phone" data-th-text="#{frag-create-profile-form.phone}"></label>
+            <input type="number" name="phone" id="phone" required>
+        </li>
+        <li>
+            <label for="street" data-th-text="#{frag-create-profile-form.street}"></label>
+            <input type="text" name="street" id="street" required>
+        </li>
+        <li>
+            <label for="city" data-th-text="#{frag-create-profile-form.city}"></label>
+            <input type="text" name="city" id="city" required>
+        </li>
+        <li>
+            <label for="postalCode" data-th-text="#{frag-create-profile-form.postalCode}"></label>
+            <input type="number" name="postalCode" id="postalCode" required>
+        </li>
+        <li>
+            <button type="submit" data-th-text="#{frag-create-profile-form.validate}"></button>
+            <button data-th-text="#{frag-create-profile-form.cancel}"></button>
+        </li>
+    </ul>
+</form>

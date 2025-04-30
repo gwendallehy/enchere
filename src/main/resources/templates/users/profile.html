@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html
+        lang="en"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title>liste</title>
+
+<main>
     <h1>je regarde MOn profil</h1>
-</body>
+</main>
+
 </html>

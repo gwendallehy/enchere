@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>je cree un profile</h1>
-</body>
+<html
+        lang="en"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title>Création d'un compte</title>
+
+<link rel="stylesheet" data-th-href="@{/css/create-profile.css}">
+
+<main>
+    <form action="" data-th-replace="~{fragments/fragment-form}"></form>
+</main>
+
 </html>
