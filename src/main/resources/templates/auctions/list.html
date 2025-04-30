@@ -1,27 +1,76 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        xmlns:th="http://www.thymeleaf.org"
-        data-th-replace="~{layouts/layout :: layout(
-                                                mainContent=~{:: main},
-                                                cssContent=~{:: link},
-                                                title=~{:: title}
-                                            )}"
->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-fragment="layout(mainContent, cssContent, title)"
+      xmlns="http://www.w3.org/1999/html">
 
-<title data-th-text="Titre"></title>
 
-<link rel="stylesheet" data-th-href="@{/css/liste.css}">
+<head>
+    <meta charset="UTF-8"
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+    >
+    <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+    <link rel="stylesheet" data-th-href="@{/css/general.css}">
+    <link rel="icon" data-th-href="@{/images/logoENI.png}">
+
+</head>
+
+
+<body>
+
+<header data-th-replace="~{fragments/fragment-header :: header}"></header>
 
 <main>
-    <h1 data-th-text="Titre"></h1>
-        <div class="box" data-th-each="articles: ${articles}">
-            <p data-th-text="${articles.name}"></p>
-            <p data-th-text="${articles.betAPrice}"></p>
-            <p data-th-text="${articles.startDate}"></p>
-            <p data-th-text="${articles.endDate}"></p>
-            <p data-th-text="${articles.user}"></p>
-            <a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a>
+    <h1 data-th-text="#{frag-entete.a.enchere.list}"></h1>
+
+    <form action="/recherche" method="POST">
+        <div class="search-form">
+
+
+            <div class="search-container">
+                <label for="q" data-th-text="#{frag-form-search-filter}">Filtres : </label>
+                <div>
+                    <!--        Loupe SVG-->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-5.34C15.23 5.01 12.22 2 8.88 2 5.53 2 2.5 5.01
+                 2.5 8.39c0 3.39 3.03 6.39 6.38 6.39a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.99 4.99c.39.39 1.03.39 1.42
+                  0l.01-.01a1 1 0 0 0 0-1.42L15.5 14zm-6.62 0C6.4 14 4.5 12.1 4.5 9.88S6.4 5.75 8.88 5.75 13.25 7.65
+                   13.25 9.88 11.35 14 8.88 14z"/>
+                    </svg>
+                    <!--        -->
+                </div>
+                <input id="q" type="text" name="q" maxlength="25" data-th-placeholder="#{frag-form-search-text}">
+
+            </div>
+
+
+            <div class="search-category">
+                <label class="label-category" for="category" data-th-text="#{frag-form-search-label-category}">catégorie
+                    :</label>
+                <div>
+
+                    <select id="category" name="category">
+                        <option data-th-value="#{frag-form-search-category-All}">Toutes</option>
+                        <option data-th-value="#{frag-form-search-category-computerDevice}">Informatique</option>
+                        <option data-th-value="#{frag-form-search-category-furnishing}">Ameublement</option>
+                        <option data-th-value="#{frag-form-search-category-clothing}">Vêtement</option>
+                        <option data-th-value="#{frag-form-search-category-sportLeisure}">Sport&Loisirs</option>
+
+                    </select>
+                </div>
+            </div>
         </div>
+        <button type="submit" data-th-text="#{frag-form-search-submit}">Rechercher</button>
+
+    </form>
+
 </main>
+<footer data-th-replace="~{fragments/fragment-footer :: footer}"></footer>
+
+</body>
 </html>
+
+
+

@@ -1,0 +1,42 @@
+h1 {
+    text-align: center;
+}
+
+form {
+    margin: 5vw 1vw 1vw 1vw;
+    display: flex;
+}
+
+.search-category{
+    margin-top: 1vw;
+    display: inline-flex;
+}
+
+.search-container {
+    position: relative;
+}
+
+input {
+    width: 25%;
+    padding: 5px 12px 5px 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+svg {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    width: 18px;
+    height: 18px;
+    fill: #888;
+    pointer-events: none;
+}
+
+select{
+    margin-left: 1vw;
+    text-align: center;
+}
+

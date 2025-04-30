@@ -5,6 +5,8 @@
     padding: 0;
     font-family: Arial, Helvetica;
 }
+
+
 /* Header */
 header {
     display: flex;
@@ -68,4 +70,15 @@ Module 04 - TP 2
 Remplacement de la couleur des liens par défaut à blanc*/
 header a {
     color: white;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 1px 8px #ddd;
+    background-color: #555555;
 }
