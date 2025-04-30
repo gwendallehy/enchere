@@ -43,3 +43,9 @@
     width: 100%;
     height: 50px;
 }
+
+.connexion form a {
+    color: #0780fb;
+    text-decoration: none;
+    text-transform: uppercase;
+}

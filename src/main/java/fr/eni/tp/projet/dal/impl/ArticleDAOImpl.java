@@ -21,7 +21,7 @@ import java.util.Objects;
 public class ArticleDAOImpl implements ArticleDAO {
 
     private static final String FIND_ALL = "SELECT * FROM ITEMS_SOLD";
-    private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE article_id = :article_id";
+    private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE item_id = :article_id";
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url) VALUES\n" +
             "(:item_name, :description, :auction_date_begin, NULL, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
@@ -60,7 +60,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         mapSqlParameterSource.addValue("article_id", article_id);
 
         return namedParameterJdbcTemplate.queryForObject(
-                SELECT_SALES_BY_USER,
+                SELECT_BY_ID,
                 mapSqlParameterSource,
                 new ArticleRowMapper()
         );

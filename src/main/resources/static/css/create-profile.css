@@ -62,3 +62,14 @@ button {
     margin-top: 10px;
     cursor: pointer;
 }
+
+form a {
+    margin-top: 10px;
+    padding: 0.4em 0.9em;
+    background-color: #ccc;
+    color: #000;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
