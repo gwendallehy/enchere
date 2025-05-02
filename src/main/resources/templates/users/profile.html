@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        data-th-replace="~{layouts/layout :: layout(
-                                                mainContent=~{:: main},
-                                                cssContent=~{},
-                                                title=~{:: title}
-                                            )}"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<title>liste</title>
+<head>
+    <title>Profile</title>
+</head>
 
+<body>
 <main>
-    <h1>je regarde MOn profil</h1>
+    <h1>Mon Profil</h1>
+    <ul>
+        <li>Pseudo: <span th:text="${user.pseudo}"></span></li>
+        <li>Nom: <span th:text="${user.lastname}"></span></li>
+        <li>Prénom: <span th:text="${user.firstname}"></span></li>
+        <li>Email: <span th:text="${user.email}"></span></li>
+        <li>Téléphone: <span th:text="${user.phone_nb}"></span></li>
+        <li>Adresse: <span th:text="${user.address}"></span></li>
+        <li>Code postal: <span th:text="${user.post_code}"></span></li>
+        <li>Ville: <span th:text="${user.city}"></span></li>
+        <li>Mot de passe: <span th:text="${user.password}"></span></li>
+        <li>Crédit: <span th:text="${user.credit}"></span></li>
+    </ul>
 </main>
-
+</body>
 </html>

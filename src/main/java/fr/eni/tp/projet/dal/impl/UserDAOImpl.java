@@ -25,6 +25,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String DELETE_USER = "DELETE FROM USERS WHERE user_id = :user_id";
     private static final String UPDATE_USER = "";
 
+    private static final String SELECT_BY_PSEUDO = "SELECT * FROM USERS WHERE pseudo = :pseudo";
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -63,6 +64,21 @@ public class UserDAOImpl implements UserDAO {
 
         return namedParameterJdbcTemplate.queryForObject(
                 SELECT_BY_EMAIL,
+                mapSqlParameterSource,
+                new UserRowMapper()
+        );
+    }
+    /**
+     *
+     * Trouver un user par un pseudo
+     */
+    @Override
+    public User findByPseudo(String pseudo) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("pseudo", pseudo);
+
+        return namedParameterJdbcTemplate.queryForObject(
+                SELECT_BY_PSEUDO,
                 mapSqlParameterSource,
                 new UserRowMapper()
         );

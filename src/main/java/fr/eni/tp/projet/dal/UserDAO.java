@@ -10,5 +10,5 @@ public interface UserDAO {
     List<User> findAllUsers();
     void createUser(User user);
     void deleteUser(long user_id);
-
+    User findByPseudo(String pseudo);
 }

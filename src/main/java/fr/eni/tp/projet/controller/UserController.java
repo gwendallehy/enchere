@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -23,9 +24,14 @@ public class UserController {
 
     // Affiche le profil connecté
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+
+        model.addAttribute("user", user);
         return "/users/profile";
     }
+
 
     // Affiche le détail d’un utilisateur via ID
     @GetMapping("/viewProfile")
