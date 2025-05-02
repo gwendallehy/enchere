@@ -14,29 +14,42 @@ form {
 
 .search-container {
     position: relative;
+
 }
+
+.search-container label{
+    margin-bottom: 50px;
+}
+.search-form {
+    width: 52vw;
+}
+
 
 input {
-    width: 25%;
+    background-image: url("/images/loupe.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 42vw;
     padding: 5px 12px 5px 40px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 16px;
-    box-sizing: border-box;
+    background-position: 0.5vw;
 }
 
-svg {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    width: 18px;
-    height: 18px;
-    fill: #888;
-    pointer-events: none;
-}
 
 select{
-    margin-left: 1vw;
+    margin-left: 5vw;
+    width: 32vw;
     text-align: center;
+    height: 8vh;
 }
 
+button{
+    width: 15vw;
+
+}
+
+.label-category{
+    align-content: center;
+}
