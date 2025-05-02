@@ -55,15 +55,22 @@ button{
     align-content: center;
 }
 
-table{
+ul{
     border: solid black;
     box-shadow: 2px 5px black;
     width: 20vw;
+    list-style: none;
 }
 
 .table-article{
     column-count: 2;
     margin: 10vh 15vw 10vh 15vw;
+}
 
+.image-list{
+    width: 10vw;
+}
 
+.tableau{
+    margin-bottom: 1vh;
 }

@@ -54,28 +54,30 @@
     </form>
 
 
-    <div class="table-article" style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <div data-th-each="articles : ${articles}">
-            <table>
-                <tr>
-                    <td data-th-text="${articles.name}"></td>
-                </tr>
-                <tr>
-                    <td data-th-text="#{frag-form-list-box-Price}+${articles.betAPrice}+' '+#{frag-form-list-box-Points}"></td>
-                </tr>
+    <div class="table-article" >
+        <div class="tableau" data-th-each="articles : ${articles}">
+            <ul>
+                <img class="image-list" src="/images/ordinateur-portable.jpg" alt="">
+                <li>
+                    <p data-th-text="${articles.name}"></p>
+                </li>
+
+                <li>
+                    <p data-th-text="#{frag-form-list-box-Price}+${articles.betAPrice}+' '+#{frag-form-list-box-Points}"></p>
+                </li>
                 <!--            <tr>-->
                 <!--                <td data-th-text="${articles.startDate}"></td>-->
                 <!--            </tr>-->
-                <tr>
-                    <td data-th-text="#{frag-form-list-box-AuctionEnd}+${articles.endDate}"></td>
-                </tr>
-                <tr>
-                    <td data-th-text="#{frag-form-list-box-Seller}+${articles.user}"></td>
-                </tr>
-                <tr>
-                    <td><a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a></td>
-                </tr>
-            </table>
+                <li>
+                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${articles.endDate}"></p>
+                </li>
+                <li>
+                    <p data-th-text="#{frag-form-list-box-Seller}+${articles.user}"></p>
+                </li>
+                <li>
+                    <a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a>
+                </li>
+            </ul>
         </div>
     </div>
 </main>
