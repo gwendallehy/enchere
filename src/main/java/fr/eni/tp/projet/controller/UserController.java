@@ -55,13 +55,13 @@ public class UserController {
             return "/users/create";
         }
         userService.createUser(user);
-        return "redirect:/users";
+        return "redirect:/login";
     }
 
     // Supprime un utilisateur
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "redirect:/";
     }
 }
