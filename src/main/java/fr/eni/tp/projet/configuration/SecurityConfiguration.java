@@ -22,37 +22,39 @@ import java.security.Security;
 @Configuration
 public class SecurityConfiguration {
     @Bean
-    UserDetailsService userDetailsService(DataSource dataSource) {
+    public UserDetailsService userDetailsService(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT pseudo AS username, password, 1 FROM MEMBRE where pseudo=?;");
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT m.email AS username, r.ROLE FROM ROLES r INNER JOIN MEMBRE m ON m.admin = r.IS_ADMIN where email=?;");
+        jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT pseudo AS username, password, 1 FROM USERS WHERE pseudo=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT m.pseudo AS username, r.ROLE FROM ROLES r INNER JOIN USERS m ON m.administrator = r.IS_ADMIN WHERE pseudo=?");
         return jdbcUserDetailsManager;
     }
+
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
-        http.authorizeHttpRequests(authorizeRequests -> {
-            authorizeRequests
-                    .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-
-                    .anyRequest().permitAll();
-
-        });
-
-        http.formLogin(form -> {
-            form.loginPage("/login").permitAll();
-            form.defaultSuccessUrl("/users/profile");
-        });
-
-        http.logout(logout -> {
-            logout
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .clearAuthentication(true)
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/");
-        });
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests
+                            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/profile").authenticated()  // Ensure profile is secured
+                            .requestMatchers(HttpMethod.GET, "/users/**").hasRole("USER")
+                            .anyRequest().permitAll();
+                })
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login").permitAll()
+                        .defaultSuccessUrl("/auctions/list", true))  // New syntax with Customizer
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/"))
+                .csrf(csrf -> csrf
+                        .disable());  // New approach to disabling CSRF protection
         return http.build();
-
     }
 }

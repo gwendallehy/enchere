@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-fragment="layout(mainContent, cssContent, title)">
 
 <head>
-    <title>Profile</title>
+    <meta charset="UTF-8"
+          name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+    <link rel="stylesheet" data-th-href="@{/css/general.css}">
+    <link rel="icon" data-th-href="@{/images/logoENI.png}">
 </head>
 
 <body>
+
+<header data-th-replace="~{fragments/fragment-header :: header}"></header>
+
 <main>
     <h1>Mon Profil</h1>
     <ul>
@@ -17,9 +28,11 @@
         <li>Adresse: <span th:text="${user.address}"></span></li>
         <li>Code postal: <span th:text="${user.post_code}"></span></li>
         <li>Ville: <span th:text="${user.city}"></span></li>
-        <li>Mot de passe: <span th:text="${user.password}"></span></li>
+        <!-- Mot de passe ne doit pas être affiché pour des raisons de sécurité -->
         <li>Crédit: <span th:text="${user.credit}"></span></li>
     </ul>
+    <a href=""
 </main>
+
 </body>
 </html>
