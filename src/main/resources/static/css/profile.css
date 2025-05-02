@@ -1,0 +1,68 @@
+h1{
+    text-align: center;
+}
+ul.profile {
+    list-style: none;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.profile li:last-child {
+    border-bottom: none;
+}
+
+.profile li span {
+    font-weight: 600;
+    color: #333;
+}
+
+.profile li span.label {
+    color: #888;
+    font-weight: normal;
+    margin-right: 1rem;
+    flex: 0 0 40%;
+    text-align: right;
+}
+
+.profile li span.value {
+    flex: 1;
+    text-align: left;
+    color: #2c3e50;
+    word-break: break-word;
+}
+
+.profile a{
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    width: 200px;
+    height: 50px;
+    color: black;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+
+}
+
+.profile li a.delete:hover {
+    background-color: red;
+    color: white;
+}
+
+.profile li a.update:hover {
+    background-color: green;
+    color: white;
+}

@@ -42,7 +42,10 @@ public class SecurityConfiguration {
                     authorizeRequests
                             .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                             .requestMatchers(HttpMethod.GET, "/profile").authenticated()  // Ensure profile is secured
-                            .requestMatchers(HttpMethod.GET, "/users/**").hasRole("USER")
+                            .requestMatchers(HttpMethod.GET, "/users/profile").hasRole("USER")
+                            .requestMatchers(HttpMethod.GET, "/users/viewProfile").hasRole("USER")
+                            .requestMatchers(HttpMethod.GET, "/users/create").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
                             .anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> formLogin
