@@ -56,7 +56,7 @@ CREATE TABLE USERS (
     address              VARCHAR(30) NOT NULL,
     post_code      VARCHAR(10) NOT NULL,
     city            VARCHAR(30) NOT NULL,
-    password     VARCHAR(30) NOT NULL,
+    password     VARCHAR(255) NOT NULL,
     credit           INTEGER NOT NULL,
     administrator   bit NOT NULL
 )
@@ -106,5 +106,22 @@ ALTER TABLE ITEMS_SOLD
     ADD CONSTRAINT user_sold_fk FOREIGN KEY ( user_id )
         REFERENCES users ( user_id )
 ON DELETE NO ACTION 
-    ON UPDATE no action 
+    ON UPDATE no action
 
+ALTER TABLE ITEMS_SOLD
+    ADD status VARCHAR(50);
+
+-- Met à jour les 3 premières lignes avec 'NC'
+UPDATE TOP (3) ITEMS_SOLD
+SET status = 'NC'
+WHERE status IS NULL;
+
+-- Met à jour les 3 suivantes avec 'EC'
+UPDATE TOP (3) ITEMS_SOLD
+SET status = 'EC'
+WHERE status IS NULL;
+
+-- Met à jour les 4 suivantes avec 'TR'
+UPDATE TOP (4) ITEMS_SOLD
+SET status = 'TR'
+WHERE status IS NULL;

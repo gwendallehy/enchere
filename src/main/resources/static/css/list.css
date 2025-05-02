@@ -47,9 +47,14 @@ select{
 
 button{
     width: 15vw;
+    box-shadow: 3px 5px;
 
 }
 
 .label-category{
     align-content: center;
+}
+
+table{
+    border: black;
 }
