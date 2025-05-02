@@ -25,5 +25,20 @@ public class CategoriesServiceImpl implements CategoriesService {
     public Categories getCategoryById(long id) {
         return categoriesDAO.findCategoriesById(id);
     }
+
+    @Override
+    public void createCategory(Categories categories) {
+        categoriesDAO.createcategory(categories);
+    }
+
+    @Override
+    public void updateCategory(Categories categories) {
+
+    }
+
+    @Override
+    public void deleteCategory(long id) {
+        categoriesDAO.deleteCategory(id);
+    }
 }
 

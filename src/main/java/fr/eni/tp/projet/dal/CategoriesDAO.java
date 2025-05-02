@@ -10,6 +10,9 @@ public interface CategoriesDAO {
     List<Categories> findAllCategories();
 
     void createcategory(Categories categories);
+
+    void updateCategory(Categories category);
+
     void deleteCategory(long id);
 
 }

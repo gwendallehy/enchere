@@ -29,6 +29,7 @@ public class CategoriesDAOImpl implements CategoriesDAO {
     private static final String BEFORE_DELETE_CAT = "UPDATE ITEMS_SOLD SET category_id = 999 WHERE category_id = :category_id";
     private static final String DELETE_CAT = "DELETE * FROM CATEGORIES WHERE category_id = :category_id";
 
+    private static final String UPDATE_CAT = "UPDATE categories SET category_desc = :name WHERE category_id = :id";
 
 
 
@@ -82,6 +83,17 @@ public class CategoriesDAOImpl implements CategoriesDAO {
 
         categorie.setIdCategory(Objects.requireNonNull(keyHolder.getKey()).longValue());
     }
+
+    @Override
+    public void updateCategory(Categories category) {
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("category_id", category.getIdCategory());
+        params.addValue("category_desc", category.getWording());
+
+        namedParameterJdbcTemplate.update(UPDATE_CAT, params);
+    }
+
 
     @Override
     public void deleteCategory(long id) {

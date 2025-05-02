@@ -1,41 +1,61 @@
 package fr.eni.tp.projet.controller;
 
-import fr.eni.tp.projet.bll.AuctionsService;
-import fr.eni.tp.projet.dal.impl.UserDAOImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import fr.eni.tp.projet.bll.UserService;
+import fr.eni.tp.projet.bo.User;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
-    private final UserDAOImpl userDAOImpl;
-    private final AuctionsService auctionsService;
 
-    public UserController(UserDAOImpl userDAOImpl, AuctionsService auctionsService) {
-        this.userDAOImpl = userDAOImpl;
-        this.auctionsService = auctionsService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
-    //Mapping user/profile?id
-
-    @GetMapping("/users/profile")
+    // Affiche le profil connecté
+    @GetMapping("/profile")
     public String profile() {
         return "/users/profile";
     }
 
-    @GetMapping("/users/viewProfile")
-    public String checkProfile() {
+    // Affiche le détail d’un utilisateur via ID
+    @GetMapping("/viewProfile")
+    public String checkProfile(@RequestParam("id") long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
         return "/users/viewProfile";
     }
-    //Mapping user/create
 
-    @GetMapping("/users/create")
-    public String create() {
+    // Affiche le formulaire de création
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("user", new User());
         return "/users/create";
     }
 
-    //Mapping user/
+    // Traite la création
+    @PostMapping("/create")
+    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/users/create";
+        }
+        userService.createUser(user);
+        return "redirect:/users";
+    }
 
+    // Supprime un utilisateur
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
 }
