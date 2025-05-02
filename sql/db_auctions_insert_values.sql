@@ -23,7 +23,7 @@ INSERT INTO USERS (pseudo, lastname, firstname, email, phone_nb, address, post_c
 
 -- Insertion des articles
 INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url) VALUES
-                                                                                                                                                        ('Ordinateur portable', 'PC portable i7 avec 16Go RAM', '2025-05-01', '2025-05-10', 400, NULL, 1, 1, NULL),
+                                                                                                                                                        ('Ordinateur portable', 'PC portable i7 avec 16Go RAM', '2025-05-01', '2025-05-10', 400, NULL, 1, 1, '/static/images/ordinateur-portable.jpg'),
                                                                                                                                                         ('Fauteuil en cuir', 'Fauteuil relaxant en cuir noir', '2025-05-01', '2025-05-12', 150, NULL, 2, 2, NULL),
                                                                                                                                                         ('Veste en jean', 'Veste Levi’s taille M', '2025-05-02', '2025-05-11', 40, NULL, 3, 3, NULL),
                                                                                                                                                         ('Vélo de course', 'Vélo route en carbone', '2025-05-03', '2025-05-13', 500, NULL, 4, 4, NULL),

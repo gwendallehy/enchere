@@ -56,5 +56,14 @@ button{
 }
 
 table{
-    border: black;
+    border: solid black;
+    box-shadow: 2px 5px black;
+    width: 20vw;
+}
+
+.table-article{
+    column-count: 2;
+    margin: 10vh 15vw 10vh 15vw;
+
+
 }

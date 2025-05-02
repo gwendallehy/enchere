@@ -14,12 +14,10 @@
     <link rel="stylesheet" data-th-href="@{/css/list.css}">
     <link rel="stylesheet" data-th-href="@{/css/general.css}">
     <link rel="icon" data-th-href="@{/images/logoENI.png}">
-
 </head>
 
 
 <body>
-
 <header data-th-replace="~{fragments/fragment-header :: header}"></header>
 
 <main>
@@ -27,52 +25,62 @@
 
     <form action="/recherche" method="POST">
         <div class="search-form">
-
-
             <div class="search-container">
                 <label for="q" data-th-text="#{frag-form-search-filter}">Filtres : </label>
 
                 <input id="q" type="text" name="q" maxlength="25" data-th-placeholder="#{frag-form-search-text}">
-
             </div>
 
 
             <div class="search-category">
-                <label class="label-category" for="category" data-th-text="#{frag-form-search-label-category}">catégorie
-                    :</label>
-                <div>
+                <label class="label-category" for="category"
+                       data-th-text="#{frag-form-search-label-category}">catégorie : </label>
 
+                <div>
                     <select id="category" name="category">
                         <option data-th-value="#{frag-form-search-category-All}">Toutes</option>
                         <option data-th-value="#{frag-form-search-category-computerDevice}">Informatique</option>
                         <option data-th-value="#{frag-form-search-category-furnishing}">Ameublement</option>
                         <option data-th-value="#{frag-form-search-category-clothing}">Vêtement</option>
                         <option data-th-value="#{frag-form-search-category-sportLeisure}">Sport&Loisirs</option>
-
                     </select>
                 </div>
             </div>
+
         </div>
+
         <button type="submit" data-th-text="#{frag-form-search-submit}">Rechercher</button>
 
     </form>
-    <table>
-    <tbody>
-    <div data-th-each="articles : ${articles}">
-        <tr>
-            <td data-th-text="${articles.name}"></td>
-            <td data-th-text="${articles.betAPrice}"></td>
-            <td data-th-text="${articles.startDate}"></td>
-            <td data-th-text="${articles.endDate}"></td>
-            <td data-th-text="${articles.user}"></td>
-            <td><a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a></td>
-        </tr>
-    </div>
-    </tbody>
-    </table>
-</main>
-<footer data-th-replace="~{fragments/fragment-footer :: footer}"></footer>
 
+
+    <div class="table-article" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div data-th-each="articles : ${articles}">
+            <table>
+                <tr>
+                    <td data-th-text="${articles.name}"></td>
+                </tr>
+                <tr>
+                    <td data-th-text="#{frag-form-list-box-Price}+${articles.betAPrice}+' '+#{frag-form-list-box-Points}"></td>
+                </tr>
+                <!--            <tr>-->
+                <!--                <td data-th-text="${articles.startDate}"></td>-->
+                <!--            </tr>-->
+                <tr>
+                    <td data-th-text="#{frag-form-list-box-AuctionEnd}+${articles.endDate}"></td>
+                </tr>
+                <tr>
+                    <td data-th-text="#{frag-form-list-box-Seller}+${articles.user}"></td>
+                </tr>
+                <tr>
+                    <td><a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer data-th-replace="~{fragments/fragment-footer :: footer}"></footer>
 </body>
 </html>
 
