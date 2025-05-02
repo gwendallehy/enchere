@@ -21,17 +21,16 @@
     <h1>Mon Profil</h1>
     <ul>
         <li>Pseudo: <span th:text="${user.pseudo}"></span></li>
-        <li>Nom: <span th:text="${user.lastname}"></span></li>
-        <li>Prénom: <span th:text="${user.firstname}"></span></li>
+        <li>Nom: <span th:text="${user.name}"></span></li>
+        <li>Prénom: <span th:text="${user.firstName}"></span></li>
         <li>Email: <span th:text="${user.email}"></span></li>
-        <li>Téléphone: <span th:text="${user.phone_nb}"></span></li>
-        <li>Adresse: <span th:text="${user.address}"></span></li>
-        <li>Code postal: <span th:text="${user.post_code}"></span></li>
+        <li>Téléphone: <span th:text="${user.phone}"></span></li>
+        <li>Adresse: <span th:text="${user.street}"></span></li>
+        <li>Code postal: <span th:text="${user.postalCode}"></span></li>
         <li>Ville: <span th:text="${user.city}"></span></li>
         <!-- Mot de passe ne doit pas être affiché pour des raisons de sécurité -->
         <li>Crédit: <span th:text="${user.credit}"></span></li>
     </ul>
-    <a href=""
 </main>
 
 </body>

@@ -8,31 +8,30 @@
   <p id="nav-title">
     <a data-th-href="@{/}" data-th-text="#{nom-application}">
     </a>
+    <strong data-th-if="${#authorization.expression('isAuthenticated')}" th:text="' - Connecté en tant que : '+${#authentication.name} + ' - ' + ${#authentication.getAuthorities()}">
+    </strong>
   </p>
 
   <nav>
     <ul>
-      <li><a data-th-href="@{/}" data-th-text="#{frag-entete.a.enchere}"></a></li>
-    </ul>
-    <ul>
       <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
-      <li><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
-      <li><a data-th-href="@{/auctions/cancel}" data-th-text="#{frag-entete.a.enchere.cancel}"></a></li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/cancel}" data-th-text="#{frag-entete.a.enchere.cancel}"></a></li>
 
       <!-- Lien visible uniquement si l'utilisateur est authentifié -->
-      <li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/users/profile}" data-th-text="#{frag-entete.a.user.profile}"></a>
       </li>
-      <li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/users/viewProfile}" data-th-text="#{frag-entete.a.user.checkone}"></a>
-      </li>
-      <li>
-        <a data-th-href="@{/users/create}" data-th-text="#{frag-entete.a.user.signup}"></a>
       </li>
 
       <!-- Lien de connexion visible uniquement si l'utilisateur n'est pas authentifié -->
-      <li>
+      <li data-th-unless="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/login}" data-th-text="#{frag-entete.a.user.login}"></a>
+      </li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}">
+        <a data-th-href="@{/logout}" data-th-text="#{frag-entete.a.user.login}"></a>
       </li>
 
     </ul>

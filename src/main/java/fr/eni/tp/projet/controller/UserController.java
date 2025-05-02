@@ -3,6 +3,7 @@ package fr.eni.tp.projet.controller;
 import fr.eni.tp.projet.bll.UserService;
 import fr.eni.tp.projet.bo.User;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,8 +25,8 @@ public class UserController {
 
     // Affiche le profil connecté
     @GetMapping("/profile")
-    public String profile(Model model, Principal principal) {
-        String username = principal.getName();
+    public String profile(Model model, Authentication authentication) {
+        String username = authentication.getName();
         User user = userService.findByUsername(username);
 
         model.addAttribute("user", user);
