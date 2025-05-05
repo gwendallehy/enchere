@@ -57,8 +57,9 @@ button{
 
 
 .table-article{
-    column-count: 2;
     margin: 10vh 15vw 10vh 15vw;
+    grid-template-columns: repeat(auto-fill, 30vw);
+    gap: 1vw;
 }
 
 .image-list{
@@ -66,5 +67,6 @@ button{
 }
 
 .tableau{
-    margin-bottom: 1vh;
+    border: solid black;
+    margin: 5vh;
 }

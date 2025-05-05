@@ -5,7 +5,10 @@
         data-th-fragment="layout(mainContent, cssContent, title)"
 >
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+  >
   <title data-th-replace="${title} ?: ~{:: #default-title}"></title>
   <link rel="stylesheet" data-th-href="@{/css/layout.css}">
   <link rel="stylesheet" data-th-href="@{/css/header.css}">

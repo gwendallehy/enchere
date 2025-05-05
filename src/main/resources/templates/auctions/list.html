@@ -10,10 +10,6 @@
 
 
 <head>
-    <meta charset="UTF-8"
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-    >
     <title data-th-text="#{frag-entete.a.enchere.list}"></title>
     <link rel="stylesheet" data-th-href="@{/css/list.css}">
 </head>
@@ -56,7 +52,7 @@
 
     <div class="table-article" >
         <div class="tableau" data-th-each="articles : ${articles}">
-            <ul class="header_ul">
+            <ul>
                 <img class="image-list" src="/images/ordinateur-portable.jpg" alt="">
                 <li>
                     <p data-th-text="${articles.name}"></p>
