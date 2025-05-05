@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -32,7 +32,6 @@ public class UserController {
         model.addAttribute("user", user);
         return "/users/profile";
     }
-
 
     // Affiche le détail d’un utilisateur via ID
     @GetMapping("/viewProfile")
@@ -62,7 +61,36 @@ public class UserController {
     // Supprime un utilisateur
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") long id) {
-        userService.deleteUser(id);
-        return "redirect:/users";
+        try{
+            userService.deleteUser(id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/login";
     }
+
+
+    // Méthode pour afficher le formulaire de mise à jour
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        User user = userService.getUserById(id); // Assurez-vous que cette méthode retourne Optional<User>
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "users/update"; // vue Thymeleaf pour afficher le formulaire
+        } else {
+            return "redirect:/error";
+        }
+    }
+
+
+
+    // Méthode pour traiter la mise à jour du formulaire
+    @PostMapping("/update")
+    public String processUpdate(@ModelAttribute("user") User user) {
+        userService.updateUser(user); // Met à jour l'utilisateur dans la base de données
+        return "redirect:/users/profile"; // Redirige vers une page de profil, par exemple
+    }
+
+
 }
