@@ -34,8 +34,8 @@ public class UserController {
     }
 
     // Affiche le détail d’un utilisateur via ID
-    @GetMapping("/viewProfile")
-    public String checkProfile(@RequestParam("id") long id, Model model) {
+    @GetMapping("/viewProfile/{id}")
+    public String checkProfile(@PathVariable("id") Long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "/users/viewProfile";

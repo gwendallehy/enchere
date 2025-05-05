@@ -98,6 +98,8 @@ public class ArticlesController {
         return "/auctions/cancel";
     }
 
+
+
     private boolean estAdmin(Authentication auth) {
         return auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
