@@ -3,6 +3,8 @@ package fr.eni.tp.projet.bll.impl;
 import fr.eni.tp.projet.bll.UserService;
 import fr.eni.tp.projet.bo.User;
 import fr.eni.tp.projet.dal.UserDAO;
+import fr.eni.tp.projet.dal.impl.ArticleDAOImpl;
+import fr.eni.tp.projet.dal.impl.BidDAOImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
+    private final BidDAOImpl bidDAOImpl;
+    private final ArticleDAOImpl articleDAOImpl;
 
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, BidDAOImpl bidDAOImpl, ArticleDAOImpl articleDAOImpl) {
         this.userDAO = userDAO;
+        this.bidDAOImpl = bidDAOImpl;
+        this.articleDAOImpl = articleDAOImpl;
     }
 
     @Override
@@ -32,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUser(User user) {
+         userDAO.updateUser(user);
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         return userDAO.findByEmail(email);
     }
@@ -43,7 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(long id) {
-        userDAO.deleteUser(id);
+        if (bidDAOImpl.findBidByUserId(id) == null && articleDAOImpl.findSalesByUser(id) == null){
+            userDAO.deleteUser(id);
+        }
     }
 }
 

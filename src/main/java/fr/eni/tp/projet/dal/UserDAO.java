@@ -9,6 +9,7 @@ public interface UserDAO {
     User findById(long user_id);
     List<User> findAllUsers();
     void createUser(User user);
+    void updateUser(User user);
     void deleteUser(long user_id);
     User findByPseudo(String pseudo);
 }

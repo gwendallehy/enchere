@@ -9,7 +9,6 @@
           content="width=device-width, initial-scale=1.0">
     <title data-th-text="#{frag-entete.a.enchere.list}"></title>
     <link rel="stylesheet" data-th-href="@{/css/profile.css}">
-    <link rel="stylesheet" data-th-href="@{/css/general.css}">
     <link rel="icon" data-th-href="@{/images/logoENI.png}">
 </head>
 
@@ -19,6 +18,7 @@
 
 <main>
     <h1>Mon Profil</h1>
+    <form th:action="@{/update}" th:object="${user}" method="post">
     <ul class="profile">
         <li>Pseudo: <span th:text="${user.pseudo}"></span></li>
         <li>Nom: <span th:text="${user.name}"></span></li>
@@ -31,12 +31,11 @@
         <!-- Mot de passe ne doit pas être affiché pour des raisons de sécurité -->
         <li>Crédit: <span th:text="${user.credit}"></span></li>
         <li>
-            <a data-th-href="@{/users/update}" class="update" data-th-text="#{user.update}"></a>
-            <a data-th-href="@{/users/delete}" class="delete" data-th-text="#{user.delete}"></a>
+            <a th:href="@{'update/' + ${user.idUser}}" class="update" data-th-text="#{user.update}">Modifier</a>
+            <a data-th-href="@{/delete}" class="delete" data-th-text="#{user.delete}"></a>
         </li>
-
     </ul>
-
+    </form>
 </main>
 
 </body>

@@ -44,6 +44,13 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/profile").authenticated()  // Ensure profile is secured
                             .requestMatchers(HttpMethod.GET, "/users/profile").hasRole("USER")
                             .requestMatchers(HttpMethod.GET, "/users/viewProfile").hasRole("USER")
+
+                            .requestMatchers(HttpMethod.GET, "/users/update/").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/users/update").hasRole("USER")
+
+                            .requestMatchers(HttpMethod.GET, "/users/delete/").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/users/delete").hasRole("USER")
+
                             .requestMatchers(HttpMethod.GET, "/users/create").permitAll()
                             .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auctions/create").hasRole("USER")

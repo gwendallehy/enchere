@@ -23,7 +23,16 @@ public class UserDAOImpl implements UserDAO {
     private static final String SELECT_BY_EMAIL = "SELECT * FROM USERS WHERE email = :email";
     private static final String CREATE_USER = "INSERT INTO USERS VALUES (:pseudo, :name, :firstName, :email, :phone, :street, :city, :post_code, :password, :credit, :administrator)";
     private static final String DELETE_USER = "DELETE FROM USERS WHERE user_id = :user_id";
-    private static final String UPDATE_USER = "";
+    private static final String UPDATE_USER = "UPDATE USERS SET pseudo = :pseudo, " +
+            "lastname = :name, " +
+            "firstname = :firstName, " +
+            "email = :email, " +
+            "phone_nb = :phone, " +
+            "address = :street, " +
+            "city = :city, " +
+            "post_code = :postalCode, " +
+            "credit = :credit " +
+            "WHERE user_id = :user_id";
 
     private static final String SELECT_BY_PSEUDO = "SELECT * FROM USERS WHERE pseudo = :pseudo";
     private JdbcTemplate jdbcTemplate;
@@ -105,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
     public void createUser(User user) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("pseudo", user.getPseudo());
-        mapSqlParameterSource.addValue("name", user.getName());
+        mapSqlParameterSource.addValue("lastname", user.getName());
         mapSqlParameterSource.addValue("firstName", user.getFirstName());
         mapSqlParameterSource.addValue("email", user.getEmail());
         mapSqlParameterSource.addValue("phone", user.getPhone());
@@ -129,6 +138,24 @@ public class UserDAOImpl implements UserDAO {
 
         user.setIdUser(Objects.requireNonNull(keyHolder.getKey()).longValue());
     }
+
+    @Override
+    public void updateUser(User user) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", user.getIdUser());
+        params.addValue("pseudo", user.getPseudo());
+        params.addValue("name", user.getName());
+        params.addValue("firstName", user.getFirstName());
+        params.addValue("email", user.getEmail());
+        params.addValue("phone", user.getPhone());
+        params.addValue("street", user.getStreet());
+        params.addValue("city", user.getCity());
+        params.addValue("postalCode", user.getPostalCode());
+        params.addValue("credit", user.getCredit());
+
+        namedParameterJdbcTemplate.update(UPDATE_USER, params);
+    }
+
 
     /**
      *
@@ -167,4 +194,5 @@ class UserRowMapper implements RowMapper<User> {
         user.setAdministrator(rs.getInt("administrator"));
         return user;
     }
+
 }
