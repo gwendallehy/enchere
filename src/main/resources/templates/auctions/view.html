@@ -9,20 +9,46 @@
                                             )}"
         xmlns="http://www.w3.org/1999/html">
 <head>
-<title data-th-text="Titre"></title>
+    <title data-th-text="Titre"></title>
 
-    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+    <link rel="stylesheet" data-th-href="@{/css/view.css}">
 </head>
 
 <body>
 <main>
-    <h1 data-th-text="Titre"></h1>
-    <div class="box">
-        <p data-th-text="${article.name}"></p>
-        <p data-th-text="${article.betAPrice}"></p>
-        <p data-th-text="${article.startDate}"></p>
-        <p data-th-text="${article.endDate}"></p>
-        <p data-th-text="${article.user}"></p>
+    <h1 data-th-text="#{frag-form-view-title}">Détail de la vente</h1>
+
+    <div id="view_zone">
+        <img id="view_img" src="/images/ordinateur-portable.jpg" alt="Image du produit">
+
+        <form id="view_box">
+            <h2 data-th-text="${article.name}"></h2>
+            <br>
+            <p data-th-text="#{frag-form-view-description}+${article.getDescription()}"></p>
+            <div>
+
+                <div>
+                    <p data-th-text="#{frag-form-view-category}"></p>
+                </div>
+                <div>
+                    <p>loremkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                    </p>
+                </div>
+            </div>
+
+            <p data-th-text="#{frag-form-view-bestBid}+${article.getBetAPrice()}"></p>
+            <p data-th-text="#{frag-form-view-endAuction}+${article.endDate}"></p>
+            <p data-th-text="#{frag-form-view-firstPrice}+${article.getSalePrice()}"></p>
+            <p data-th-text="#{frag-form-view-pickup}+${article.getPickup()}"></p>
+            <p data-th-text="#{frag-form-view-seller}+${article.user}"></p>
+            <input type="number" name="choiceBid" id="" required min="(${article.getBetAPrice()} + 1)"
+                   data-th-value="(${article.getBetAPrice()} + 1)">
+            <p data-th-text="#{frag-form-view-myBid}+${article.startDate}"></p>
+            <button type="submit" data-th-text="#{frag-form-view-bid}"></button>
+
+
+        </form>
     </div>
 </main>
 

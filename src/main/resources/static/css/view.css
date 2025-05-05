@@ -1,0 +1,13 @@
+#view_img{
+    width: 40vw;
+    margin: 8vh 4vw 8vh 4vw;
+}
+
+#view_box{
+    margin-top: 8vh;
+}
+
+#view_zone{
+    display: flex;
+
+}
