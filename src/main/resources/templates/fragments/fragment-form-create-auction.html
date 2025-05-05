@@ -1,0 +1,35 @@
+<form data-th-fragment="form-create-auction" data-th-action="@{/auctions/create}" method="post" data-th-object="${article}">
+  <h1>Mettre un article en enchère</h1>
+  <ul class="flex-outer">
+    <li>
+      <label for="name">Nom</label>
+      <input type="text" name="name" id="name" data-th-field="*{name}" required>
+    </li>
+    <li>
+      <label for="description">Description</label>
+      <input type="text" name="description" id="description" data-th-field="*{description}" required>
+    </li>
+    <li>
+      <label for="startDate">Date de début</label>
+      <input type="date" name="startDate" id="startDate" data-th-field="*{startDate}" required>
+    </li>
+    <li>
+      <label for="endDate">Date de fin</label>
+      <input type="date" name="endDate" id="endDate" data-th-field="*{endDate}" required>
+    </li>
+    <li>
+      <label for="betAPrice">Prix de départ</label>
+      <input type="number" name="betAPrice" id="betAPrice" data-th-field="*{betAPrice}" required>
+    </li>
+    <li>
+      <label for="category">Catégorie</label>
+      <select name="category" id="category" data-th-field="*{category}" required>
+        <option value="">Selectionner une catégorie</option>
+        <option data-th-each="category: ${categories}" data-th-value="${category.idCategory}" data-th-text="${category.wording}"></option>
+      </select>
+    </li>
+    <li>
+      <button type="submit">Valider</button>
+    </li>
+  </ul>
+</form>

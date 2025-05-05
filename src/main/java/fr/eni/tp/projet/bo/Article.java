@@ -1,11 +1,13 @@
 package fr.eni.tp.projet.bo;
 
+import java.time.LocalDate;
+
 public class Article {
     private long idArticle;
     private String name;
     private String description;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private long betAPrice;
     private long salePrice;
     private String status;
@@ -18,7 +20,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(long idArticle, String name, String description, String startDate, String endDate, long betAPrice, long salePrice, String status, String picture, long user_id, Categories category, Pickup pickup) {
+    public Article(long idArticle, String name, String description, LocalDate startDate, LocalDate endDate, long betAPrice, long salePrice, String status, String picture, long user_id, Categories category, Pickup pickup) {
         this.idArticle = idArticle;
         this.name = name;
         this.description = description;
@@ -57,19 +59,19 @@ public class Article {
         this.description = description;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

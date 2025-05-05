@@ -24,7 +24,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE item_id = :article_id";
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url) VALUES\n" +
-            "(:item_name, :description, :auction_date_begin, NULL, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
+            "(:item_name, :description, :auction_date_begin, :auction_date_end, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
     private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = :article_id;";
 
     private static final String FIND_ALL_EC ="SELECT * FROM ITEMS_SOLD WHERE status = 'EC'";
@@ -134,13 +134,12 @@ public class ArticleDAOImpl implements ArticleDAO {
         mapSqlParameterSource.addValue("item_name", article.getName());
         mapSqlParameterSource.addValue("description", article.getDescription());
         mapSqlParameterSource.addValue("auction_date_begin", article.getStartDate());
+        mapSqlParameterSource.addValue("auction_date_end", article.getEndDate());
         mapSqlParameterSource.addValue("price_init", article.getBetAPrice());
         mapSqlParameterSource.addValue("price_selling", article.getSalePrice());
         mapSqlParameterSource.addValue("user_id", user_id);
         mapSqlParameterSource.addValue("category_id", article.getCategory().getIdCategory());
         mapSqlParameterSource.addValue("picture_url", article.getPicture());
-
-        mapSqlParameterSource.addValue("user_id", user_id);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -213,8 +212,8 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setIdArticle(rs.getLong("item_id"));
         article.setName(rs.getString("item_name"));
         article.setDescription(rs.getString("description"));
-        article.setStartDate(rs.getString("auction_date_begin"));
-        article.setEndDate(rs.getString("auction_date_end"));
+        article.setStartDate(rs.getDate("auction_date_begin").toLocalDate());
+        article.setEndDate(rs.getDate("auction_date_end").toLocalDate());
         article.setBetAPrice(rs.getLong("price_init"));
         article.setSalePrice(rs.getLong("price_selling"));
         article.setUser(rs.getLong("user_id"));

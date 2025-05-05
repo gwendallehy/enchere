@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/users/viewProfile").hasRole("USER")
                             .requestMatchers(HttpMethod.GET, "/users/create").permitAll()
                             .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auctions/create").hasRole("USER")
                             .anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> formLogin

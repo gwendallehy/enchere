@@ -2,6 +2,7 @@ package fr.eni.tp.projet.controller;
 
 import fr.eni.tp.projet.bll.*;
 import fr.eni.tp.projet.bo.Article;
+import fr.eni.tp.projet.bo.Categories;
 import fr.eni.tp.projet.bo.User;
 import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
@@ -58,8 +59,11 @@ public class ArticlesController {
 
     @GetMapping("/auctions/create")
     public String afficherFormulaireCreation(Model model) {
+
+        List<Categories> categories = categoriesService.getAllCategories();
+        model.addAttribute("categories", categories);
         model.addAttribute("article", new Article());
-        model.addAttribute("categories", categoriesService.getAllCategories());
+
         return "/auctions/create";
     }
 
@@ -72,10 +76,11 @@ public class ArticlesController {
     ) {
         if (!bindingResult.hasErrors()) {
             try {
-                User user = (User) authentication.getPrincipal(); // Assure-toi que User implémente UserDetails
+                // User user = (User) authentication.getPrincipal(); // Assure-toi que User implémente UserDetails
+                String username = authentication.getName();
+                User user = userService.findByUsername(username);
                 articleService.sellAnArticle(article, (int) user.getIdUser());
                 return "redirect:/auctions/list";
-
             } catch (BusinessException exception) {
                 exception.getKeys().forEach(key ->
                         bindingResult.addError(new ObjectError("globalError", key))

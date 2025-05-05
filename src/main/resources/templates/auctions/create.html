@@ -3,15 +3,17 @@
         lang="en"
         data-th-replace="~{layouts/layout :: layout(
                                                 mainContent=~{:: main},
-                                                cssContent=~{},
+                                                cssContent=~{:: link},
                                                 title=~{:: title}
                                             )}"
 >
 
 <title>Création d'une enchère</title>
 
+<link rel="stylesheet" data-th-href="@{/css/create-profile.css}">
+
 <main>
-    <h1>je cree une enchere</h1>
+    <form action="" data-th-replace="~{fragments/fragment-form-create-auction}"></form>
 </main>
 
 </html>
