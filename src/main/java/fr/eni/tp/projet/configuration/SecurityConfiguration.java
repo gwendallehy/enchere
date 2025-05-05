@@ -40,7 +40,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests
-                            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/users/create").permitAll()
                             .requestMatchers(HttpMethod.GET, "/profile").authenticated()  // Ensure profile is secured
                             .requestMatchers(HttpMethod.GET, "/users/profile").hasRole("USER")
                             .requestMatchers(HttpMethod.GET, "/users/viewProfile").hasRole("USER")

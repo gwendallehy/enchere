@@ -9,10 +9,14 @@
 
 /* Header */
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 20px 50px;
+    padding: 20px 0px 20px 0px;
     box-shadow: 0 1px 8px #ddd;
     background-color: #555555;
 }
@@ -36,7 +40,7 @@ header li {
 
 header a {
     text-decoration: none;
-    color: #555;
+    color: white;
     transition: all 0.3s ease 0s;
 }
 
@@ -45,8 +49,10 @@ header a:hover {
 }
 
 main {
-    margin-top: 15px;
+    margin-top: 50px;
     margin-left: 15px;
+    padding-top: 35px;
+    padding-bottom: 45px;
 }
 
 main h1 {
@@ -63,13 +69,6 @@ main h1 {
 .center-section {
     margin: auto;
     text-align: center;
-}
-
-/* 
-Module 04 - TP 2
-Remplacement de la couleur des liens par défaut à blanc*/
-header a {
-    color: white;
 }
 
 /*footer {*/

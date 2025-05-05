@@ -1,9 +1,17 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .connexion{
     text-align: center;
     /*background-color: #ff6a6a;*/
     margin: 20px;
     padding: 10px;
     line-height: 30px;
+    width: 100%;
 }
 .connexion form{
     text-align: center;
