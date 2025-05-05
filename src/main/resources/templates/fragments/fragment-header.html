@@ -1,5 +1,5 @@
 <header data-th-fragment="header">
-  <div>
+  <div class="flags">
     <div>
       <a data-th-href="@{/(lang='fr')}"><img data-th-src="@{/images/French.webp}" height="10" alt="Drapeau français"></a>
       <a data-th-href="@{/(lang='en')}"><img data-th-src="@{/images/English.webp}" height="10" alt="Drapeau anglais"></a>
@@ -13,7 +13,7 @@
   </p>
 
   <nav>
-    <ul>
+    <ul id="header_ul">
       <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/cancel}" data-th-text="#{frag-entete.a.enchere.cancel}"></a></li>

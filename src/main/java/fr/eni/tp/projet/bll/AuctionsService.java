@@ -1,7 +1,6 @@
 package fr.eni.tp.projet.bll;
 
 import fr.eni.tp.projet.bo.*;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

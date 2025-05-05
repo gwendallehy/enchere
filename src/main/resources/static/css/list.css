@@ -55,12 +55,6 @@ button{
     align-content: center;
 }
 
-ul{
-    border: solid black;
-    box-shadow: 2px 5px black;
-    width: 20vw;
-    list-style: none;
-}
 
 .table-article{
     column-count: 2;

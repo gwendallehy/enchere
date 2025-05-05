@@ -125,3 +125,4 @@ WHERE status IS NULL;
 UPDATE TOP (4) ITEMS_SOLD
 SET status = 'TR'
 WHERE status IS NULL;
+

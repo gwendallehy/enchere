@@ -1,10 +1,7 @@
 package fr.eni.tp.projet.bll.impl;
 
 import fr.eni.tp.projet.bll.AuctionsService;
-import fr.eni.tp.projet.bll.CategoriesService;
 import fr.eni.tp.projet.bo.Article;
-import fr.eni.tp.projet.bo.Categories;
-import fr.eni.tp.projet.bo.User;
 import fr.eni.tp.projet.dal.*;
 import org.springframework.stereotype.Service;
 

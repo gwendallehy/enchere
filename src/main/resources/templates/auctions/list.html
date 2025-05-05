@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      data-th-fragment="layout(mainContent, cssContent, title)"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
       xmlns="http://www.w3.org/1999/html">
 
 
@@ -12,14 +16,10 @@
     >
     <title data-th-text="#{frag-entete.a.enchere.list}"></title>
     <link rel="stylesheet" data-th-href="@{/css/list.css}">
-    <link rel="stylesheet" data-th-href="@{/css/general.css}">
-    <link rel="icon" data-th-href="@{/images/logoENI.png}">
 </head>
 
 
 <body>
-<header data-th-replace="~{fragments/fragment-header :: header}"></header>
-
 <main>
     <h1 data-th-text="#{frag-entete.a.enchere.list}"></h1>
 
@@ -56,7 +56,7 @@
 
     <div class="table-article" >
         <div class="tableau" data-th-each="articles : ${articles}">
-            <ul>
+            <ul class="header_ul">
                 <img class="image-list" src="/images/ordinateur-portable.jpg" alt="">
                 <li>
                     <p data-th-text="${articles.name}"></p>
@@ -81,8 +81,6 @@
         </div>
     </div>
 </main>
-
-<footer data-th-replace="~{fragments/fragment-footer :: footer}"></footer>
 </body>
 </html>
 
