@@ -6,13 +6,16 @@ import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -92,21 +95,28 @@ public class ArticlesController {
         return "/auctions/list";
     }
 
-    @GetMapping("/auctions/list/user/ec")
-    public String auctionsByUserEc(Model model, Authentication authentication) {
-        long id = userService.findByUsername(authentication.getName()).getIdUser();
-        List<Article> articles = articleService.findSalesByUser(id);
+    @GetMapping("/auctions/list/user/{status}")
+    public String auctionsByUserAndStatus(@PathVariable("status") String status ,Model model, Authentication authentication) {
+        List<String> validStatus = Arrays.asList("NC", "EC", "TR");
+        if (!validStatus.contains(status.toUpperCase())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid status");
+        }
+
+        long user_id = userService.findByUsername(authentication.getName()).getIdUser();
+
+        List<Article> articles = articleService.findSalesByUserAndStatus(user_id, status.toUpperCase());
         List<User> users = userService.getAllUsers();
 
+        // Create a map to associate user IDs with User objects
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
 
+        // Pass the articles and userMap to the template
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
+
         return "/auctions/list";
     }
-
-
 
     @GetMapping("/auctions/view")
     public String auctionsById(@RequestParam(name = "id") int id, Model model) {
