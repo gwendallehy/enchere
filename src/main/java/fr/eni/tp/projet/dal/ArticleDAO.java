@@ -19,5 +19,5 @@ public interface ArticleDAO {
     //Vente
     List<Article> findAuctionByUserAndStatus(long user_id, String status);
 
-
+    List<Article> findByUserAndStatus(long user_id, String status);
 }

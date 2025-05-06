@@ -48,12 +48,14 @@
         </ul>
       </li>
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
+        <a data-th-href="@{/users/create}" data-th-text="#{frag-entete.a.user.registration}"></a>
+      </li>
+      <li data-th-unless="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/login}" data-th-text="#{frag-entete.a.user.login}"></a>
       </li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/logout}">Déconnexion</a>
       </li>
-
     </ul>
   </nav>
 </header>

@@ -11,6 +11,6 @@ public interface ArticleService {
     List<Article> findSalesByUser (long user_id);
     void sellAnArticle(Article article, int user_id);
     void cancelASell(int article_id);
-
+    List<Article> findSalesByUserAndStatus(long user_id, String status);
 
 }
