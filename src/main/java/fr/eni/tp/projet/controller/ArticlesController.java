@@ -42,26 +42,65 @@ public class ArticlesController {
 
     @GetMapping("/auctions/list")
     public String auctions(Model model) {
+
         List<Article> articles = articleService.findAllArticles();
         List<User> users = userService.getAllUsers();
-        // Create a map to associate user IDs with User objects
+        List<Categories> category = categoriesService.getAllCategories();
+
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
-        // Pass the articles and userMap to the template
+
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
-
+        model.addAttribute("category", category);
         return "/auctions/list";
     }
+
+
+        @PostMapping("/auctions/list/recherche")
+        public String Filter(Model model,
+                             @RequestParam("name") String filtre1,
+                             @RequestParam(value = "category", defaultValue = "0") long filtre2
+        ) {
+
+        List<Article> articles = articleService.FindFilter(filtre1,filtre2);
+        List<User> users = userService.getAllUsers();
+        List<Categories> category = categoriesService.getAllCategories();
+
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+
+        model.addAttribute("articles", articles);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("category", category);
+        return "/auctions/list";
+    }
+
+
+
     @GetMapping("/auctions/list/user")
     public String auctionsByUser(Model model, Authentication authentication) {
         long id = userService.findByUsername(authentication.getName()).getIdUser();
         List<Article> articles = articleService.findSalesByUser(id);
         List<User> users = userService.getAllUsers();
-        // Create a map to associate user IDs with User objects
+
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
-        // Pass the articles and userMap to the template
+
+        model.addAttribute("articles", articles);
+        model.addAttribute("userMap", userMap);
+        return "/auctions/list";
+    }
+
+    @GetMapping("/auctions/list/user/ec")
+    public String auctionsByUserEc(Model model, Authentication authentication) {
+        long id = userService.findByUsername(authentication.getName()).getIdUser();
+        List<Article> articles = articleService.findSalesByUser(id);
+        List<User> users = userService.getAllUsers();
+
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
         return "/auctions/list";
@@ -151,6 +190,8 @@ public class ArticlesController {
         articleService.cancelASell(id); // méthode du service qui annule la vente
         return "redirect:/auctions/list"; // redirige vers la page des articles
     }
+
+
 
 
     private boolean estAdmin(Authentication auth) {

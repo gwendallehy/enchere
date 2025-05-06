@@ -19,32 +19,29 @@
 <main>
     <h1 data-th-text="#{frag-entete.a.enchere.list}"></h1>
 
-    <form action="/recherche" method="POST">
-        <div class="search-form">
-            <div class="search-container">
-                <label for="q" data-th-text="#{frag-form-search-filter}">Filtres : </label>
+    <form method="post" th:action="@{/auctions/list/recherche}">
+        <div class="search-category">
+            <label class="label-category" for="category"
+                   data-th-text="#{frag-form-search-label-category}">catégorie :</label>
 
-                <input id="q" type="text" name="q" maxlength="25" data-th-placeholder="#{frag-form-search-text}">
+            <div>
+                <select id="category" name="category">
+                    <option value="">Toutes</option>
+                    <option data-th-each="category : ${category}"
+                            data-th-value="${category.idCategory}"
+                            data-th-text="${category.wording}"></option>
+                </select>
             </div>
-
-
-            <div class="search-category">
-                <label class="label-category" for="category"
-                       data-th-text="#{frag-form-search-label-category}">catégorie : </label>
-
-                <div>
-                    <select id="category" name="category">
-                        <option data-th-value="#{frag-form-search-category-All}">Toutes</option>
-                        <option data-th-each="category: ${categories}" data-th-value="${category.idCategory}" data-th-text="${category.wording}"></option>
-                    </select>
-                </div>
-            </div>
-
         </div>
 
-        <button type="submit" data-th-text="#{frag-form-search-submit}">Rechercher</button>
+        <div class="search-keyword">
+            <label for="name">Mot-clé :</label>
+            <input type="text" id="name" name="name"/>
+        </div>
 
+        <button type="submit">Rechercher</button>
     </form>
+
 
 
     <div class="table-article" >
