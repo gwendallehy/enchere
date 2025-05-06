@@ -24,7 +24,7 @@
         <li>Nom: <span th:text="${user.name}"></span></li>
         <li>Prénom: <span th:text="${user.firstName}"></span></li>
         <li>Email: <span th:text="${user.email}"></span></li>
-        <li>Téléphone: <span th:text="${user.phone}"></span></li>
+        <li>Téléphone: <span th:text="'0'+${user.phone}"></span></li>
         <li>Adresse: <span th:text="${user.street}"></span></li>
         <li>Code postal: <span th:text="${user.postalCode}"></span></li>
         <li>Ville: <span th:text="${user.city}"></span></li>

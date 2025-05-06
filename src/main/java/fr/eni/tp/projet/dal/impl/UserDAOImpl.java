@@ -30,9 +30,9 @@ public class UserDAOImpl implements UserDAO {
             "phone_nb = :phone, " +
             "address = :street, " +
             "city = :city, " +
-            "post_code = :postalCode, " +
-            "credit = :credit " +
+            "post_code = :postalCode " +
             "WHERE user_id = :user_id";
+    String SELECT_USERNAME_BY_ID = "SELECT pseudo FROM USERS WHERE user_id = :user_id";
 
     private static final String SELECT_BY_PSEUDO = "SELECT * FROM USERS WHERE pseudo = :pseudo";
     private JdbcTemplate jdbcTemplate;
@@ -151,12 +151,20 @@ public class UserDAOImpl implements UserDAO {
         params.addValue("street", user.getStreet());
         params.addValue("city", user.getCity());
         params.addValue("postalCode", user.getPostalCode());
-        params.addValue("credit", user.getCredit());
 
         namedParameterJdbcTemplate.update(UPDATE_USER, params);
     }
 
+    public String findUsernameById(long userId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", userId);
 
+        return namedParameterJdbcTemplate.queryForObject(
+                SELECT_USERNAME_BY_ID,
+                parameters,
+                String.class
+        );
+    }
     /**
      *
      * Supprimer un User

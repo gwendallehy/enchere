@@ -74,6 +74,17 @@ button{
     padding: 1vw;
 }
 
+.tableau li a{
+    text-decoration: none;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #007bff;
+    padding-left: 1vh;
+    padding-right: 1vh;
+
+}
+
 ul{
     list-style: none;
 }
