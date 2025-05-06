@@ -35,10 +35,7 @@
                 <div>
                     <select id="category" name="category">
                         <option data-th-value="#{frag-form-search-category-All}">Toutes</option>
-                        <option data-th-value="#{frag-form-search-category-computerDevice}">Informatique</option>
-                        <option data-th-value="#{frag-form-search-category-furnishing}">Ameublement</option>
-                        <option data-th-value="#{frag-form-search-category-clothing}">Vêtement</option>
-                        <option data-th-value="#{frag-form-search-category-sportLeisure}">Sport&Loisirs</option>
+                        <option data-th-each="category: ${categories}" data-th-value="${category.idCategory}" data-th-text="${category.wording}"></option>
                     </select>
                 </div>
             </div>

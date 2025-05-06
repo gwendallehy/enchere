@@ -44,7 +44,10 @@ public class ArticlesController {
     @GetMapping("/auctions/list")
     public String auctions(Model model) {
         List<Article> articles = articleService.findAllArticles();
+        List<Categories> categories = categoriesService.getAllCategories();
+
         model.addAttribute("articles", articles);
+        model.addAttribute("categories", categories);
         return "/auctions/list";
     }
 
@@ -71,6 +74,7 @@ public class ArticlesController {
         form.setPickup(pickup);
 
         List<Categories> categories = categoriesService.getAllCategories();
+
         model.addAttribute("auctionForm", form);
         model.addAttribute("categories", categories);
         model.addAttribute("user", user);
