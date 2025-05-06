@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests
                             .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/users/create").permitAll()
+
                             .requestMatchers(HttpMethod.GET, "/profile").authenticated()  // Ensure profile is secured
                             .requestMatchers(HttpMethod.GET, "/users/profile").hasRole("USER")
                             .requestMatchers(HttpMethod.GET, "/users/viewProfile").hasRole("USER")
@@ -70,12 +71,6 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.POST, "/auctions/view").permitAll()
 
 
-
-
-
-
-
-
                             .anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> formLogin
@@ -86,7 +81,7 @@ public class SecurityConfiguration {
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/"));
+                        .logoutSuccessUrl("/auctions/list"));
 
         return http.build();
     }

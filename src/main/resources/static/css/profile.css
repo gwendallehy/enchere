@@ -1,6 +1,13 @@
-h1{
+h1 {
     text-align: center;
 }
+
+main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20vh;
+}
+
 ul.profile {
     list-style: none;
     padding: 2rem;
@@ -18,6 +25,11 @@ ul.profile {
     align-items: center;
     padding: 1rem 0;
     border-bottom: 1px solid #e0e0e0;
+}
+
+/* Une ligne sur deux en bleu clair */
+.profile li:nth-child(odd) {
+    background-color: #e6f7ff;
 }
 
 .profile li:last-child {
@@ -44,7 +56,7 @@ ul.profile {
     word-break: break-word;
 }
 
-.profile a{
+.profile a {
     display: flex;
     align-items: center;
     background-color: gray;
@@ -54,7 +66,6 @@ ul.profile {
     justify-content: center;
     border-radius: 10px;
     text-decoration: none;
-
 }
 
 .profile li a.delete:hover {

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -47,17 +44,30 @@ public class ArticlesController {
     public String auctions(Model model) {
         List<Article> articles = articleService.findAllArticles();
         List<User> users = userService.getAllUsers();
-
         // Create a map to associate user IDs with User objects
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
-
         // Pass the articles and userMap to the template
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
 
         return "/auctions/list";
     }
+    @GetMapping("/auctions/list/user")
+    public String auctionsByUser(Model model, Authentication authentication) {
+        long id = userService.findByUsername(authentication.getName()).getIdUser();
+        List<Article> articles = articleService.findSalesByUser(id);
+        List<User> users = userService.getAllUsers();
+        // Create a map to associate user IDs with User objects
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+        // Pass the articles and userMap to the template
+        model.addAttribute("articles", articles);
+        model.addAttribute("userMap", userMap);
+        return "/auctions/list";
+    }
+
+
 
     @GetMapping("/auctions/view")
     public String auctionsById(@RequestParam(name = "id") int id, Model model) {
@@ -122,21 +132,26 @@ public class ArticlesController {
     }
 
     @GetMapping("/auctions/cancel")
-    public String auctionsCancel() {
+    public String auctionsCancel(Model model, Authentication authentication) {
+        // Récupère le nom d'utilisateur (ou email, ou identifiant) de l'utilisateur connecté
+        String username = authentication.getName();
+        long user = userService.findByUsername(username).getIdUser();
+
+        // Suppose que tu as un service qui permet de récupérer les articles de l'utilisateur
+        List<Article> userArticles = articleService.findSalesByUser(user);
+        System.out.println(userArticles);
+        // Ajoute les articles au modèle pour les afficher dans la vue
+        model.addAttribute("articles", userArticles);
+
         return "/auctions/cancel";
     }
 
-    @GetMapping("/auctions/my-sales")
-    public String mySales(Model model, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
-
-        List<Article> articles = articleService.findSalesByUser(user.getIdUser());
-
-        model.addAttribute("articles", articles);
-
-        return "/auctions/my-sales";
+    @PostMapping("/cancel-sell/{id}")
+    public String cancelASell(@PathVariable("id") int id) {
+        articleService.cancelASell(id); // méthode du service qui annule la vente
+        return "redirect:/auctions/list"; // redirige vers la page des articles
     }
+
 
     private boolean estAdmin(Authentication auth) {
         return auth.getAuthorities().stream()

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      data-th-fragment="layout(mainContent, cssContent, title)">
-
+<html
+        lang="en"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
 <head>
     <meta charset="UTF-8"
           name="viewport"
@@ -13,8 +17,6 @@
 </head>
 
 <body>
-
-<header data-th-replace="~{fragments/fragment-header :: header}"></header>
 
 <main>
     <h1>Mon Profil</h1>
