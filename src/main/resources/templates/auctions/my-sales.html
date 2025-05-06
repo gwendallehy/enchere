@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title>Mes ventes</title>
+
+<link rel="stylesheet" data-th-href="@{/css/list.css}">
+
+<main>
+    <h1>Mes ventes</h1>
+
+    <div class="table-article" >
+        <div class="tableau" data-th-each="article : ${articles}">
+            <ul>
+                <img class="image-list" src="/images/ordinateur-portable.jpg" alt="Image du produit">
+                <li>
+                    <p data-th-text="${article.name}"></p>
+                </li>
+
+                <li>
+                    <p data-th-text="#{frag-form-list-box-Price}+${article.betAPrice}+' '+#{frag-form-list-box-Points}"></p>
+                </li>
+                <li>
+                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${article.endDate}"></p>
+                </li>
+                <li>
+                    <a data-th-href="@{/auctions/view(id=${article.idArticle})}" th:text="Details"></a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+</html>

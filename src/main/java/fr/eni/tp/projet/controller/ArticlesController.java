@@ -126,7 +126,17 @@ public class ArticlesController {
         return "/auctions/cancel";
     }
 
+    @GetMapping("/auctions/my-sales")
+    public String mySales(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
 
+        List<Article> articles = articleService.findSalesByUser(user.getIdUser());
+
+        model.addAttribute("articles", articles);
+
+        return "/auctions/my-sales";
+    }
 
     private boolean estAdmin(Authentication auth) {
         return auth.getAuthorities().stream()

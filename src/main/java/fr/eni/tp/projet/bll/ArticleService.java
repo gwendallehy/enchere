@@ -8,7 +8,7 @@ public interface ArticleService {
     List<Article> FindFilter(String name, long category_id);
     Article findArticleById(int id);
     List<Article> findAllArticles();
-    List<Article> findSalesByUser (int userId);
+    List<Article> findSalesByUser (long user_id);
     void sellAnArticle(Article article, int user_id);
     void cancelASell(int article_id);
 

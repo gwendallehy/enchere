@@ -15,6 +15,7 @@
   <nav>
     <ul id="header_ul">
       <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
+      <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/my-sales}" data-th-text="#{frag-entete.a.enchere.my-sales}"></a></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
 
       <!-- Lien visible uniquement si l'utilisateur est authentifié -->
