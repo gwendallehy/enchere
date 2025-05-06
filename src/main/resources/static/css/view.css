@@ -11,3 +11,8 @@
     display: flex;
 
 }
+
+#para {
+    width: auto;
+    overflow-wrap: break-word;
+}

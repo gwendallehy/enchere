@@ -118,6 +118,12 @@ public class ArticleDAOImpl implements ArticleDAO {
                     new ArticleRowMapper()
             );
         }
+        if (item_name == null || item_name.isEmpty() && (category_id == 0)) {
+            return jdbcTemplate.query(
+                    FIND_ALL,
+                    new ArticleRowMapper()
+            );
+        }
         // SI name contient qqchose mais pas de catégorie
         if (category_id == 0 && !item_name.isEmpty()) {
             return namedParameterJdbcTemplate.query(
@@ -126,12 +132,21 @@ public class ArticleDAOImpl implements ArticleDAO {
                     new ArticleRowMapper()
             );
         }
-        // SI name contient qqchose et  il y a une catégorie
+        // SI SI name est vide ou null et pas de catégorie
+        if (item_name == null || item_name.isEmpty() && (category_id == 0)){
+            return namedParameterJdbcTemplate.query(
+                    FIND_ALL,
+                    parameters,
+                    new ArticleRowMapper()
+            );
+        }
+        // SINON (SI name contient qqchose et il y a une catégorie)
         return namedParameterJdbcTemplate.query(
                 SELECT_FILTER,
                 parameters,
                 new ArticleRowMapper()
         );
+
     }
 
 
