@@ -23,6 +23,9 @@ public class AuctionsServiceImpl implements AuctionsService {
         this.bidDAO = bidDAO;
     }
 
+
+
+
     @Override
     public List<Article> OpenAuctions() {
         return articleDAO.findOpenAction();
@@ -37,6 +40,10 @@ public class AuctionsServiceImpl implements AuctionsService {
     public List<Article> MyWinAuctions(long user_id) {
         return articleDAO.findBidAndWinByUser(user_id, "TR");
     }
+
+
+
+
 
     @Override
     public List<Article> MyCurrentAuction(long user_id) {

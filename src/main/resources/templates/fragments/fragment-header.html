@@ -41,9 +41,9 @@
       <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
         <a href="#">Mes offres</a>
         <ul class="dropdown-menu">
-          <li><a data-th-href="@{/my-bids/all}">Toutes mes offres</a></li>
-          <li><a data-th-href="@{/my-bids/ongoing}">Mes offres en cours</a></li>
-          <li><a data-th-href="@{/my-bids/won}">Mes offres remportées</a></li>
+          <li><a data-th-href="@{/bids/all}">Toutes mes offres</a></li>
+          <li><a data-th-href="@{/bids/ongoing}">Mes offres en cours</a></li>
+          <li><a data-th-href="@{/bids/won}">Mes offres remportées</a></li>
         </ul>
       </li>
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
