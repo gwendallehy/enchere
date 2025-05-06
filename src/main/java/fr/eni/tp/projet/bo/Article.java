@@ -1,6 +1,8 @@
 package fr.eni.tp.projet.bo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Article {
     private long idArticle;
@@ -129,6 +131,18 @@ public class Article {
 
     public void setUser(long user_id) {
         this.user_id = user_id;
+    }
+
+    public String getFormattedStartDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
+
+        return this.startDate.format(formatter);
+    }
+
+    public String getFormattedEndDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
+
+        return this.endDate.format(formatter);
     }
 
     @Override

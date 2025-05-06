@@ -59,7 +59,10 @@
                 <!--                <td data-th-text="${articles.startDate}"></td>-->
                 <!--            </tr>-->
                 <li>
-                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${article.endDate}"></p>
+                    <p data-th-text="#{frag-form-list-box-AuctionStart}+${article.formattedStartDate}"></p>
+                </li>
+                <li>
+                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${article.formattedEndDate}"></p>
                 </li>
                 <li>
                     <a th:href="@{'/users/viewProfile/' + ${userMap[article.user].idUser}}" th:text="#{frag-form-list-box-Seller} + ${userMap[article.user].pseudo}"></a>
