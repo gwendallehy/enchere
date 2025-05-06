@@ -1,35 +1,53 @@
-<form data-th-fragment="form-create-auction" data-th-action="@{/auctions/create}" method="post" data-th-object="${article}">
+<form data-th-fragment="form-create-auction" data-th-action="@{/auctions/create}" method="post" data-th-object="${auctionForm}">
   <h1>Mettre un article en enchère</h1>
   <ul class="flex-outer">
     <li>
       <label for="name">Nom</label>
-      <input type="text" name="name" id="name" data-th-field="*{name}" required>
+      <input type="text" name="name" id="name" data-th-field="*{article.name}" required>
     </li>
     <li>
       <label for="description">Description</label>
-      <input type="text" name="description" id="description" data-th-field="*{description}" required>
+      <input type="text" name="description" id="description" data-th-field="*{article.description}" required>
     </li>
     <li>
       <label for="startDate">Date de début</label>
-      <input type="date" name="startDate" id="startDate" data-th-field="*{startDate}" required>
+      <input type="date" name="startDate" id="startDate" data-th-field="*{article.startDate}" required>
     </li>
     <li>
       <label for="endDate">Date de fin</label>
-      <input type="date" name="endDate" id="endDate" data-th-field="*{endDate}" required>
+      <input type="date" name="endDate" id="endDate" data-th-field="*{article.endDate}" required>
     </li>
     <li>
       <label for="betAPrice">Prix de départ</label>
-      <input type="number" name="betAPrice" id="betAPrice" data-th-field="*{betAPrice}" required>
+      <input type="number" name="betAPrice" id="betAPrice" data-th-field="*{article.betAPrice}" required>
     </li>
     <li>
       <label for="category">Catégorie</label>
-      <select name="category" id="category" data-th-field="*{category}" required>
+      <select name="category" id="category" data-th-field="*{article.category}" required>
         <option value="">Selectionner une catégorie</option>
         <option data-th-each="category: ${categories}" data-th-value="${category.idCategory}" data-th-text="${category.wording}"></option>
       </select>
     </li>
+    <fieldset>
+      <legend>Retrait</legend>
+        <li>
+          <label for="street">Rue</label>
+          <input type="text" name="street" id="street" data-th-field="*{pickup.street}" required>
+        </li>
+        <li>
+          <label for="postalCode">Code postal</label>
+          <input type="number" name="postalCode" id="postalCode" data-th-field="*{pickup.postalCode}" required>
+        </li>
+        <li>
+          <label for="city">Ville</label>
+          <input type="text" name="city" id="city" data-th-field="*{pickup.city}" required>
+        </li>
+    </fieldset>
     <li>
       <button type="submit">Valider</button>
+      <a data-th-href="@{/auctions/list}">
+        <button type="button">Annuler</button>
+      </a>
     </li>
   </ul>
 </form>

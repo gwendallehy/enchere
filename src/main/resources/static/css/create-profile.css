@@ -34,25 +34,25 @@ form h1 {
     margin-top: 10px;
 }
 
-.flex-outer > li > label {
+.flex-outer li label {
     flex: 1 0 120px;
     max-width: 200px;
 }
 
-.flex-outer > li > label+* {
+.flex-outer li label+* {
     flex: 1 0 200px;
 }
 
-.flex-outer > li > input {
+.flex-outer li input {
     border: none;
     border-bottom: 1px solid black;
 }
 
-.flex-outer > li > input:focus {
+.flex-outer li input:focus {
     outline: none;
 }
 
-.flex-outer > li:last-of-type {
+.flex-outer li:last-of-type {
     justify-content: center;
     gap: 20px;
 }
@@ -62,16 +62,5 @@ button {
     width: 80px;
     border-radius: 20px;
     margin-top: 10px;
-    cursor: pointer;
-}
-
-form a {
-    margin-top: 10px;
-    padding: 0.4em 0.9em;
-    background-color: #ccc;
-    color: #000;
-    text-decoration: none;
-    border: none;
-    border-radius: 20px;
     cursor: pointer;
 }

@@ -39,7 +39,7 @@ ALTER TABLE BIDS ADD constraint bid_pk PRIMARY KEY (user_id, item_id)
 
 CREATE TABLE PICKUPS (
 	item_id         INTEGER NOT NULL,
-    address              VARCHAR(30) NOT NULL,
+    address              VARCHAR(60) NOT NULL,
     post_code      VARCHAR(15) NOT NULL,
     city            VARCHAR(30) NOT NULL
 )

@@ -1,9 +1,7 @@
 package fr.eni.tp.projet.controller;
 
 import fr.eni.tp.projet.bll.*;
-import fr.eni.tp.projet.bo.Article;
-import fr.eni.tp.projet.bo.Categories;
-import fr.eni.tp.projet.bo.User;
+import fr.eni.tp.projet.bo.*;
 import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -58,28 +56,47 @@ public class ArticlesController {
     }
 
     @GetMapping("/auctions/create")
-    public String afficherFormulaireCreation(Model model) {
+    public String afficherFormulaireCreation(Model model, Authentication authentication) {
+        AuctionForm form = new AuctionForm();
+        form.setArticle(new Article());
+
+
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+
+        Pickup pickup = new Pickup();
+        pickup.setStreet(user.getStreet());
+        pickup.setCity(user.getCity());
+        pickup.setPostalCode(user.getPostalCode());
+        form.setPickup(pickup);
 
         List<Categories> categories = categoriesService.getAllCategories();
+        model.addAttribute("auctionForm", form);
         model.addAttribute("categories", categories);
-        model.addAttribute("article", new Article());
+        model.addAttribute("user", user);
 
         return "/auctions/create";
     }
 
     @PostMapping("/auctions/create")
     public String creerArticle(
-            @Valid @ModelAttribute("article") Article article,
+            @Valid @ModelAttribute("auctionForm") AuctionForm auctionForm,
             BindingResult bindingResult,
             Authentication authentication,
             Model model
     ) {
         if (!bindingResult.hasErrors()) {
             try {
+                Article article = auctionForm.getArticle();
+                Pickup pickup = auctionForm.getPickup();
+
                 // User user = (User) authentication.getPrincipal(); // Assure-toi que User implémente UserDetails
                 String username = authentication.getName();
                 User user = userService.findByUsername(username);
                 articleService.sellAnArticle(article, (int) user.getIdUser());
+
+                pickup.setIdPickup(article.getIdArticle());
+                pickUpService.createPickUp(pickup);
                 return "redirect:/auctions/list";
             } catch (BusinessException exception) {
                 exception.getKeys().forEach(key ->

@@ -43,7 +43,9 @@
         </li>
         <li>
             <button type="submit" data-th-text="#{frag-create-profile-form.validate}"></button>
-            <a data-th-href="@{/}" data-th-text="#{frag-create-profile-form.cancel}"></a>
+            <a data-th-href="@{/}">
+                <button type="button" data-th-text="#{frag-create-profile-form.cancel}"></button>
+            </a>
         </li>
     </ul>
 </form>
