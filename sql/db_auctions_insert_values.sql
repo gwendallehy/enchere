@@ -132,3 +132,5 @@ UPDATE ITEMS_SOLD SET price_selling = 37  WHERE item_id = 7;
 UPDATE ITEMS_SOLD SET price_selling = 22  WHERE item_id = 8;
 UPDATE ITEMS_SOLD SET price_selling = 95  WHERE item_id = 9;
 UPDATE ITEMS_SOLD SET price_selling = 70  WHERE item_id = 10;
+
+UPDATE USERS SET password = '{bcrypt}$2y$10$hQ1s0HeofglfopbL4LM6qu2NJkMLz68SKYzKIYEp9hQOYK0CAG07a' WHERE user_id = 1;

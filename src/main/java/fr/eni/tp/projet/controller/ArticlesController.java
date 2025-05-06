@@ -1,9 +1,10 @@
 package fr.eni.tp.projet.controller;
 
 import fr.eni.tp.projet.bll.*;
-import fr.eni.tp.projet.bo.*;
-import fr.eni.tp.projet.exception.BusinessException;
+        import fr.eni.tp.projet.bo.*;
+        import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
+import jdk.jfr.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -66,7 +67,7 @@ public class ArticlesController {
                              @RequestParam(value = "category", defaultValue = "0") long filtre2
         ) {
 
-        List<Article> articles = articleService.FindFilter(filtre1,filtre2);
+        List<Article> articles = articleService.findFilter(filtre1,filtre2);
         List<User> users = userService.getAllUsers();
         List<Categories> category = categoriesService.getAllCategories();
 
@@ -78,7 +79,6 @@ public class ArticlesController {
         model.addAttribute("category", category);
         return "/auctions/list";
     }
-
 
 
     @GetMapping("/auctions/list/user")
@@ -106,7 +106,7 @@ public class ArticlesController {
 
         List<Article> articles = articleService.findSalesByUserAndStatus(user_id, status.toUpperCase());
         List<User> users = userService.getAllUsers();
-
+        List<Categories> categories = categoriesService.getAllCategories();
         // Create a map to associate user IDs with User objects
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
@@ -114,7 +114,22 @@ public class ArticlesController {
         // Pass the articles and userMap to the template
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
+        model.addAttribute("categories", categories);
+        return "/auctions/list";
+    }
 
+    @PostMapping("/auctions/search")
+    public String rechercher(@RequestParam("name_search") String name_search,
+                             @RequestParam(value = "category_search", defaultValue = "0") long category_search,
+                             Model model) {
+        List<Article> articles = articleService.findFilter(name_search, category_search);
+        List<User> users = userService.getAllUsers();
+        List<Categories> category = categoriesService.getAllCategories();
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+        model.addAttribute("articles", articles);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("category", category);
         return "/auctions/list";
     }
 
@@ -124,6 +139,8 @@ public class ArticlesController {
         model.addAttribute("article", article);
         return "/auctions/view";
     }
+
+
 
     @GetMapping("/auctions/create")
     public String afficherFormulaireCreation(Model model, Authentication authentication) {

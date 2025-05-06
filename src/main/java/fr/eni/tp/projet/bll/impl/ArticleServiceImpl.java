@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> FindFilter(String name, long category_id) {
+    public List<Article> findFilter(String name, long category_id) {
         return articleDAO.findByFilter(name , category_id);
     }
 }
