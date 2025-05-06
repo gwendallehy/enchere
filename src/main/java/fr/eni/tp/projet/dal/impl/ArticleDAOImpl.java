@@ -114,6 +114,12 @@ public class ArticleDAOImpl implements ArticleDAO {
                     new ArticleRowMapper()
             );
         }
+        if (item_name == null || item_name.isEmpty() && (category_id == 0)) {
+            return jdbcTemplate.query(
+                    FIND_ALL,
+                    new ArticleRowMapper()
+            );
+        }
         // SI name contient qqchose mais pas de catégorie
         if (category_id == 0 && !item_name.isEmpty()) {
             return namedParameterJdbcTemplate.query(

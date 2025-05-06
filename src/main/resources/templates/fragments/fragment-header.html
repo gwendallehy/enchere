@@ -14,12 +14,10 @@
 
   <nav>
     <ul id="header_ul">
-
       <li>
         <a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}">Liste des enchères</a>
       </li>
-      <li data-th-unless="${#authorization.expression('isAuthenticated')}">
-      </li>
+      <li data-th-unless="${#authorization.expression('isAuthenticated')}"></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
         <a href="#">Mon compte</a>
         <ul class="dropdown-menu">
@@ -36,6 +34,7 @@
           <li><a data-th-href="@{/auctions/list/user/ec}">Mes enchères en cours</a></li>
           <li><a data-th-href="@{/auctions/list/user/nc}">Mes enchères non commencées</a></li>
           <li><a data-th-href="@{/auctions/list/user/tr}">Mes enchères terminées</a></li>
+          <li><a data-th-href="@{/auctions/cancel}">Annuler une enchère</a></li>
         </ul>
       </li>
 
