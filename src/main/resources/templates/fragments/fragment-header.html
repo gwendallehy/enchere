@@ -16,14 +16,10 @@
     <ul id="header_ul">
       <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
-      <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/cancel}" data-th-text="#{frag-entete.a.enchere.cancel}"></a></li>
 
       <!-- Lien visible uniquement si l'utilisateur est authentifié -->
       <li data-th-if="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/users/profile}" data-th-text="#{frag-entete.a.user.profile}"></a>
-      </li>
-      <li data-th-if="${#authorization.expression('isAuthenticated')}">
-        <a data-th-href="@{/users/viewProfile}" data-th-text="#{frag-entete.a.user.checkone}"></a>
       </li>
 
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
