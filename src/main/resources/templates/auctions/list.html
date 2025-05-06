@@ -52,7 +52,10 @@
                     <p data-th-text="#{frag-form-list-box-Price} + ${article.betAPrice} + ' ' + #{frag-form-list-box-Points}"></p>
                 </li>
                 <li>
-                    <p data-th-text="#{frag-form-list-box-AuctionEnd} + ${article.endDate}"></p>
+                    <p data-th-text="#{frag-form-list-box-AuctionStart}+${article.formattedStartDate}"></p>
+                </li>
+                <li>
+                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${article.formattedEndDate}"></p>
                 </li>
                 <li>
                     <a th:href="@{'/users/viewProfile/' + ${userMap[article.user].idUser}}"
