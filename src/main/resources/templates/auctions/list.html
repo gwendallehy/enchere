@@ -48,30 +48,35 @@
 
 
     <div class="table-article" >
-        <div class="tableau" data-th-each="articles : ${articles}">
+        <div class="tableau" data-th-each="article : ${articles}">
             <ul>
                 <img class="image-list" src="/images/ordinateur-portable.jpg" alt="Image du produit">
                 <li>
-                    <p data-th-text="${articles.name}"></p>
+                    <p data-th-text="${article.name}"></p>
                 </li>
 
                 <li>
-                    <p data-th-text="#{frag-form-list-box-Price}+${articles.betAPrice}+' '+#{frag-form-list-box-Points}"></p>
+                    <p data-th-text="#{frag-form-list-box-Price}+${article.betAPrice}+' '+#{frag-form-list-box-Points}"></p>
                 </li>
                 <!--            <tr>-->
                 <!--                <td data-th-text="${articles.startDate}"></td>-->
                 <!--            </tr>-->
                 <li>
-                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${articles.endDate}"></p>
+                    <p data-th-text="#{frag-form-list-box-AuctionEnd}+${article.endDate}"></p>
                 </li>
                 <li>
-                    <p data-th-text="#{frag-form-list-box-Seller}+${articles.user}"></p>
+                    <a th:href="@{'/users/viewProfile/' + ${userMap[article.user].idUser}}" th:text="#{frag-form-list-box-Seller} + ${userMap[article.user].pseudo}"></a>
                 </li>
                 <li>
-                    <a data-th-href="@{/auctions/view(id=${articles.idArticle})}" data-th-text="Details"></a>
+                    <a data-th-href="@{/auctions/view(id=${article.idArticle})}" th:text="Details"></a>
+
                 </li>
             </ul>
         </div>
+<!--        <tr th:each="article : ${articles}">-->
+<!--            <td th:text="${article.name}"></td>-->
+<!--            <td th:text="${article.description}"></td>-->
+<!--        </tr>-->
     </div>
 </main>
 </body>

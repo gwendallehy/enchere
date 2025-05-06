@@ -8,7 +8,7 @@
   <p id="nav-title">
     <a data-th-href="@{/}" data-th-text="#{nom-application}">
     </a>
-    <strong data-th-if="${#authorization.expression('isAuthenticated')}" th:text="' - Connecté en tant que : '+${#authentication.name} + ' - ' + ${#authentication.getAuthorities()}">
+    <strong class="author" data-th-if="${#authorization.expression('isAuthenticated')}" th:text="'Connecté en tant que : '+${#authentication.name} + ' - ' + ${#authentication.getAuthorities()}">
     </strong>
   </p>
 

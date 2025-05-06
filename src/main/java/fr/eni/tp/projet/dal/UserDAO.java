@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserDAO {
     public User findByEmail(String email);
     User findById(long user_id);
+    String findUsernameById(long user_id);
     List<User> findAllUsers();
     void createUser(User user);
     void updateUser(User user);

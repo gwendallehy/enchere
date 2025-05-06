@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+>
+
+<title>Modification d'un compte</title>
+
+<link rel="stylesheet" data-th-href="@{/css/profile-update.css}">
+
+<main>
+  <form action="#" th:action="@{/users/update}" method="post" th:object="${user}">
+    <h1>Mettre à jour votre profil</h1>
+    <input type="hidden" th:field="*{idUser}" />
+    <ul class="form-container">
+      <li>
+        <label for="pseudo">Pseudo</label>
+        <input type="text" id="pseudo" th:field="*{pseudo}" required />
+      </li>
+      <li>
+        <label for="name">Nom</label>
+        <input type="text" id="name" th:field="*{name}" required />
+      </li>
+      <li>
+        <label for="firstName">Prénom</label>
+        <input type="text" id="firstName" th:field="*{firstName}" required />
+      </li>
+      <li>
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" required />
+      </li>
+      <li>
+        <label for="phone">Téléphone</label>
+        <input type="text" id="phone" name="phone" th:value="*{phone}" required />
+
+      </li>
+      <li>
+        <label for="street">Rue</label>
+        <input type="text" id="street" th:field="*{street}" required />
+      </li>
+      <li>
+        <label for="city">Ville</label>
+        <input type="text" id="city" th:field="*{city}" required />
+      </li>
+      <li>
+        <label for="postalCode">Code postal</label>
+        <input type="text" id="postalCode" th:field="*{postalCode}" required />
+      </li>
+      <li>
+        <button type="submit">Valider</button>
+      </li>
+    </ul>
+  </form>
+
+</main>
+
+</html>

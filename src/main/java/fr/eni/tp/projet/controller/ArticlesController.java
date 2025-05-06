@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class ArticlesController {
@@ -44,10 +46,16 @@ public class ArticlesController {
     @GetMapping("/auctions/list")
     public String auctions(Model model) {
         List<Article> articles = articleService.findAllArticles();
-        List<Categories> categories = categoriesService.getAllCategories();
+        List<User> users = userService.getAllUsers();
 
+        // Create a map to associate user IDs with User objects
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+
+        // Pass the articles and userMap to the template
         model.addAttribute("articles", articles);
-        model.addAttribute("categories", categories);
+        model.addAttribute("userMap", userMap);
+
         return "/auctions/list";
     }
 
@@ -74,7 +82,6 @@ public class ArticlesController {
         form.setPickup(pickup);
 
         List<Categories> categories = categoriesService.getAllCategories();
-
         model.addAttribute("auctionForm", form);
         model.addAttribute("categories", categories);
         model.addAttribute("user", user);

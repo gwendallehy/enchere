@@ -51,9 +51,31 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/users/delete/").hasRole("USER")
                             .requestMatchers(HttpMethod.POST, "/users/delete").hasRole("USER")
 
+                            .requestMatchers(HttpMethod.GET, "/auctions/create").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/auctions/create").hasRole("USER")
+
+                            .requestMatchers(HttpMethod.GET, "/auctions/cancel").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/auctions/cancel").hasRole("USER")
+
+                            .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
+
                             .requestMatchers(HttpMethod.GET, "/users/create").permitAll()
                             .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/auctions/create").hasRole("USER")
+
+                            .requestMatchers(HttpMethod.GET, "/auctions/list").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auctions/list").permitAll()
+
+                            .requestMatchers(HttpMethod.GET, "/auctions/view").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auctions/view").permitAll()
+
+
+
+
+
+
+
+
                             .anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> formLogin
