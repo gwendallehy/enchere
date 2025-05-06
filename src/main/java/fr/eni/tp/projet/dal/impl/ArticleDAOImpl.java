@@ -37,9 +37,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 
 
-    private static final String SELECT_FILTER = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id AND name LIKE '%' + :name + '%'";
+    private static final String SELECT_FILTER = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id AND item_name LIKE '%' + :item_name + '%'";
     private static final String SELECT_FILTER_WITHOUT_NAME = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id";
-    private static final String SELECT_FILTER_WITHOUT_CATE = "SELECT * FROM ITEMS_SOLD WHERE item_name ";
+    private static final String SELECT_FILTER_WITHOUT_CATE = "SELECT * FROM ITEMS_SOLD WHERE item_name LIKE '%' + :item_name + '%'";
 
 
 
@@ -101,13 +101,13 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     @Override
-    public List<Article> findByFilter(String name,long category_id) {
+    public List<Article> findByFilter(String item_name,long category_id) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("item_name", name);
+        parameters.addValue("item_name", item_name);
         parameters.addValue("category_id", category_id);
 
         // SI name est vide ou null mais il y a une catégorie
-        if (name == null || name.isEmpty() && (category_id > 0)) {
+        if (item_name == null || item_name.isEmpty() && (category_id > 0)) {
             return namedParameterJdbcTemplate.query(
                     SELECT_FILTER_WITHOUT_NAME,
                     parameters,
@@ -115,7 +115,7 @@ public class ArticleDAOImpl implements ArticleDAO {
             );
         }
         // SI name contient qqchose mais pas de catégorie
-        if (category_id < 0 && !name.isEmpty()) {
+        if (category_id == 0 && !item_name.isEmpty()) {
             return namedParameterJdbcTemplate.query(
                     SELECT_FILTER_WITHOUT_CATE,
                     parameters,

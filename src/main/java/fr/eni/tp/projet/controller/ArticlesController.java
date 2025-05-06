@@ -6,16 +6,13 @@ import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,54 +42,71 @@ public class ArticlesController {
 
     @GetMapping("/auctions/list")
     public String auctions(Model model) {
+
         List<Article> articles = articleService.findAllArticles();
         List<User> users = userService.getAllUsers();
-        // Create a map to associate user IDs with User objects
+        List<Categories> category = categoriesService.getAllCategories();
+
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
-        // Pass the articles and userMap to the template
+
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
-
+        model.addAttribute("category", category);
         return "/auctions/list";
     }
+
+
+        @PostMapping("/auctions/list/recherche")
+        public String Filter(Model model,
+                             @RequestParam("name") String filtre1,
+                             @RequestParam(value = "category", defaultValue = "0") long filtre2
+        ) {
+
+        List<Article> articles = articleService.FindFilter(filtre1,filtre2);
+        List<User> users = userService.getAllUsers();
+        List<Categories> category = categoriesService.getAllCategories();
+
+        Map<Long, User> userMap = users.stream()
+                .collect(Collectors.toMap(User::getIdUser, user -> user));
+
+        model.addAttribute("articles", articles);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("category", category);
+        return "/auctions/list";
+    }
+
+
 
     @GetMapping("/auctions/list/user")
     public String auctionsByUser(Model model, Authentication authentication) {
-        long user_id = userService.findByUsername(authentication.getName()).getIdUser();
-        List<Article> articles = articleService.findSalesByUser(user_id);
+        long id = userService.findByUsername(authentication.getName()).getIdUser();
+        List<Article> articles = articleService.findSalesByUser(id);
         List<User> users = userService.getAllUsers();
-        // Create a map to associate user IDs with User objects
+
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
-        // Pass the articles and userMap to the template
+
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
         return "/auctions/list";
     }
 
-    @GetMapping("/auctions/list/user/{status}")
-    public String auctionsByUserAndStatusNc(@PathVariable("status") String status ,Model model, Authentication authentication) {
-        List<String> validStatus = Arrays.asList("NC", "EC", "TR");
-        if (!validStatus.contains(status.toUpperCase())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid status");
-        }
-
-        long user_id = userService.findByUsername(authentication.getName()).getIdUser();
-
-        List<Article> articles = articleService.findSalesByUserAndStatus(user_id, status.toUpperCase());
+    @GetMapping("/auctions/list/user/ec")
+    public String auctionsByUserEc(Model model, Authentication authentication) {
+        long id = userService.findByUsername(authentication.getName()).getIdUser();
+        List<Article> articles = articleService.findSalesByUser(id);
         List<User> users = userService.getAllUsers();
 
-        // Create a map to associate user IDs with User objects
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
 
-        // Pass the articles and userMap to the template
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
-
         return "/auctions/list";
     }
+
+
 
     @GetMapping("/auctions/view")
     public String auctionsById(@RequestParam(name = "id") int id, Model model) {
@@ -176,6 +190,8 @@ public class ArticlesController {
         articleService.cancelASell(id); // méthode du service qui annule la vente
         return "redirect:/auctions/list"; // redirige vers la page des articles
     }
+
+
 
 
     private boolean estAdmin(Authentication auth) {
