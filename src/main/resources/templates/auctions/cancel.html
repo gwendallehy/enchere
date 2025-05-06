@@ -1,17 +1,48 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        data-th-replace="~{layouts/layout :: layout(
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
                                                 mainContent=~{:: main},
-                                                cssContent=~{},
+                                                cssContent=~{:: link},
                                                 title=~{:: title}
                                             )}"
->
+      xmlns="http://www.w3.org/1999/html">
 
-<title>title</title>
+
+<head>
+    <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+</head>
 
 <main>
-    <h1>j'annule une enchere</h1>
+    <div class="table-article">
+        <!-- Check if articles is empty or null -->
+        <div th:if="${#lists.isEmpty(articles)}">
+            <h2>Vous n'avez pas de vente en cours.</h2>
+        </div>
+
+        <div class="tableau" data-th-each="article : ${articles}">
+            <ul>
+                <li>
+                    <p data-th-text="${article.name}"></p>
+                </li>
+                <li>
+                    <p data-th-text="${article.description}"></p>
+                </li>
+                <li>
+                    <p data-th-text="${article.category}"></p>
+                </li>
+                <li>
+                    <p data-th-text="${article.category}"></p>
+                </li>
+                <li>
+                    <form th:action="@{/cancel-sell/{id}(id=${article.idArticle})}" method="post">
+                        <button type="submit">Annuler la vente</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
 </main>
 
 </html>

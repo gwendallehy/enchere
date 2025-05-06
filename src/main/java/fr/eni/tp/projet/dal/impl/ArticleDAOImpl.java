@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url) VALUES\n" +
             "(:item_name, :description, :auction_date_begin, :auction_date_end, :price_init, :price_selling, :user_id, :category_id, :picture_url);";
-    private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = :article_id;";
+    private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = ?";
 
     private static final String FIND_ALL_EC ="SELECT * FROM ITEMS_SOLD WHERE status = 'EC'";
     private static final String SELECT_STATUS_USER ="SELECT * FROM BIDS as b INNER JOIN ITEMS_SOLD as i ON b.item_id = i.item_id WHERE b.user_id= :user_id AND status = :status"; //Select BID JOIN Article
@@ -153,15 +154,15 @@ public class ArticleDAOImpl implements ArticleDAO {
         article.setIdArticle(Objects.requireNonNull(keyHolder.getKey()).intValue());
     }
 
-    @Override
-    public void cancelASell(long article_id) {
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("article_id", article_id);
 
-        jdbcTemplate.update(
-                CANCEL_A_SALE,
-                article_id
-        );
+    @Transactional
+    public void cancelASell(long id_article) {
+        // Supprimer d'abord les lignes dépendantes
+        jdbcTemplate.update("DELETE FROM BIDS WHERE item_id = ?", id_article);
+        jdbcTemplate.update("DELETE FROM PICKUPS WHERE item_id = ?", id_article);
+
+        // Puis supprimer l'article
+        jdbcTemplate.update("DELETE FROM ITEMS_SOLD WHERE item_id = ?", id_article);
     }
 
 

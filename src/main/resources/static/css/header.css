@@ -51,3 +51,50 @@ header a:hover {
 .flags{
     margin: 0 1vw 0 1vw;
 }
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown arrow */
+.dropdown > a::after {
+    content: ' ▼';
+    font-size: 0.7em;
+}
+
+/* Dropdown menu hidden by default */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #555555;
+    border: 1px solid #333;
+    min-width: 180px;
+    z-index: 1000;
+}
+
+/* Style for items in dropdown */
+.dropdown-menu li {
+    display: block;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #555555;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgb(0, 128, 192);
+    color: white;
+}
+
+/* Show the menu on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}

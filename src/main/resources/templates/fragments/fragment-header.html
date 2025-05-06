@@ -5,34 +5,56 @@
       <a data-th-href="@{/(lang='en')}"><img data-th-src="@{/images/English.webp}" height="10" alt="Drapeau anglais"></a>
     </div>
   </div>
+
   <p id="nav-title">
-    <a data-th-href="@{/}" data-th-text="#{nom-application}">
-    </a>
-    <strong class="author" data-th-if="${#authorization.expression('isAuthenticated')}" th:text="'Connecté en tant que : '+${#authentication.name} + ' - ' + ${#authentication.getAuthorities()}">
-    </strong>
+    <a data-th-href="@{/}" data-th-text="#{nom-application}"></a>
+    <strong class="author" data-th-if="${#authorization.expression('isAuthenticated')}"
+            th:text="'Connecté en tant que : ' + ${#authentication.name}"></strong>
   </p>
 
   <nav>
     <ul id="header_ul">
-      <li><a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}"></a></li>
-      <li data-th-if="${#authorization.expression('isAuthenticated')}"><a data-th-href="@{/auctions/create}" data-th-text="#{frag-entete.a.enchere.create}"></a></li>
 
-      <!-- Lien visible uniquement si l'utilisateur est authentifié -->
-      <li data-th-if="${#authorization.expression('isAuthenticated')}">
-        <a data-th-href="@{/users/profile}" data-th-text="#{frag-entete.a.user.profile}"></a>
+      <li>
+        <a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}">Liste des enchères</a>
       </li>
-
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
-        <a data-th-href="@{/users/create}" data-th-text="#{frag-entete.a.user.registration}"></a>
       </li>
-      <!-- Lien de connexion visible uniquement si l'utilisateur n'est pas authentifié -->
+      <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
+        <a href="#">Mon compte</a>
+        <ul class="dropdown-menu">
+          <li><a data-th-href="@{/users/profile}">Mon profil</a></li>
+          <li><a data-th-href="@{/users/change-password}">Modifier mon mot de passe</a></li>
+          <li><a data-th-href="@{/auctions/create}">Créer une enchère</a></li>
+        </ul>
+      </li>
+
+      <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
+        <a href="#">Mes enchères</a>
+        <ul class="dropdown-menu">
+          <li><a data-th-href="@{/auctions/list/user}">Toutes mes enchères</a></li>
+          <li><a data-th-href="@{/auctions/list/user/ec}">Mes enchères en cours</a></li>
+          <li><a data-th-href="@{/auctions/list/user/nc}">Mes enchères non commencées</a></li>
+          <li><a data-th-href="@{/auctions/list/user/tr}">Mes enchères terminées</a></li>
+        </ul>
+      </li>
+
+      <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
+        <a href="#">Mes offres</a>
+        <ul class="dropdown-menu">
+          <li><a data-th-href="@{/my-bids/all}">Toutes mes offres</a></li>
+          <li><a data-th-href="@{/my-bids/ongoing}">Mes offres en cours</a></li>
+          <li><a data-th-href="@{/my-bids/won}">Mes offres remportées</a></li>
+        </ul>
+      </li>
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/login}" data-th-text="#{frag-entete.a.user.login}"></a>
       </li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}">
-        <a data-th-href="@{/logout}" data-th-text="#{frag-entete.a.user.logout}"></a>
+        <a data-th-href="@{/logout}">Déconnexion</a>
       </li>
 
     </ul>
   </nav>
 </header>
+
