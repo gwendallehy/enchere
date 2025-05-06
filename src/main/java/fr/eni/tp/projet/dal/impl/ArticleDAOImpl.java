@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,10 @@ public class ArticleDAOImpl implements ArticleDAO {
     private static final String SELECT_STATUS_USER ="SELECT * FROM BIDS as b INNER JOIN ITEMS_SOLD as i ON b.item_id = i.item_id WHERE b.user_id= :user_id AND status = :status"; //Select BID JOIN Article
     private static final String SELECT_MY_STATUS_USER ="SELECT * FROM ITEMS_SOLD WHERE status = :status AND user_id = :user_id";
 
+    private static final String SELECT_BY_STATUS_AND_START_DATE = "SELECT * FROM ITEMS_SOLD WHERE status = :status AND auction_date_begin = :date;";
+    private static final String SELECT_BY_STATUS_AND_END_DATE = "SELECT * FROM ITEMS_SOLD WHERE status = :status AND auction_date_end = :date;";
 
+    private static final String UPDATE_ARTICLE_STATUS_BY_ID = "UPDATE ITEMS_SOLD SET status = :status WHERE item_id = :id_article;";
 
     private static final String SELECT_FILTER = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id AND item_name LIKE '%' + :item_name + '%'";
     private static final String SELECT_FILTER_WITHOUT_NAME = "SELECT * FROM ITEMS_SOLD WHERE category_id = :category_id";
@@ -218,6 +222,44 @@ public class ArticleDAOImpl implements ArticleDAO {
                 SELECT_ARTICLES_BY_USER_AND_STATUS,
                 mapSqlParameterSource,
                 new ArticleRowMapper()
+        );
+    }
+
+    @Override
+    public List<Article> findByStatusAndStartDate(String status, LocalDate startDate) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("status", status);
+        mapSqlParameterSource.addValue("date", startDate);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_BY_STATUS_AND_START_DATE,
+                mapSqlParameterSource,
+                new ArticleRowMapper()
+        );
+    }
+
+    @Override
+    public List<Article> findByStatusAndEndDate(String status, LocalDate endDate) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("status", status);
+        mapSqlParameterSource.addValue("date", endDate);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_BY_STATUS_AND_END_DATE,
+                mapSqlParameterSource,
+                new ArticleRowMapper()
+        );
+    }
+
+    @Override
+    public void updateArticleStatusById(String status, long article_id) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("status", status);
+        mapSqlParameterSource.addValue("article_id", article_id);
+
+        namedParameterJdbcTemplate.update(
+                UPDATE_ARTICLE_STATUS_BY_ID,
+                mapSqlParameterSource
         );
     }
 }
