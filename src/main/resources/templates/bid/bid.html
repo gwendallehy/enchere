@@ -10,7 +10,7 @@
 
 <head>
     <title data-th-text="#{frag-entete.a.enchere.list}"></title>
-    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+    <link rel="stylesheet" data-th-href="@{/css/bid.css}">
 </head>
 
 <body>
@@ -43,8 +43,9 @@
                 <span th:text="${currentBid == null ? 'Aucune enchère' : currentBid.bidAmount + ' €'}"></span>
             </p>
             <p>Placé par :
-                <span th:text="${currentBid == null ? 'Aucun' : currentBid.bidIdUser}"></span>
+                <span th:text="${currentBid == null || user == null ? 'Aucun' : user.firstName + ' ' + user.name}"></span>
             </p>
+
         </div>
 
         <!-- Formulaire pour placer une nouvelle enchère -->

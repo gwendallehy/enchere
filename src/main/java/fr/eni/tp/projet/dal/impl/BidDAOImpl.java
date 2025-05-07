@@ -128,7 +128,7 @@ public class BidDAOImpl implements BidDAO {
         List<Bid> existingBids = namedParameterJdbcTemplate.query(sql, params, new BidRowMapper());
 
         // Check if the user has enough credits
-        String userCreditsSql = "SELECT credits FROM users WHERE user_id = :user_id";
+        String userCreditsSql = "SELECT credit FROM users WHERE user_id = :user_id";
         MapSqlParameterSource userCreditsParams = new MapSqlParameterSource();
         userCreditsParams.addValue("user_id", bid.getBidIdUser());
 
@@ -166,9 +166,9 @@ public class BidDAOImpl implements BidDAO {
         }
 
         // Deduct credits from the user
-        String deductCreditsQuery = "UPDATE users SET credits = credits - :credits WHERE user_id = :user_id";
+        String deductCreditsQuery = "UPDATE USERS SET credit = credit - :credit WHERE user_id = :user_id";
         MapSqlParameterSource deductCreditsParams = new MapSqlParameterSource();
-        deductCreditsParams.addValue("credits", bid.getBidAmount());
+        deductCreditsParams.addValue("credit", bid.getBidAmount());
         deductCreditsParams.addValue("user_id", bid.getBidIdUser());
 
         // Perform the credit deduction

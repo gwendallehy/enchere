@@ -155,7 +155,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         mapSqlParameterSource.addValue("price_selling", article.getSalePrice());
         mapSqlParameterSource.addValue("user_id", user_id);
         mapSqlParameterSource.addValue("category_id", article.getCategory().getIdCategory());
-        mapSqlParameterSource.addValue("picture_url", article.getPicture());
+        mapSqlParameterSource.addValue("picture_url",article.getPicture());
         mapSqlParameterSource.addValue("status", article.getStatus());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
