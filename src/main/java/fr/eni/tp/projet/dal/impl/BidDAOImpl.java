@@ -1,8 +1,8 @@
 package fr.eni.tp.projet.dal.impl;
 
-import fr.eni.tp.projet.bo.Article;
 import fr.eni.tp.projet.bo.Bid;
 import fr.eni.tp.projet.dal.BidDAO;
+import fr.eni.tp.projet.exception.InsufficientCreditsException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -127,6 +127,18 @@ public class BidDAOImpl implements BidDAO {
 
         List<Bid> existingBids = namedParameterJdbcTemplate.query(sql, params, new BidRowMapper());
 
+        // Check if the user has enough credits
+        String userCreditsSql = "SELECT credits FROM users WHERE user_id = :user_id";
+        MapSqlParameterSource userCreditsParams = new MapSqlParameterSource();
+        userCreditsParams.addValue("user_id", bid.getBidIdUser());
+
+        Integer currentCredits = namedParameterJdbcTemplate.queryForObject(userCreditsSql, userCreditsParams, Integer.class);
+
+        // Check if user has sufficient credits
+        if (currentCredits == null || currentCredits < bid.getBidAmount()) {
+            throw new InsufficientCreditsException("User does not have enough credits to place the bid.");
+        }
+
         if (!existingBids.isEmpty()) {
             // If a bid exists, update it
             String updateBidQuery = "UPDATE bids SET bid_date = :bid_date, bid_price = :bid_price " +
@@ -152,7 +164,17 @@ public class BidDAOImpl implements BidDAO {
 
             namedParameterJdbcTemplate.update(insertBidQuery, insertParams);
         }
+
+        // Deduct credits from the user
+        String deductCreditsQuery = "UPDATE users SET credits = credits - :credits WHERE user_id = :user_id";
+        MapSqlParameterSource deductCreditsParams = new MapSqlParameterSource();
+        deductCreditsParams.addValue("credits", bid.getBidAmount());
+        deductCreditsParams.addValue("user_id", bid.getBidIdUser());
+
+        // Perform the credit deduction
+        namedParameterJdbcTemplate.update(deductCreditsQuery, deductCreditsParams);
     }
+
 
 
     @Override
