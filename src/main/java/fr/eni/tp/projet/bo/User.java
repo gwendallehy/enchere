@@ -6,7 +6,7 @@ public class User {
     private String name;
     private String firstName;
     private String email;
-    private long phone;
+    private String phone;
     private String street;
     private String city;
     private long postalCode;
@@ -15,7 +15,7 @@ public class User {
     private long credit;
     private int administrator;
 
-    public User(long idUser, String pseudo, String name, String firstName, String email, long phone, String street, String city, long postalCode, String password, String confirmPassword, long credit, int administrator) {
+    public User(long idUser, String pseudo, String name, String firstName, String email, String phone, String street, String city, long postalCode, String password, String confirmPassword, long credit, int administrator) {
         this.idUser = idUser;
         this.pseudo = pseudo;
         this.name = name;
@@ -75,11 +75,11 @@ public class User {
         this.email = email;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
