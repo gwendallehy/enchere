@@ -13,4 +13,6 @@ public interface UserDAO {
     void updateUser(User user);
     void deleteUser(long user_id);
     User findByPseudo(String pseudo);
+    void updatePassword(long userId, String hashedPassword);
+
 }

@@ -1,59 +1,108 @@
+/* Style général du main */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 100vh;
+    background: #f7f7f7; /* Fond léger */
 }
 
-.connexion{
+/* Conteneur de la connexion */
+.connexion {
     text-align: center;
-    /*background-color: #ff6a6a;*/
-    margin: 20px;
-    padding: 10px;
-    line-height: 30px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce pour l'effet de profondeur */
+    border-radius: 10px;
+    padding: 30px;
     width: 100%;
+    max-width: 400px; /* Limite la largeur */
 }
-.connexion form{
-    text-align: center;
-    background-color: transparent;
+
+/* Titre principal */
+.connexion h1 {
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+/* Formulaire de connexion */
+.connexion form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px; /* Espacement entre les champs */
 }
 
-.connexion form label{
-
+/* Style des labels */
+.connexion form label {
+    font-size: 14px;
+    color: #666666;
+    text-align: left;
+    width: 100%;
 }
-.connexion form input{
+
+/* Style des champs de texte et mot de passe */
+.connexion form input {
     text-align: center;
     outline: none;
-    border: none;
-    border-bottom: #0780fb 1px solid;
-    font-size: 15px;
-    color: #555555;
+    border: 1px solid #ddd; /* Bordure légère */
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
     line-height: 1.2;
-    width: 20%;
-    height: 45px;
-    background: transparent;
-    padding: 0 5px;
-
+    width: 100%;
+    padding: 12px;
+    background: #f4f4f4; /* Fond léger pour les champs */
+    transition: border-color 0.3s ease;
 }
 
+.connexion form input:focus {
+    border-color: #0780fb; /* Changement de bordure au focus */
+    background: #ffffff; /* Fond blanc lors du focus */
+}
+
+/* Style du bouton de soumission */
 .connexion form button {
     outline: none !important;
     border: none;
-    background: transparent;
-    font-size: 15px;
-    color: #0780fb;
+    background: #0780fb;
+    color: #ffffff;
+    font-size: 16px;
     line-height: 1.2;
     text-transform: uppercase;
-    padding: 0 20px;
+    padding: 15px 25px;
     width: 100%;
-    height: 50px;
+    border-radius: 8px; /* Bordure arrondie */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.connexion form button:hover {
+    background-color: #005cbf; /* Couleur de fond plus foncée lors du hover */
+}
+
+/* Style des liens */
 .connexion form a {
     color: #0780fb;
     text-decoration: none;
+    font-size: 14px;
     text-transform: uppercase;
+}
+
+.connexion form a:hover {
+    text-decoration: underline;
+}
+
+/* Affichage des erreurs */
+.connexion .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Style pour le footer ou autres éléments en bas de page */
+.connexion footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #888;
 }

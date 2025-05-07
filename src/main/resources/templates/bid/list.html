@@ -11,7 +11,7 @@
 
 <head>
   <title data-th-text="#{frag-entete.a.enchere.list}"></title>
-  <link rel="stylesheet" data-th-href="@{/css/list.css}">
+  <link rel="stylesheet" data-th-href="@{/css/bidlist.css}">
 </head>
 
 
@@ -29,10 +29,11 @@
     </thead>
     <tbody>
     <tr th:each="entry : ${bidArticleEntries}">
-      <td th:text="${entry.value.name}">Article</td>
-      <td th:text="${entry.value.description}">Description</td>
-      <td th:text="${entry.key.bidDate}">Date</td>
-      <td th:text="${entry.key.bidAmount}">Montant</td>
+      <td data-label="Nom Article" th:text="${entry.value.name}">Article</td>
+      <td data-label="Description" th:text="${entry.value.description}">Description</td>
+      <td data-label="Date Enchère" th:text="${entry.key.bidDate}">Date</td>
+      <td data-label="Montant Offert" th:text="${entry.key.bidAmount}">Montant</td>
+
     </tr>
     </tbody>
   </table>

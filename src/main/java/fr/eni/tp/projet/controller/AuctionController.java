@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -91,11 +90,6 @@ public class AuctionController {
         return "/bid/list";
     }
 
-
-
-
-
-
     @GetMapping("/bid/bid")
     public String bidPage(@RequestParam("itemId") int itemId, Model model) {
         // Récupérer l'article avec l'ID
@@ -103,6 +97,12 @@ public class AuctionController {
 
         // Récupérer la mise actuelle si elle existe
         Optional<Bid> currentBid = Optional.ofNullable(bidService.getBidByItemId(itemId));
+
+        // Ajouter l'utilisateur qui a placé l'enchère dans le modèle
+        currentBid.ifPresent(bid -> {
+            User user = userService.getUserById(bid.getBidIdUser());
+            model.addAttribute("user", user);  // Ajouter l'utilisateur au modèle
+        });
 
         // Ajouter les attributs au modèle pour qu'ils soient accessibles dans la vue Thymeleaf
         model.addAttribute("article", article);  // Assurez-vous que l'article est ajouté au modèle
@@ -130,7 +130,7 @@ public class AuctionController {
 
             if (now.isBefore(startDateTime) || now.isAfter(endDateTime)) {
                 redirectAttributes.addFlashAttribute("error", "La date de l'enchère n'est pas valide.");
-                return "redirect:/bid?itemId=" + itemId;
+                return "redirect:/bid/bid?itemId=" + itemId;
             }
         }
 
@@ -141,7 +141,7 @@ public class AuctionController {
 
         if (bidPrice <= minBid) {
             redirectAttributes.addFlashAttribute("error", "Votre mise doit être supérieure à " + minBid + " €.");
-            return "redirect:/bid?itemId=" + itemId;
+            return "redirect:/bid/bid?itemId=" + itemId;
         }
 
         // INSERT ou UPDATE

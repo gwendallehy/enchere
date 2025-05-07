@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -32,7 +33,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();  // Utilisation de BCrypt pour sécuriser les mots de passe
     }
 
     @Bean
@@ -58,6 +59,10 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/auctions/cancel").hasRole("USER")
                             .requestMatchers(HttpMethod.POST, "/auctions/cancel").hasRole("USER")
 
+                            .requestMatchers(HttpMethod.GET, "/users/change-password").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/users/change-password").hasRole("USER")
+                            .requestMatchers(HttpMethod.GET, "/users/forgot-password").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
 
                             .requestMatchers(HttpMethod.GET, "/bid/**").hasRole("USER")
                             .requestMatchers(HttpMethod.POST, "/bid/**").hasRole("USER")

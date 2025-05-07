@@ -16,4 +16,9 @@ public class BusinessException extends RuntimeException {
     public List<String> getKeys() {
         return keys;
     }
+
+    public BusinessException(String key) {
+        this.keys.add(key);
+    }
+
 }
