@@ -12,4 +12,7 @@ public interface UserService {
     void updateUser(User user);
     void createUser(User user);
     void deleteUser(long id);
+
+    void resetPassword(String username, String newPassword);
+    void changePassword(String username, String currentPassword, String newPassword);
 }

@@ -47,6 +47,17 @@ public class UserDAOImpl implements UserDAO {
      *
      * Trouver un user par ID
      */
+    private static final String UPDATE_PASSWORD = "UPDATE USERS SET password = :password WHERE user_id = :user_id";
+
+    public void updatePassword(long userId, String newPassword) {
+        String updatePasswordQuery = "UPDATE USERS SET password = :password WHERE user_id = :user_id";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", userId);
+        params.addValue("password", newPassword);
+
+        namedParameterJdbcTemplate.update(updatePasswordQuery, params);
+    }
 
     @Override
     public User findById(long user_id) {

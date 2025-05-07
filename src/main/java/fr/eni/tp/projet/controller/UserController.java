@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -98,5 +100,61 @@ public class UserController {
         return "redirect:/users/profile"; // Redirige vers une page de profil, par exemple
     }
 
+    // Formulaire de changement de mot de passe
+    @GetMapping("/change-password")
+    public String showChangePasswordForm() {
+        return "/users/change-password";
+    }
+
+    // Méthode pour traiter la soumission du formulaire de changement de mot de passe
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Authentication authentication, Model model) {
+
+        System.out.println(currentPassword);
+        System.out.println(newPassword);
+        System.out.println(confirmPassword);
+
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("error", "Les mots de passe ne correspondent pas.");
+            System.out.println("Les mots de passe ne correspondent pas.");
+            return "/users/change-password";
+        }
+
+        String username = authentication.getName();
+
+        try {
+            userService.changePassword(username, currentPassword, newPassword);
+            System.out.println("Password changed");
+            return "redirect:/users/profile";  // Redirection vers le profil de l'utilisateur après un changement réussi
+        } catch (BusinessException e) {
+            model.addAttribute("error", e.getMessage());
+            System.out.println("Password NON");
+            return "/users/change-password";  // Retourner sur la page avec le message d'erreur
+        }
+    }
+
+    // Formulaire mot de passe oublié
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm() {
+        return "users/forgot-password";
+    }
+
+    // Traitement du formulaire
+    @PostMapping("/forgot-password")
+    public String resetPassword(@RequestParam("pseudo") String username,
+                                @RequestParam("newPassword") String newPassword,
+                                Model model, RedirectAttributes redirectAttributes) {
+        try {
+            userService.resetPassword(username, newPassword);
+            model.addAttribute("success", "Mot de passe réinitialisé !");
+            return "redirect:/login";
+        } catch (BusinessException e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "users/forgot-password";
+    }
 
 }
