@@ -17,7 +17,8 @@ public class BusinessCode {
         // --- ARTICLE ---
         public static final String VALID_ARTICLE_NAME_BLANK = "validation.article.name.blank";
         public static final String VALID_ARTICLE_DESCRIPTION_BLANK = "validation.article.description.blank";
-        public static final String VALID_ARTICLE_STARTDATE_INVALID = "validation.article.startdate.invalid";
+        public static final String VALID_ARTICLE_STARTDATE_IS_AFTER_ENDDATE = "La date de début doit être avant la date de fin";
+        public static final String VALID_ARTICLE_STARTDATE_INVALID = "La date de début est invalide";
         public static final String VALID_ARTICLE_ENDDATE_INVALID = "validation.article.enddate.invalid";
         public static final String VALID_ARTICLE_BETPRICE_INVALID = "validation.article.betprice.invalid";
         public static final String VALID_ARTICLE_SALEPRICE_INVALID = "validation.article.saleprice.invalid";

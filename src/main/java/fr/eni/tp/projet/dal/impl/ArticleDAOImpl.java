@@ -27,7 +27,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE item_id = :article_id";
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url, status) VALUES\n" +
-            "(:item_name, :description, :auction_date_begin, :auction_date_end, :price_init, :price_selling, :user_id, :category_id, :picture_url, 'NC');";
+            "(:item_name, :description, :auction_date_begin, :auction_date_end, :price_init, :price_selling, :user_id, :category_id, :picture_url, :status);";
     private static final String CANCEL_A_SALE = "DELETE FROM ITEMS_SOLD WHERE item_id = ?";
 
     private static final String FIND_ALL_EC ="SELECT * FROM ITEMS_SOLD WHERE status = 'EC'";
@@ -163,6 +163,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         mapSqlParameterSource.addValue("user_id", user_id);
         mapSqlParameterSource.addValue("category_id", article.getCategory().getIdCategory());
         mapSqlParameterSource.addValue("picture_url", article.getPicture());
+        mapSqlParameterSource.addValue("status", article.getStatus());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
