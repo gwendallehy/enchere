@@ -52,16 +52,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        boolean isValid = true;
         BusinessException businessException = new BusinessException();
 
-        // Vérification que les mots de passe correspondent
-        if (user.getPassword() != null && user.getPassword().equals(user.getConfirmPassword())) {
-            // Vérification de la validité du mot de passe (facultatif, mais recommandé)
-            if (user.getPassword().length() < 6) {
-                businessException.addKey("Le mot de passe doit contenir au moins 6 caractères.");
-                throw businessException;
-            }
+        isValid = isConfirmPasswordValid(user.getPassword(), user.getConfirmPassword(), businessException);
+        isValid &= isPseudoBlank(user.getPseudo(), businessException);
+        isValid &= isLastNameBlank(user.getName(), businessException);
+        isValid &= isFirstNameBlank(user.getFirstName(), businessException);
+        isValid &= isPhoneValid(user.getPhone(), businessException);
+        isValid &= isPostalCodeValid(user.getPostalCode(), businessException);
 
+        // Vérification que les mots de passe correspondent
+        if (isValid) {
             // Encodage du mot de passe avant de le sauvegarder
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);  // Remplacer le mot de passe en clair par le mot de passe encodé
@@ -69,9 +71,82 @@ public class UserServiceImpl implements UserService {
             // Création de l'utilisateur avec le mot de passe encodé
             userDAO.createUser(user);
         } else {
-            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_CONFIRM_PASSWORD);
             throw businessException;
         }
+    }
+
+    public boolean isConfirmPasswordValid(String password, String confirmPassword, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (password != null && !password.equals(confirmPassword)) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_CONFIRM_PASSWORD);
+        }
+
+        // Vérification de la validité du mot de passe (facultatif, mais recommandé)
+        if (password.length() < 6) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_MIN_LENGTH);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPseudoBlank(String pseudo, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (pseudo.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PSEUDO_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isLastNameBlank(String lastName, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (lastName.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_NAME_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isFirstNameBlank(String firstName, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (firstName.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_FIRSTNAME_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPhoneValid(String phoneNumber, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (phoneNumber.length() != 10) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PHONE_INVALID);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPostalCodeValid(long postalCode, BusinessException businessException) {
+        boolean isValid = true;
+
+        String postalCodeStr = String.valueOf(postalCode);
+
+        if (postalCodeStr.isBlank() || postalCodeStr.length() != 5) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_POSTALCODE_INVALID);
+        }
+
+        return isValid;
     }
 
     @Override
