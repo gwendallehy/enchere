@@ -5,6 +5,8 @@ import fr.eni.tp.projet.bo.Pickup;
 import fr.eni.tp.projet.dal.PickUpDAO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PickUpServiceImpl implements PickUpService {
 
@@ -22,6 +24,11 @@ public class PickUpServiceImpl implements PickUpService {
     @Override
     public void createPickUp(Pickup pickup) {
         pickUpDAO.createPickUp(pickup);
+    }
+
+    @Override
+    public List<Pickup> findAllPickup() {
+        return pickUpDAO.findAllPickup();
     }
 }
 

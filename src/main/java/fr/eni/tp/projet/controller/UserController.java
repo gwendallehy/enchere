@@ -150,7 +150,7 @@ public class UserController {
         try {
             userService.resetPassword(username, newPassword);
             model.addAttribute("success", "Mot de passe réinitialisé !");
-            return "redirect:/login";
+            return "redirect:/";
         } catch (BusinessException e) {
             model.addAttribute("error", e.getMessage());
         }

@@ -1,25 +1,21 @@
 package fr.eni.tp.projet.dal.impl;
 
-import fr.eni.tp.projet.bo.Categories;
 import fr.eni.tp.projet.bo.Pickup;
-import fr.eni.tp.projet.bo.User;
 import fr.eni.tp.projet.dal.PickUpDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
+import java.util.List;
 
 @Repository
 public class PickUpDAOImpl implements PickUpDAO {
     private static final String SELECT_ALL = "SELECT * FROM PICKUPS";
-    private static final String SELECT_BY_ID = "SELECT * FROM PICKUPS WHERE :item_id = :item_id";
+    private static final String SELECT_BY_ID = "SELECT * FROM PICKUPS WHERE item_id = :item_id";
     private static final String CREATE = "INSERT INTO PICKUPS (item_id, address, city, post_code) VALUES (:item_id, :address, :city, :post_code)";
 
     private JdbcTemplate jdbcTemplate;
@@ -45,6 +41,14 @@ public class PickUpDAOImpl implements PickUpDAO {
                 new PickUpRowMapper()
         );
 
+    }
+
+    @Override
+    public List<Pickup> findAllPickup() {
+        return jdbcTemplate.query(
+                SELECT_ALL,
+                new PickUpRowMapper()
+        );
     }
 
     /**

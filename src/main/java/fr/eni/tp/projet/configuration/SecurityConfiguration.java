@@ -39,6 +39,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // 🔴 Désactive CSRF (à utiliser avec prudence !)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests
                             .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/users/create").permitAll()
@@ -61,6 +63,7 @@ public class SecurityConfiguration {
 
                             .requestMatchers(HttpMethod.GET, "/users/change-password").hasRole("USER")
                             .requestMatchers(HttpMethod.POST, "/users/change-password").hasRole("USER")
+
                             .requestMatchers(HttpMethod.GET, "/users/forgot-password").permitAll()
                             .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
 

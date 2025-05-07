@@ -52,12 +52,20 @@ public class ArticlesController {
         List<User> users = userService.getAllUsers();
         List<Categories> category = categoriesService.getAllCategories();
 
+
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
+
+
+        List<Pickup> pickups = pickUpService.findAllPickup();
+        // Création d'une Map associant les ID d'article aux pickups
+        Map<Long, Pickup> pickupMap = pickups.stream()
+                .collect(Collectors.toMap(Pickup::getIdPickup, pickup -> pickup));
 
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
         model.addAttribute("category", category);
+        model.addAttribute("pickupMap", pickupMap);
         return "/auctions/list";
     }
 
@@ -128,16 +136,28 @@ public class ArticlesController {
         List<Categories> category = categoriesService.getAllCategories();
         Map<Long, User> userMap = users.stream()
                 .collect(Collectors.toMap(User::getIdUser, user -> user));
+
+        List<Pickup> pickups = pickUpService.findAllPickup();
+        // Création d'une Map associant les ID d'article aux pickups
+        Map<Long, Pickup> pickupMap = pickups.stream()
+                .collect(Collectors.toMap(Pickup::getIdPickup, pickup -> pickup));
+
         model.addAttribute("articles", articles);
         model.addAttribute("userMap", userMap);
         model.addAttribute("category", category);
+        model.addAttribute("pickupMap", pickupMap);
         return "/auctions/list";
     }
 
     @GetMapping("/auctions/view")
     public String auctionsById(@RequestParam(name = "id") int id, Model model) {
         Article article = articleService.findArticleById(id);
+        Pickup pickup = pickUpService.getPickUpByItemId(id);
+        User user = userService.getUserById(articleService.findArticleById(id).getUser());
         model.addAttribute("article", article);
+        model.addAttribute("pickup", pickup);
+        model.addAttribute("user", user);
+
         return "/auctions/view";
     }
 
