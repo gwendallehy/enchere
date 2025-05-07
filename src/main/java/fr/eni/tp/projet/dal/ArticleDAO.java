@@ -16,13 +16,13 @@ public interface ArticleDAO {
     void cancelASell(long article_id);
 
     List<Article> findOpenAction();
-    List<Article> findBidAndWinByUser(long user_id, String status);
+
     //Vente
     List<Article> findAuctionByUserAndStatus(long user_id, String status);
-
     List<Article> findByUserAndStatus(long user_id, String status);
-
     List<Article> findByStatusAndStartDate(String status, LocalDate startDate);
     List<Article> findByStatusAndEndDate(String status, LocalDate endDate);
     void updateArticleStatusById(String status, long article_id);
+
+
 }

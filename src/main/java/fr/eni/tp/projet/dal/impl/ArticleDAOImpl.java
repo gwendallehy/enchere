@@ -32,9 +32,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     private static final String FIND_ALL_EC ="SELECT * FROM ITEMS_SOLD WHERE status = 'EC'";
     private static final String SELECT_ARTICLES_BY_USER_AND_STATUS = "SELECT * FROM ITEMS_SOLD WHERE status = :status AND user_id = :user_id;";
-
-    private static final String SELECT_STATUS_USER ="SELECT * FROM BIDS as b INNER JOIN ITEMS_SOLD as i ON b.item_id = i.item_id WHERE b.user_id= :user_id AND status = :status"; //Select BID JOIN Article
     private static final String SELECT_MY_STATUS_USER ="SELECT * FROM ITEMS_SOLD WHERE status = :status AND user_id = :user_id";
+
+
+
 
     private static final String SELECT_BY_STATUS_AND_START_DATE = "SELECT * FROM ITEMS_SOLD WHERE status = :status AND auction_date_begin = :date;";
     private static final String SELECT_BY_STATUS_AND_END_DATE = "SELECT * FROM ITEMS_SOLD WHERE status = :status AND auction_date_end = :date;";
@@ -70,6 +71,9 @@ public class ArticleDAOImpl implements ArticleDAO {
         );
     }
 
+
+
+
     /**
      *
      * Trouver un article avec son ID
@@ -91,18 +95,6 @@ public class ArticleDAOImpl implements ArticleDAO {
      *
      * Trouver les articles avec son IDUser
      */
-
-    @Override
-    public List<Article> findSalesByUser(long userId) {
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("user_id", userId);
-
-        return namedParameterJdbcTemplate.query(
-                SELECT_SALES_BY_USER,
-                parameters,
-                new ArticleRowMapper()
-        );
-    }
 
     @Override
     public List<Article> findByFilter(String item_name,long category_id) {
@@ -148,6 +140,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         );
 
     }
+
 
 
     @Override
@@ -198,20 +191,19 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     //MES BID GAGNER ET EN COUR
+
+
     @Override
-    public List<Article> findBidAndWinByUser(long user_id, String status) {
-            MapSqlParameterSource parameters = new MapSqlParameterSource();
-            parameters.addValue("user_id", user_id);
-            parameters.addValue("status", status);
+    public List<Article> findSalesByUser(long userId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", userId);
 
-            return namedParameterJdbcTemplate.query(
-                    SELECT_STATUS_USER,
-                    parameters,
-                    new ArticleRowMapper()
-            );
-
+        return namedParameterJdbcTemplate.query(
+                SELECT_SALES_BY_USER,
+                parameters,
+                new ArticleRowMapper()
+        );
     }
-
     //MES VENTES EC NC & TR
     @Override
     public List<Article> findAuctionByUserAndStatus(long user_id, String status) {

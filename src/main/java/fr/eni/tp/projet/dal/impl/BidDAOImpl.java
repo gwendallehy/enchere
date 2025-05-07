@@ -1,5 +1,6 @@
 package fr.eni.tp.projet.dal.impl;
 
+import fr.eni.tp.projet.bo.Article;
 import fr.eni.tp.projet.bo.Bid;
 import fr.eni.tp.projet.dal.BidDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,8 +17,17 @@ import java.util.List;
 public class BidDAOImpl implements BidDAO {
 
     private static final String SELECT_ALL = "SELECT * FROM BIDS";
-    private static final String SELECT_BY_USER_ID = "SELECT * FROM BIDS WHERE :user_id = :user_id";
-    private static final String SELECT_BY_ITEM_ID = "SELECT * FROM BIDS WHERE :item_id = :item_id";
+
+
+    private static final String SELECT_BY_USER_ID = "SELECT * FROM BIDS WHERE user_id = :user_id";
+    private static final String SELECT_BY_ITEM_ID = "SELECT * FROM BIDS WHERE item_id = :item_id";
+
+
+    //Bid
+    private static final String SELECT_STATUS_USER ="SELECT * FROM BIDS as b INNER JOIN ITEMS_SOLD as i ON b.item_id = i.item_id WHERE b.user_id= :user_id AND status = :status"; //Select BID JOIN Article
+    private static final String SELECT_BID_BY_USER = "SELECT * FROM BIDS WHERE user_id= :user_id"; //Select BID JOIN Article
+
+
     private static final String CREATE_BID = "INSERT INTO BIDS VALUES (:user_id, :item_id, :bid_date, :bid_price)";
     private static final String DELETE_BID = "DELETE FROM BIDS WHERE item_id = :item_id";
 
@@ -64,15 +74,43 @@ public class BidDAOImpl implements BidDAO {
 
     @Override
     public Bid findBidByItemId(long item_id) {
+        String sql = "SELECT TOP 1 * FROM bids WHERE item_id = :item_id ORDER BY bid_price DESC";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("item_id", item_id);
+
+        List<Bid> bids = namedParameterJdbcTemplate.query(sql, params, new BidRowMapper());
+        return bids.isEmpty() ? null : bids.get(0);
+    }
+
+
+
+    @Override
+    public List<Bid> findBidAndWinByUser(long user_id, String status) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", user_id);
+        parameters.addValue("status", status);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_STATUS_USER,
+                parameters,
+                new BidRowMapper()
+        );
+
+    }
+
+
+    @Override
+    public List<Bid> findBidByUser(long user_id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("item_id", item_id);
-        return namedParameterJdbcTemplate.queryForObject(
-                SELECT_BY_ITEM_ID,
+        mapSqlParameterSource.addValue("user_id", user_id);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_BID_BY_USER,
                 mapSqlParameterSource,
                 new BidRowMapper()
         );
     }
-
     /**
      *
      * Encherir
@@ -80,17 +118,42 @@ public class BidDAOImpl implements BidDAO {
 
     @Override
     public void createBid(Bid bid) {
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("item_id", bid.getBidIdItem());
-        mapSqlParameterSource.addValue("user_id", bid.getBidIdUser());
-        mapSqlParameterSource.addValue("bid_date", bid.getBidDate());
-        mapSqlParameterSource.addValue("bid_price", bid.getBidAmount());
-        namedParameterJdbcTemplate.update(
-                CREATE_BID,
-                mapSqlParameterSource
-        );
+        // Check if a bid already exists for the same item and user
+        String sql = "SELECT * FROM bids WHERE item_id = :item_id AND user_id = :user_id";
 
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("item_id", bid.getBidIdItem());
+        params.addValue("user_id", bid.getBidIdUser());
+
+        List<Bid> existingBids = namedParameterJdbcTemplate.query(sql, params, new BidRowMapper());
+
+        if (!existingBids.isEmpty()) {
+            // If a bid exists, update it
+            String updateBidQuery = "UPDATE bids SET bid_date = :bid_date, bid_price = :bid_price " +
+                    "WHERE user_id = :user_id AND item_id = :item_id";
+
+            MapSqlParameterSource updateParams = new MapSqlParameterSource();
+            updateParams.addValue("bid_date", bid.getBidDate());
+            updateParams.addValue("bid_price", bid.getBidAmount());
+            updateParams.addValue("user_id", bid.getBidIdUser());
+            updateParams.addValue("item_id", bid.getBidIdItem());
+
+            namedParameterJdbcTemplate.update(updateBidQuery, updateParams);
+        } else {
+            // Otherwise, insert a new bid
+            String insertBidQuery = "INSERT INTO bids (user_id, item_id, bid_date, bid_price) " +
+                    "VALUES (:user_id, :item_id, :bid_date, :bid_price)";
+
+            MapSqlParameterSource insertParams = new MapSqlParameterSource();
+            insertParams.addValue("user_id", bid.getBidIdUser());
+            insertParams.addValue("item_id", bid.getBidIdItem());
+            insertParams.addValue("bid_date", bid.getBidDate());
+            insertParams.addValue("bid_price", bid.getBidAmount());
+
+            namedParameterJdbcTemplate.update(insertBidQuery, insertParams);
+        }
     }
+
 
     @Override
     public void deleteBid(long item_id) {

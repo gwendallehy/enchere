@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+  <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+  <link rel="stylesheet" data-th-href="@{/css/list.css}">
+</head>
+
+
+<body>
+<main>
+  <h1 data-th-text="#{frag-entete.a.enchere.list}"></h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Nom Article</th>
+      <th>Description</th>
+      <th>Date Enchère</th>
+      <th>Montant Offert</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${bidArticleEntries}">
+      <td th:text="${entry.value.name}">Article</td>
+      <td th:text="${entry.value.description}">Description</td>
+      <td th:text="${entry.key.bidDate}">Date</td>
+      <td th:text="${entry.key.bidAmount}">Montant</td>
+    </tr>
+    </tbody>
+  </table>
+
+</main>
+</body>
+</html>
+
+
+
+

@@ -58,6 +58,10 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/auctions/cancel").hasRole("USER")
                             .requestMatchers(HttpMethod.POST, "/auctions/cancel").hasRole("USER")
 
+
+                            .requestMatchers(HttpMethod.GET, "/bid/**").hasRole("USER")
+                            .requestMatchers(HttpMethod.POST, "/bid/**").hasRole("USER")
+
                             .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
 

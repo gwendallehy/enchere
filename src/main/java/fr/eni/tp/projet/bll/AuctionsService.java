@@ -8,8 +8,10 @@ public interface AuctionsService {
 
     //Achat
     List<Article> OpenAuctions();
-    List<Article> MyOpenBid(long user_id);
-    List<Article> MyWinAuctions(long user_id);
+
+    List<Bid> MyAllBid(long user_id);
+    List<Bid> MyOpenBid(long user_id);
+    List<Bid> MyWinAuctions(long user_id);
 
     //Vente
     List<Article> MyCurrentAuction(long user_id);

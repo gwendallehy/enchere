@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+      xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+    <link rel="stylesheet" data-th-href="@{/css/list.css}">
+</head>
+
+<body>
+<main>
+    <div class="container">
+        <h1>Enchérir sur l'article : <span th:text="${article != null ? article.name : 'Article non trouvé'}"></span></h1>
+
+        <!-- Affichage des messages d'erreur ou de succès -->
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="alert alert-success">
+            <p th:text="${success}"></p>
+        </div>
+
+        <!-- Affichage des détails de l'article -->
+        <div class="article-details">
+            <h2>Article : <span th:text="${article != null ? article.name : 'Article non trouvé'}"></span></h2>
+            <p>Catégorie : <span th:text="${article.category != null ? article.category.wording : 'Aucune catégorie'}"></span></p>
+            <p>Description : <span th:text="${article != null ? article.description : 'Pas de description disponible'}"></span></p>
+            <p>Prix de départ : <span th:text="${article != null ? article.betAPrice : '0'}"></span> €</p>
+            <p>Date de début : <span th:text="${article != null ? article.startDate : 'Date non disponible'}"></span></p>
+            <p>Date de fin : <span th:text="${article != null ? article.endDate : 'Date non disponible'}"></span></p>
+        </div>
+
+        <!-- Affichage de l'enchère actuelle -->
+        <div class="current-bid">
+            <h3>Enchère actuelle</h3>
+            <p>Dernière enchère :
+                <span th:text="${currentBid == null ? 'Aucune enchère' : currentBid.bidAmount + ' €'}"></span>
+            </p>
+            <p>Placé par :
+                <span th:text="${currentBid == null ? 'Aucun' : currentBid.bidIdUser}"></span>
+            </p>
+        </div>
+
+        <!-- Formulaire pour placer une nouvelle enchère -->
+        <h3>Placer votre enchère</h3>
+        <form th:action="@{/bid/bid}" method="post">
+            <input type="hidden" name="itemId" th:value="${article.idArticle}" />
+
+            <!-- Champ pour le montant de l'enchère -->
+            <div>
+                <label for="choiceBid">Montant de l'enchère (en €) :</label>
+                <input type="number" id="choiceBid" name="choiceBid" min="1"
+                       th:value="${currentBid == null ? article.betAPrice : currentBid.bidAmount + 1}" required />
+            </div>
+
+            <div>
+                <button type="submit">Placer l'enchère</button>
+            </div>
+        </form>
+
+    </div>
+</main>
+</body>
+</html>

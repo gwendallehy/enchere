@@ -41,11 +41,9 @@
             <p data-th-text="#{frag-form-view-firstPrice}+${article.getSalePrice()}"></p>
             <p data-th-text="#{frag-form-view-pickup}+${article.getPickup()}"></p>
             <p data-th-text="#{frag-form-view-seller}+${article.user}"></p>
-            <input type="number" name="choiceBid" id="" required min="(${article.getBetAPrice()} + 1)"
-                   data-th-value="(${article.getBetAPrice()} + 1)">
-            <p data-th-text="#{frag-form-view-myBid}+${article.startDate}"></p>
-            <button type="submit" data-th-text="#{frag-form-view-bid}"></button>
 
+            <p data-th-text="#{frag-form-view-myBid}+${article.startDate}"></p>
+                <a th:href="@{/bid/bid(itemId=${article.idArticle})}" class="btn btn-primary">Placer une enchère</a>
 
         </form>
     </div>

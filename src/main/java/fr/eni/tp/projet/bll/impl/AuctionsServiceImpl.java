@@ -2,6 +2,7 @@ package fr.eni.tp.projet.bll.impl;
 
 import fr.eni.tp.projet.bll.AuctionsService;
 import fr.eni.tp.projet.bo.Article;
+import fr.eni.tp.projet.bo.Bid;
 import fr.eni.tp.projet.dal.*;
 import org.springframework.stereotype.Service;
 
@@ -24,26 +25,27 @@ public class AuctionsServiceImpl implements AuctionsService {
     }
 
 
-
-
     @Override
     public List<Article> OpenAuctions() {
         return articleDAO.findOpenAction();
     }
 
+
+
     @Override
-    public List<Article> MyOpenBid(long user_id) {
-        return articleDAO.findBidAndWinByUser(user_id, "EC");
+    public List<Bid> MyOpenBid(long user_id) {
+        return bidDAO.findBidAndWinByUser(user_id, "EC");
     }
 
     @Override
-    public List<Article> MyWinAuctions(long user_id) {
-        return articleDAO.findBidAndWinByUser(user_id, "TR");
+    public List<Bid> MyWinAuctions(long user_id) {
+        return bidDAO.findBidAndWinByUser(user_id, "TR");
     }
 
-
-
-
+    @Override
+    public List<Bid> MyAllBid(long user_id) {
+        return bidDAO.findBidByUser(user_id);
+    }
 
     @Override
     public List<Article> MyCurrentAuction(long user_id) {
