@@ -17,7 +17,6 @@
       <li>
         <a data-th-href="@{/auctions/list}" data-th-text="#{frag-entete.a.enchere.list}">Liste des enchères</a>
       </li>
-      <li data-th-unless="${#authorization.expression('isAuthenticated')}"></li>
       <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
         <a href="#">Mon compte</a>
         <ul class="dropdown-menu">
@@ -26,7 +25,6 @@
           <li><a data-th-href="@{/auctions/create}">Créer une enchère</a></li>
         </ul>
       </li>
-
       <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
         <a href="#">Mes enchères</a>
         <ul class="dropdown-menu">
@@ -37,7 +35,6 @@
           <li><a data-th-href="@{/auctions/cancel}">Annuler une enchère</a></li>
         </ul>
       </li>
-
       <li data-th-if="${#authorization.expression('isAuthenticated')}" class="dropdown">
         <a href="#">Mes offres</a>
         <ul class="dropdown-menu">
