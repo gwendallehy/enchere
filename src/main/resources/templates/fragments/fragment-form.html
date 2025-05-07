@@ -41,6 +41,9 @@
             <label for="postalCode" data-th-text="#{frag-create-profile-form.postalCode}"></label>
             <input type="number" name="postalCode" id="postalCode" data-th-field="*{postalCode}" required  placeholder="format : 29000">
         </li>
+        <li data-th-if="${confirmPasswordError}">
+            <p data-th-text="${confirmPasswordError}"></p>
+        </li>
         <li>
             <button type="submit" data-th-text="#{frag-create-profile-form.validate}"></button>
             <a data-th-href="@{/}">

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -45,13 +47,15 @@ public class UserController {
     // Affiche le formulaire de création
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("user", new User());
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new User());
+        }
         return "/users/create";
     }
 
     // Traite la création
     @PostMapping("/create")
-    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "/users/create";
         }
@@ -60,6 +64,8 @@ public class UserController {
             userService.createUser(user);
             return "redirect:/login";
         } catch (BusinessException e) {
+            redirectAttributes.addFlashAttribute("confirmPasswordError", String.join(", ", e.getKeys()));
+            redirectAttributes.addFlashAttribute("user", user);
             return "redirect:/users/create";
         }
     }

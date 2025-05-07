@@ -51,14 +51,89 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        boolean isValid = true;
         BusinessException businessException = new BusinessException();
 
-        if (user.getPassword() != null && user.getPassword().equals(user.getConfirmPassword())) {
+        isValid = isConfirmPasswordValid(user.getPassword(), user.getConfirmPassword(), businessException);
+        isValid &= isPseudoBlank(user.getPseudo(), businessException);
+        isValid &= isLastNameBlank(user.getName(), businessException);
+        isValid &= isFirstNameBlank(user.getFirstName(), businessException);
+        isValid &= isPhoneValid(user.getPhone(), businessException);
+        isValid &= isPostalCodeValid(user.getPostalCode(), businessException);
+
+        if (isValid) {
             userDAO.createUser(user);
         } else {
-            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_CONFIRM_PASSWORD);
             throw businessException;
         }
+    }
+
+    public boolean isConfirmPasswordValid(String password, String confirmPassword, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (!password.equals(confirmPassword)) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_CONFIRM_PASSWORD);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPseudoBlank(String pseudo, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (pseudo.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PSEUDO_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isLastNameBlank(String lastName, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (lastName.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_NAME_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isFirstNameBlank(String firstName, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (firstName.isBlank()) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_FIRSTNAME_BLANK);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPhoneValid(String phoneNumber, BusinessException businessException) {
+        boolean isValid = true;
+
+        if (phoneNumber.length() != 10) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_PHONE_INVALID);
+        }
+
+        return isValid;
+    }
+
+    public boolean isPostalCodeValid(long postalCode, BusinessException businessException) {
+        boolean isValid = true;
+
+        String postalCodeStr = String.valueOf(postalCode);
+
+        if (postalCodeStr.isBlank() || postalCodeStr.length() != 5) {
+            isValid = false;
+            businessException.addKey(BusinessCode.VALID_USER_POSTALCODE_INVALID);
+        }
+
+        return isValid;
     }
 
     @Override
