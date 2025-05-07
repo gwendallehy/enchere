@@ -11,10 +11,11 @@ public class User {
     private String city;
     private long postalCode;
     private String password;
+    private String confirmPassword;
     private long credit;
     private int administrator;
 
-    public User(long idUser, String pseudo, String name, String firstName, String email, long phone, String street, String city, long postalCode, String password, long credit, int administrator) {
+    public User(long idUser, String pseudo, String name, String firstName, String email, long phone, String street, String city, long postalCode, String password, String confirmPassword, long credit, int administrator) {
         this.idUser = idUser;
         this.pseudo = pseudo;
         this.name = name;
@@ -25,6 +26,7 @@ public class User {
         this.city = city;
         this.postalCode = postalCode;
         this.password = password;
+        this.confirmPassword = confirmPassword;
         this.credit = credit;
         this.administrator = administrator;
     }
@@ -113,6 +115,14 @@ public class User {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public long getCredit() {
         return credit;
     }
@@ -140,8 +150,9 @@ public class User {
         sb.append(", phone=").append(phone);
         sb.append(", street='").append(street).append('\'');
         sb.append(", city='").append(city).append('\'');
-        sb.append(", postalCode='").append(postalCode).append('\'');
+        sb.append(", postalCode=").append(postalCode);
         sb.append(", password='").append(password).append('\'');
+        sb.append(", confirmPassword='").append(confirmPassword).append('\'');
         sb.append(", credit=").append(credit);
         sb.append(", administrator=").append(administrator);
         sb.append('}');

@@ -13,6 +13,7 @@ public class BusinessCode {
         public static final String VALID_USER_POSTALCODE_INVALID = "validation.user.postalcode.invalid";
         public static final String VALID_USER_PASSWORD_BLANK = "validation.user.password.blank";
         public static final String VALID_USER_PASSWORD_WEAK = "validation.user.password.weak";
+        public static final String VALID_USER_PASSWORD_CONFIRM_PASSWORD = "Les mots de passes sont différents";
 
         // --- ARTICLE ---
         public static final String VALID_ARTICLE_NAME_BLANK = "validation.article.name.blank";

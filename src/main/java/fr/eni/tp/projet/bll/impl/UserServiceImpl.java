@@ -5,6 +5,8 @@ import fr.eni.tp.projet.bo.User;
 import fr.eni.tp.projet.dal.UserDAO;
 import fr.eni.tp.projet.dal.impl.ArticleDAOImpl;
 import fr.eni.tp.projet.dal.impl.BidDAOImpl;
+import fr.eni.tp.projet.exception.BusinessCode;
+import fr.eni.tp.projet.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +51,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
-        userDAO.createUser(user);
+        BusinessException businessException = new BusinessException();
+
+        if (user.getPassword() != null && user.getPassword().equals(user.getConfirmPassword())) {
+            userDAO.createUser(user);
+        } else {
+            businessException.addKey(BusinessCode.VALID_USER_PASSWORD_CONFIRM_PASSWORD);
+            throw businessException;
+        }
     }
 
     @Override

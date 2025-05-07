@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SELECT_ALL = "SELECT * FROM USERS";
     private static final String SELECT_BY_ID = "SELECT * FROM USERS WHERE user_id = :user_id";
     private static final String SELECT_BY_EMAIL = "SELECT * FROM USERS WHERE email = :email";
-    private static final String CREATE_USER = "INSERT INTO USERS VALUES (:pseudo, :name, :firstName, :email, :phone, :street, :city, :post_code, :password, :credit, :administrator)";
+    private static final String CREATE_USER = "INSERT INTO USERS VALUES (:pseudo, :lastName, :firstName, :email, :phone, :street, :city, :post_code, :password, :credit, :administrator)";
     private static final String DELETE_USER = "DELETE FROM USERS WHERE user_id = :user_id";
     private static final String UPDATE_USER = "UPDATE USERS SET pseudo = :pseudo, " +
             "lastname = :name, " +
@@ -114,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
     public void createUser(User user) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("pseudo", user.getPseudo());
-        mapSqlParameterSource.addValue("lastname", user.getName());
+        mapSqlParameterSource.addValue("lastName", user.getName());
         mapSqlParameterSource.addValue("firstName", user.getFirstName());
         mapSqlParameterSource.addValue("email", user.getEmail());
         mapSqlParameterSource.addValue("phone", user.getPhone());

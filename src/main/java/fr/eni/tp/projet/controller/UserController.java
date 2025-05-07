@@ -2,6 +2,7 @@ package fr.eni.tp.projet.controller;
 
 import fr.eni.tp.projet.bll.UserService;
 import fr.eni.tp.projet.bo.User;
+import fr.eni.tp.projet.exception.BusinessException;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -54,8 +55,13 @@ public class UserController {
         if (result.hasErrors()) {
             return "/users/create";
         }
-        userService.createUser(user);
-        return "redirect:/users";
+
+        try {
+            userService.createUser(user);
+            return "redirect:/login";
+        } catch (BusinessException e) {
+            return "redirect:/users/create";
+        }
     }
 
     // Supprime un utilisateur
