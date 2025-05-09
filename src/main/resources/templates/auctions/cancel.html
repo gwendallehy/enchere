@@ -30,10 +30,10 @@
                     <p data-th-text="${article.description}"></p>
                 </li>
                 <li>
-                    <p data-th-text="${article.category}"></p>
+                    <p data-th-text="${article.betAPrice + ' credits'}"></p>
                 </li>
                 <li>
-                    <p data-th-text="${article.category}"></p>
+                    <p data-th-text="${article.startDate + ' - ' + article.endDate}"></p>
                 </li>
                 <li>
                     <form th:action="@{/cancel-sell/{id}(id=${article.idArticle})}" method="post">

@@ -32,6 +32,9 @@ h1 {
     justify-content: center;
 }
 
+#view_zone img{
+    height: 500px;
+}
 /* Image styles */
 #view_img {
     width: 100%;
@@ -39,6 +42,8 @@ h1 {
     height: auto;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+
 }
 
 /* Form/Info box styles */
