@@ -1,0 +1,78 @@
+<!-- src/main/resources/templates/admin/teamlyf.html -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+  <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+  <link rel="stylesheet" data-th-href="@{/css/admin.css}">
+</head>
+
+
+<body>
+<main>
+  <div class="dashboard-container" id="id">
+    <h1>Gérer les suppressions</h1>
+
+    <div class="three-column-layout">
+
+      <!-- Colonne : Articles -->
+      <div class="column">
+        <h2>Articles</h2>
+        <ul>
+          <li th:each="article : ${articles}">
+            <span th:text="${article.name}"></span>
+            <form th:action="@{/admin/deleteArticle}" method="post">
+              <input type="hidden" name="id" th:value="${article.idArticle}" />
+              <button type="submit">Supprimer</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Colonne : Catégories -->
+      <div class="column">
+        <h2>Catégories</h2>
+        <ul>
+          <li th:each="category : ${categories}">
+            <span th:text="${category.wording}"></span>
+            <form th:action="@{/admin/deleteCategory}" method="post">
+              <input type="hidden" name="id" th:value="${category.idCategory}" />
+              <button type="submit">Supprimer</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Colonne : Utilisateurs -->
+      <div class="column">
+        <h2>Utilisateurs</h2>
+        <ul>
+          <li th:each="user : ${users}">
+            <span th:text="${user.pseudo}"></span>
+            <form th:action="@{/admin/deleteUser}" method="post">
+              <input type="hidden" name="id" th:value="${user.idUser}" />
+              <button type="submit">Supprimer</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="button-group">
+      <a th:href="@{/admin}">
+        <button>Retour au tableau de bord</button>
+      </a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
