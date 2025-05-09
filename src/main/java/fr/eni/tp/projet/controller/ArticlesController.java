@@ -3,6 +3,7 @@ package fr.eni.tp.projet.controller;
 import fr.eni.tp.projet.bll.*;
         import fr.eni.tp.projet.bo.*;
         import fr.eni.tp.projet.exception.BusinessException;
+
 import jakarta.validation.Valid;
 import jdk.jfr.Category;
 import org.slf4j.Logger;
@@ -14,12 +15,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
+import fr.eni.tp.projet.form.AuctionForm;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Controller
@@ -197,23 +204,57 @@ public class ArticlesController {
             try {
                 Article article = auctionForm.getArticle();
                 Pickup pickup = auctionForm.getPickup();
+                MultipartFile picture = auctionForm.getPicture(); // <-- on récupère le fichier
 
-                // User user = (User) authentication.getPrincipal(); // Assure-toi que User implémente UserDetails
+                // Gérer l'image
+                if (picture != null && !picture.isEmpty()) {
+                    String originalFilename = picture.getOriginalFilename();
+                    String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    String newFileName = UUID.randomUUID().toString() + extension;
+                    String userHome = System.getProperty("user.home"); // Sélectionne le répertoire utilisateur
+                    Path uploadDir = Paths.get(userHome, "uploads"); // ou configurer ailleurs
+                    if (!Files.exists(uploadDir)) {
+                        Files.createDirectories(uploadDir);
+                    }
+
+                    Path filePath = uploadDir.resolve(newFileName);
+                    // Ajout des logs pour déboguer
+                    logger.info("Image sauvegardée sous : {}", filePath);  // Affiche le chemin du fichier sauvegardé
+                    logger.info("Nom enregistré en BDD : {}", newFileName);  // Affiche le nom du fichier à enregistrer en BDD
+                    logger.info("Répertoire absolu de sauvegarde des images : {}", uploadDir.toAbsolutePath());
+                    System.out.println(uploadDir.toAbsolutePath());
+                    try {
+                        picture.transferTo(filePath.toFile());
+
+                            logger.info("Image sauvegardée sous : {}", filePath);
+                        } catch (IOException e) {
+                            logger.error("Erreur lors du transfert de l'image", e);
+
+                    }
+                    article.setPicture(newFileName);
+                }
+
                 String username = authentication.getName();
                 User user = userService.findByUsername(username);
+
                 articleService.sellAnArticle(article, (int) user.getIdUser());
 
                 pickup.setIdPickup(article.getIdArticle());
                 pickUpService.createPickUp(pickup);
+
                 return "redirect:/auctions/list";
-            } catch (BusinessException exception) {
-                exception.getKeys().forEach(key ->
-                        bindingResult.addError(new ObjectError("globalError", key))
-                );
+            } catch (BusinessException | IOException exception) {
+                if (exception instanceof BusinessException businessException) {
+                    businessException.getKeys().forEach(key ->
+                            bindingResult.addError(new ObjectError("globalError", key))
+                    );
+                } else {
+                    logger.error("Erreur lors de l'upload de l'image", exception);
+                    bindingResult.addError(new ObjectError("globalError", "Erreur lors de l'upload de l'image."));
+                }
             }
         }
 
-        // En cas d'erreurs
         model.addAttribute("categories", categoriesService.getAllCategories());
         return "/auctions/create";
     }

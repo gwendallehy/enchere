@@ -13,7 +13,7 @@ public class Article {
     private long betAPrice;
     private long salePrice;
     private String status;
-    private String picture;
+    private String picture_path;
     private long user_id;
 
     private Categories category;
@@ -31,7 +31,7 @@ public class Article {
         this.betAPrice = betAPrice;
         this.salePrice = salePrice;
         this.status = status;
-        this.picture = picture;
+        this.picture_path = picture;
         this.user_id = user_id;
         this.category = category;
         this.pickup = pickup;
@@ -118,11 +118,11 @@ public class Article {
     }
 
     public String getPicture() {
-        return picture;
+        return picture_path;
     }
 
     public void setPicture(String picture) {
-        this.picture = picture;
+        this.picture_path = picture;
     }
 
     public long getUser() {
@@ -156,7 +156,7 @@ public class Article {
         sb.append(", betAPrice=").append(betAPrice);
         sb.append(", salePrice=").append(salePrice);
         sb.append(", status='").append(status).append('\'');
-        sb.append(", picture='").append(picture).append('\'');
+        sb.append(", picture='").append(picture_path).append('\'');
         sb.append(", user=").append(user_id);
         sb.append(", category=").append(category);
         sb.append(", pickup=").append(pickup);

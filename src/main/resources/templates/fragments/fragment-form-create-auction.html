@@ -1,4 +1,9 @@
-<form data-th-fragment="form-create-auction" data-th-action="@{/auctions/create}" method="post" data-th-object="${auctionForm}">
+<form data-th-fragment="form-create-auction"
+      data-th-action="@{/auctions/create}"
+      method="post"
+      data-th-object="${auctionForm}"
+      enctype="multipart/form-data">
+
   <h1>Mettre un article en enchère</h1>
   <ul class="flex-outer">
     <li>
@@ -11,7 +16,7 @@
     </li>
     <li>
       <label for="picture">Image</label>
-      <input type="file" name="picture" id="picture">
+      <input type="file" id="picture" name="picture" accept="image/png, image/jpeg" data-th-field="*{picture}">
     </li>
     <li>
       <label for="startDate">Date de début</label>

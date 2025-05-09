@@ -1,8 +1,22 @@
 package fr.eni.tp.projet.bo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AuctionForm {
     private Article article;
     private Pickup pickup;
+    private MultipartFile picture; //MultipartFile pour gèrer l'importation d'image
+
+
+    public MultipartFile getPicture() {
+        return picture;
+    }
+    public void setPicture(MultipartFile picture) {
+        this.picture = picture;
+    }
+
+
+
 
     public AuctionForm() {
     }

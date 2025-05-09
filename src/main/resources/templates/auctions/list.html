@@ -43,7 +43,7 @@
         <div class="article-card" data-th-each="article : ${articles}">
 
 
-            <img class="image-list" data-th-src="${article.getPicture()}" alt="Image du produit">
+            <img class="image-list" th:src="@{'/uploads/' + ${article.picture}}" alt="Image de l'article">
 
 
             <div class="article-title">
