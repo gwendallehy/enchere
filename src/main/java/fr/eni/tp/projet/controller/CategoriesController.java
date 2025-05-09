@@ -43,20 +43,21 @@ public class CategoriesController {
     @PostMapping("/admin/categories/create")
     public String creerCategorie(@ModelAttribute Categories categorie) {
         categoriesService.createCategory(categorie);
-        return "redirect:/admin/categoriesList";
+        return "redirect:/admin/categories"; // Corrigé ici
     }
 
     @PostMapping("/admin/categories/update")
     public String modifierCategorie(@ModelAttribute Categories categorie) {
         categoriesService.updateCategory(categorie);
-        return "redirect:/admin/categoriesList";
+        return "redirect:/admin/categories"; // Corrigé ici aussi
     }
 
     @PostMapping("/admin/categories/delete")
     public String supprimerCategorie(@RequestParam("id") long id) {
         categoriesService.deleteCategory(id);
-        return "redirect:/admin/categoriesList";
+        return "redirect:/admin/categories"; // Corrigé
     }
+
 
     private boolean estAdmin(Authentication auth) {
         return auth.getAuthorities().stream()

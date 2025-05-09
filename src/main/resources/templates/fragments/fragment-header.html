@@ -43,6 +43,15 @@
           <li><a data-th-href="@{/bid/won}">Mes offres remportées</a></li>
         </ul>
       </li>
+
+      <!-- Menu admin : Visible seulement si l'utilisateur a le rôle ROLE_ADMIN -->
+      <li data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" class="dropdown">
+        <a href="#">Administration</a>
+        <ul class="dropdown-menu">
+          <li><a data-th-href="@{/admin}">Tableau de bord</a></li>
+        </ul>
+      </li>
+
       <li data-th-unless="${#authorization.expression('isAuthenticated')}">
         <a data-th-href="@{/users/create}" data-th-text="#{frag-entete.a.user.registration}"></a>
       </li>

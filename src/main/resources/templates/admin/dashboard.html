@@ -1,0 +1,30 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+  <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+  <link rel="stylesheet" data-th-href="@{/css/admin.css}">
+</head>
+
+
+<body>
+<main>
+  <div class="dashboard-container">
+<h1>Administration</h1>
+<ul>
+  <li><a th:href="@{/admin/addArticle}">Ajouter un article</a></li>
+  <li><a th:href="@{/admin/addCategory}">Ajouter une catégorie</a></li>
+  <li><a th:href="@{/admin/addUser}">Ajouter un utilisateur</a></li>
+  <li><a th:href="@{/admin/manage}">Supprimer une entité</a></li>
+</ul>
+  </div>
+</main>
+</body>
+</html>

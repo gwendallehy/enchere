@@ -1,0 +1,30 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+  <title data-th-text="#{frag-entete.a.enchere.list}"></title>
+  <link rel="stylesheet" data-th-href="@{/css/admin.css}">
+</head>
+
+
+<body>
+<main>
+  <div class="admin-container">
+<h2>Ajouter une nouvelle catégorie</h2>
+<form th:action="@{/admin/addCategory}" th:object="${category}" method="post">
+  <label>Nom :</label>
+  <input type="text" th:field="*{wording}" required />
+  <button type="submit">Ajouter</button>
+</form>
+<a th:href="@{/admin}">Retour</a>
+    </div>
+</main>
+</body>
+</html>
