@@ -46,6 +46,7 @@ form h1 {
 .flex-outer li input {
     border: none;
     border-bottom: 1px solid black;
+    background-color: #f0f2f5;
 }
 
 .flex-outer li input:focus {
