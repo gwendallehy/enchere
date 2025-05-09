@@ -28,19 +28,19 @@
             <div>
 
                 <div>
-                    <p data-th-text="#{frag-form-view-category}"></p>
+                    <p data-th-text="#{frag-form-view-category}+${article.getCategory().getWording()}"></p>
             </div>
 
             <p data-th-text="#{frag-form-view-bestBid}+${article.getBetAPrice()}"></p>
-            <p data-th-text="#{frag-form-view-endAuction}+${article.endDate}"></p>
+            <p data-th-text="#{frag-form-view-endAuction}+${article.getFormattedEndDate()}"></p>
             <p data-th-text="#{frag-form-view-firstPrice}+${article.getSalePrice()}"></p>
                 <p data-th-text="#{frag-form-view-pickup} + ' ' + ${pickup.city + ' ' + pickup.street + ' ' + pickup.postalCode}"></p>
 
                 <p data-th-text="#{frag-form-view-seller}+${user.pseudo}"></p>
 
-            <p data-th-text="#{frag-form-view-myBid}+${article.startDate}"></p>
+            <p data-th-text="#{frag-form-view-myBid}+${article.getFormattedStartDate()}"></p>
                 <a th:href="@{/bid/bid(itemId=${article.idArticle})}" class="btn btn-primary">Placer une enchère</a>
-
+            </div>
         </form>
     </div>
 </main>
