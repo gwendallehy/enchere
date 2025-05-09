@@ -24,7 +24,7 @@ import java.util.Objects;
 public class ArticleDAOImpl implements ArticleDAO {
 
     private static final String FIND_ALL = "SELECT * FROM ITEMS_SOLD";
-    private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD WHERE item_id = :article_id";
+    private static final String SELECT_BY_ID = "SELECT * FROM ITEMS_SOLD INNER JOIN CATEGORIES ON ITEMS_SOLD.item_id = CATEGORIES.category_id WHERE item_id = :article_id";
     private static final String SELECT_SALES_BY_USER = "SELECT * FROM ITEMS_SOLD WHERE user_id = :user_id";
     private static final String CREATE_A_SALE = "INSERT INTO ITEMS_SOLD (item_name, description, auction_date_begin, auction_date_end, price_init, price_selling, user_id, category_id, picture_url, status) VALUES\n" +
             "(:item_name, :description, :auction_date_begin, :auction_date_end, :price_init, :price_selling, :user_id, :category_id, :picture_url, :status);";
@@ -87,7 +87,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         return namedParameterJdbcTemplate.queryForObject(
                 SELECT_BY_ID,
                 mapSqlParameterSource,
-                new ArticleRowMapper()
+                new ArticleCategoryRowMapper()
         );
     }
 
@@ -289,6 +289,31 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setStatus(rs.getString("status"));
         article.setPicture(rs.getString("picture_url"));
 
+        return article;
+    }
+}
+
+class ArticleCategoryRowMapper implements RowMapper<Article> {
+
+    @Override
+    public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Article article = new Article();
+
+        article.setIdArticle(rs.getLong("item_id"));
+        article.setName(rs.getString("item_name"));
+        article.setDescription(rs.getString("description"));
+        article.setStartDate(rs.getDate("auction_date_begin").toLocalDate());
+        article.setEndDate(rs.getDate("auction_date_end").toLocalDate());
+        article.setBetAPrice(rs.getLong("price_init"));
+        article.setSalePrice(rs.getLong("price_selling"));
+        article.setUser(rs.getLong("user_id"));
+        article.setStatus(rs.getString("status"));
+        article.setPicture(rs.getString("picture_url"));
+
+        Categories category = new Categories();
+        category.setIdCategory(rs.getLong("category_id"));
+        category.setWording(rs.getString("category_desc"));
+        article.setCategory(category);
 
         return article;
     }
