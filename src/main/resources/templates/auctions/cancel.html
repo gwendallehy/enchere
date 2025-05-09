@@ -12,6 +12,7 @@
 <head>
     <title data-th-text="#{frag-entete.a.enchere.list}"></title>
     <link rel="stylesheet" data-th-href="@{/css/list.css}">
+    <link rel="stylesheet" data-th-href="@{/css/cancel-article.css}">
 </head>
 
 <main>
@@ -21,19 +22,17 @@
             <h2>Vous n'avez pas de vente en cours.</h2>
         </div>
 
-        <div class="tableau" data-th-each="article : ${articles}">
+<!--        <div class="tableau" data-th-each="article : ${articles}">-->
+        <div class="article-card" data-th-each="article : ${articles}">
             <ul>
-                <li>
+                <li class="article-title">
                     <p data-th-text="${article.name}"></p>
                 </li>
                 <li>
-                    <p data-th-text="${article.description}"></p>
+                    <p data-th-text="#{frag-form-view-description}+${article.description}"></p>
                 </li>
                 <li>
-                    <p data-th-text="${article.category}"></p>
-                </li>
-                <li>
-                    <p data-th-text="${article.category}"></p>
+                    <p data-th-text="#{frag-form-view-category}+${article.category.wording}"></p>
                 </li>
                 <li>
                     <form th:action="@{/cancel-sell/{id}(id=${article.idArticle})}" method="post">
