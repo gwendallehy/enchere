@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,64 +117,71 @@ public class BidDAOImpl implements BidDAO {
      * Encherir
      */
 
+    @Transactional
     @Override
     public void createBid(Bid bid) {
-        // Check if a bid already exists for the same item and user
-        String sql = "SELECT * FROM bids WHERE item_id = :item_id AND user_id = :user_id";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("item_id", bid.getBidIdItem());
-        params.addValue("user_id", bid.getBidIdUser());
+        // Vérifie s'il existe déjà une enchère pour cet article
+        String sql = "SELECT * FROM bids WHERE item_id = :item_id";
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("item_id", bid.getBidIdItem());
 
         List<Bid> existingBids = namedParameterJdbcTemplate.query(sql, params, new BidRowMapper());
 
-        // Check if the user has enough credits
-        String userCreditsSql = "SELECT credit FROM users WHERE user_id = :user_id";
-        MapSqlParameterSource userCreditsParams = new MapSqlParameterSource();
-        userCreditsParams.addValue("user_id", bid.getBidIdUser());
+        long bidAmount = bid.getBidAmount();
+        long newUserId = bid.getBidIdUser();
 
-        Integer currentCredits = namedParameterJdbcTemplate.queryForObject(userCreditsSql, userCreditsParams, Integer.class);
+        // Vérifie les crédits du nouvel utilisateur
+        String creditQuery = "SELECT credit FROM users WHERE user_id = :user_id";
+        MapSqlParameterSource creditParams = new MapSqlParameterSource().addValue("user_id", newUserId);
+        Integer newUserCredits = namedParameterJdbcTemplate.queryForObject(creditQuery, creditParams, Integer.class);
 
-        // Check if user has sufficient credits
-        if (currentCredits == null || currentCredits < bid.getBidAmount()) {
+        if (newUserCredits == null || newUserCredits < bidAmount) {
             throw new InsufficientCreditsException("User does not have enough credits to place the bid.");
         }
 
         if (!existingBids.isEmpty()) {
-            // If a bid exists, update it
-            String updateBidQuery = "UPDATE bids SET bid_date = :bid_date, bid_price = :bid_price " +
-                    "WHERE user_id = :user_id AND item_id = :item_id";
+            Bid existingBid = existingBids.get(0);
+            long oldUserId = existingBid.getBidIdUser();
+            long oldBidAmount = existingBid.getBidAmount();
 
-            MapSqlParameterSource updateParams = new MapSqlParameterSource();
-            updateParams.addValue("bid_date", bid.getBidDate());
-            updateParams.addValue("bid_price", bid.getBidAmount());
-            updateParams.addValue("user_id", bid.getBidIdUser());
-            updateParams.addValue("item_id", bid.getBidIdItem());
+            // Rembourse l'ancien utilisateur
+            String refundSql = "UPDATE users SET credit = credit + :amount WHERE user_id = :user_id";
+            namedParameterJdbcTemplate.update(refundSql,
+                    new MapSqlParameterSource()
+                            .addValue("amount", oldBidAmount)
+                            .addValue("user_id", oldUserId));
 
-            namedParameterJdbcTemplate.update(updateBidQuery, updateParams);
+            // Met à jour le bid existant avec le nouvel utilisateur
+            String updateBidSql = "UPDATE bids SET user_id = :user_id, bid_price = :bid_price, bid_date = :bid_date " +
+                    "WHERE item_id = :item_id";
+            MapSqlParameterSource updateParams = new MapSqlParameterSource()
+                    .addValue("user_id", newUserId)
+                    .addValue("bid_price", bidAmount)
+                    .addValue("bid_date", bid.getBidDate())
+                    .addValue("item_id", bid.getBidIdItem());
+
+            namedParameterJdbcTemplate.update(updateBidSql, updateParams);
         } else {
-            // Otherwise, insert a new bid
-            String insertBidQuery = "INSERT INTO bids (user_id, item_id, bid_date, bid_price) " +
+            // Aucune enchère : insère une nouvelle ligne
+            String insertSql = "INSERT INTO bids (user_id, item_id, bid_date, bid_price) " +
                     "VALUES (:user_id, :item_id, :bid_date, :bid_price)";
+            MapSqlParameterSource insertParams = new MapSqlParameterSource()
+                    .addValue("user_id", newUserId)
+                    .addValue("item_id", bid.getBidIdItem())
+                    .addValue("bid_date", bid.getBidDate())
+                    .addValue("bid_price", bidAmount);
 
-            MapSqlParameterSource insertParams = new MapSqlParameterSource();
-            insertParams.addValue("user_id", bid.getBidIdUser());
-            insertParams.addValue("item_id", bid.getBidIdItem());
-            insertParams.addValue("bid_date", bid.getBidDate());
-            insertParams.addValue("bid_price", bid.getBidAmount());
-
-            namedParameterJdbcTemplate.update(insertBidQuery, insertParams);
+            namedParameterJdbcTemplate.update(insertSql, insertParams);
         }
 
-        // Deduct credits from the user
-        String deductCreditsQuery = "UPDATE USERS SET credit = credit - :credit WHERE user_id = :user_id";
-        MapSqlParameterSource deductCreditsParams = new MapSqlParameterSource();
-        deductCreditsParams.addValue("credit", bid.getBidAmount());
-        deductCreditsParams.addValue("user_id", bid.getBidIdUser());
-
-        // Perform the credit deduction
-        namedParameterJdbcTemplate.update(deductCreditsQuery, deductCreditsParams);
+        // Déduit les crédits du nouvel utilisateur
+        String deductSql = "UPDATE users SET credit = credit - :amount WHERE user_id = :user_id";
+        namedParameterJdbcTemplate.update(deductSql,
+                new MapSqlParameterSource()
+                        .addValue("amount", bidAmount)
+                        .addValue("user_id", newUserId));
     }
+
 
 
 
