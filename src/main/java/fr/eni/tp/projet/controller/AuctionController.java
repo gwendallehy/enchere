@@ -123,10 +123,16 @@ public class AuctionController {
         Article article = articleService.findArticleById(Math.toIntExact(itemId));
         LocalDateTime now = LocalDateTime.now();
 
-        // Vérification des dates (startDate et endDate sont supposées être des LocalDate)
+        // ⛔ Règle 1 : l'utilisateur ne peut pas enchérir sur son propre article
+        if (article.getUser() == user.getIdUser()) {
+            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez pas enchérir sur votre propre article.");
+            return "redirect:/bid/bid?itemId=" + itemId;
+        }
+
+        // Vérification des dates d'enchère
         if (article.getStartDate() != null && article.getEndDate() != null) {
-            LocalDateTime startDateTime = article.getStartDate().atStartOfDay(); // Conversion de LocalDate à LocalDateTime
-            LocalDateTime endDateTime = article.getEndDate().atTime(23, 59, 59); // Fin de la journée pour endDate
+            LocalDateTime startDateTime = article.getStartDate().atStartOfDay();
+            LocalDateTime endDateTime = article.getEndDate().atTime(23, 59, 59);
 
             if (now.isBefore(startDateTime) || now.isAfter(endDateTime)) {
                 redirectAttributes.addFlashAttribute("error", "La date de l'enchère n'est pas valide.");
@@ -136,23 +142,24 @@ public class AuctionController {
 
         Optional<Bid> currentBidOpt = Optional.ofNullable(bidService.getBidByItemId(itemId));
 
-        // Règle du prix
-        long minBid = currentBidOpt.map(Bid::getBidAmount).orElse(article.getBetAPrice());
+        // ⛔ Règle 2 : l'utilisateur ne peut pas enchérir deux fois de suite
+        if (currentBidOpt.isPresent() && currentBidOpt.get().getBidIdUser() == user.getIdUser()) {
+            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez pas enchérir deux fois de suite.");
+            return "redirect:/bid/bid?itemId=" + itemId;
+        }
 
+        // Vérification du montant
+        long minBid = currentBidOpt.map(Bid::getBidAmount).orElse(article.getBetAPrice());
         if (bidPrice <= minBid) {
             redirectAttributes.addFlashAttribute("error", "Votre mise doit être supérieure à " + minBid + " €.");
             return "redirect:/bid/bid?itemId=" + itemId;
         }
 
-        // INSERT ou UPDATE
-        Bid bid = currentBidOpt
-                .filter(b -> b.getBidIdUser() == user.getIdUser())
-                .orElse(new Bid());
-
+        // Création ou mise à jour de l'enchère
+        Bid bid = new Bid();
         bid.setBidIdUser(user.getIdUser());
         bid.setBidIdItem(article.getIdArticle());
         bid.setBidAmount(bidPrice);
-
         String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         bid.setBidDate(formattedDate);
 
@@ -160,4 +167,5 @@ public class AuctionController {
         redirectAttributes.addFlashAttribute("success", "Votre enchère a été enregistrée !");
         return "redirect:/bid/bid?itemId=" + itemId;
     }
+
 }

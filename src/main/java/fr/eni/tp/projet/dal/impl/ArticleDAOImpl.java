@@ -57,7 +57,6 @@ public class ArticleDAOImpl implements ArticleDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-
     /**
      *
      * Trouver tous les articles
@@ -70,9 +69,6 @@ public class ArticleDAOImpl implements ArticleDAO {
                 new ArticleRowMapper()
         );
     }
-
-
-
 
     /**
      *

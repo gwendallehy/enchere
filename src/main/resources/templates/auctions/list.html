@@ -41,7 +41,10 @@
     </form>
     <div class="table-article">
         <div class="article-card" data-th-each="article : ${articles}">
+
+
             <img class="image-list" data-th-src="${article.getPicture()}" alt="Image du produit">
+
 
             <div class="article-title">
                 <p data-th-text="${article.name}"></p>
