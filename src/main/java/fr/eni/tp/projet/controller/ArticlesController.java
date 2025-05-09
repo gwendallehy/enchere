@@ -161,6 +161,7 @@ public class ArticlesController {
         Article article = articleService.findArticleById(id);
         Pickup pickup = pickUpService.getPickUpByItemId(id);
         User user = userService.getUserById(articleService.findArticleById(id).getUser());
+
         model.addAttribute("article", article);
         model.addAttribute("pickup", pickup);
         model.addAttribute("user", user);
